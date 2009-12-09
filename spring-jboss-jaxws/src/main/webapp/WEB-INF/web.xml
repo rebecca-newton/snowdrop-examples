@@ -1,0 +1,21 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+   <context-param>
+       <param-name>contextConfigLocation</param-name>
+       <param-value>/WEB-INF/spring-config.xml</param-value>
+   </context-param>
+   <listener>
+       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+   </listener>
+    <servlet>
+      <servlet-name>TestService</servlet-name>
+      <servlet-class>springdemo.adder.Adder</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>TestService</servlet-name>
+      <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+  </web-app>
