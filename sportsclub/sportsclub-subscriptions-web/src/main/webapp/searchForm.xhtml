@@ -1,0 +1,93 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:a4j="http://richfaces.org/a4j"
+                template="layout/template.xhtml">
+    <ui:define name="content">
+
+
+        <rich:panel>
+            <f:facet name="header">Search for an account</f:facet>
+            <h:form>
+                <h:inputText value="#{accountSearch.name}" label="Search name"/>
+                <a4j:commandButton value="Search" action="#{accountSearch.searchAccounts}"
+                                   reRender="searchResults"/>
+            </h:form>
+        </rich:panel>
+
+
+        <a4j:outputPanel id="searchResults">
+            <h:form>
+                <rich:panel header="Search results" rendered="#{accountSearch.searchInfoAvailable}">
+
+                    <rich:dataTable id="searchResultsTable" value="#{accountSearch}" var="account" rows="5">
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Account #"/>
+                            </f:facet>
+                            <h:outputText value="#{account.id}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="First Name"/>
+                            </f:facet>
+                            <h:outputText value="#{account.subscriber.name.firstName}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Last Name"/>
+                            </f:facet>
+                            <h:outputText value="#{account.subscriber.name.lastName}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="City"/>
+                            </f:facet>
+                            <h:outputText value="#{account.subscriber.address.city}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Membership"/>
+                            </f:facet>
+                            <h:outputText value="#{account.membership.code}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Billing"/>
+                            </f:facet>
+                            <h:outputText value="#{account.billingType}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Edit"/>
+                            </f:facet>
+                            <a4j:commandLink value="Edit" onclick="Richfaces.showModalPanel('')"/>
+                        </rich:column>
+                        <f:facet name="footer">
+                            <rich:datascroller id="sc2" for="searchResultsTable" maxPages="5"
+                                               page="#{accountSearch.currentPage}"/>
+                        </f:facet>
+                    </rich:dataTable>
+                </rich:panel>
+            </h:form>
+        </a4j:outputPanel>
+
+        <rich:modalPanel id="edit">
+
+            <f:facet name="header">
+
+                <h:outputText value="I'm panel header"/>
+
+            </f:facet>
+
+            <p> My panel
+            </p>
+
+            <a onclick="Richfaces.hideModalPanel('pnl');" href="#">Hide ModalPanel</a>
+
+        </rich:modalPanel>
+
+    </ui:define>
+</ui:composition>
