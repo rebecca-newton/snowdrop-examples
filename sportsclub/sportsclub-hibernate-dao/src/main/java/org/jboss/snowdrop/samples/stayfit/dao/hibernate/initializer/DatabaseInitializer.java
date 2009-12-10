@@ -13,9 +13,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.annotation.PostConstruct;
 import java.lang.reflect.Member;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.Locale;
+import java.util.*;
 
 import static org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType.*;
 
@@ -55,93 +53,84 @@ public class DatabaseInitializer implements InitializingBean
             }
 
             Membership silverMembership = createMembership("SILVER", "600.0");
-            save(session, silverMembership);
             Membership goldMembership = createMembership("GOLD", "900.0");
-            save(session, goldMembership);
             Membership platinumMembership = createMembership("PLATINUM", "1200.0");
+
+            save(session, silverMembership);
+            save(session, goldMembership);
             save(session, platinumMembership);
 
 
-            // Accounts are populated later (see below)
-            Account account1;
-            Account account2;
-            Account account3;
+            Map<String, Person> persons = new HashMap<String, Person>();
+
+            persons.put("person1", createPerson("Samuel", "Vimes", "1 Yonge", "Toronto", "Ontario", "Canada"));
+            persons.put("person2", createPerson("Sibyl", "Vimes", "1 Yonge", "Toronto", "Ontario", "Canada"));
+            persons.put("person3", createPerson("Havelock", "Vetinari", "1 Bloor", "Toronto", "Ontario", "Canada"));
+            persons.put("person4", createPerson("Nobby", "Nobbs", "1 Dufferin", "Toronto", "Ontario", "Canada"));
+            persons.put("person5", createPerson("Carrot", "Ironfoundersson", "1 King", "Toronto", "Ontario", "Canada"));
+            persons.put("person6", createPerson("Magrat", "Garlick", "1 King", "Lancre", "Ramtops", "Canada"));
+            persons.put("person7", createPerson("Gytha", "Ogg", "1 King", "Lancre", "Ramtops", "Canada"));
+            persons.put("person8", createPerson("Esmerelda", "Weatherwax", "1 King", "Lancre", "Ramtops", "Canada"));
+            persons.put("person9", createPerson("Mustrum", "Ridcully", "1 King", "Lancre", "Ramtops", "Canada"));
+            persons.put("person10", createPerson("Bill", "Door", "1 King", "Lancre", "Ramtops", "Canada"));
+            persons.put("person11", createPerson("Angua", "von Uberwald", "1 King", "Lancre", "Ramtops", "Canada"));
+            persons.put("person12", createPerson("Claude", "Dibbler", "1 King", "Lancre", "Ramtops", "Canada"));
+
+            saveMap(session, persons);
 
 
-            Person person = createPerson("Samuel", "Vimes", "1 Yonge", "Toronto", "Ontario", "Canada");
-            save(session, person);
-            save(session, createAccount(silverMembership, BillingType.MONTHLY, person));
+            Map<String, Account> accounts = new HashMap<String, Account>();
 
-            person = createPerson("Sibyl", "Vimes", "1 Yonge", "Toronto", "Ontario", "Canada");
-            save(session, person);
-            save(session, createAccount(goldMembership, BillingType.WEEKLY, person));
+            accounts.put("account1", createAccount(silverMembership, BillingType.MONTHLY, persons.get("person1")));
+            accounts.put("account2", createAccount(goldMembership, BillingType.WEEKLY, persons.get("person2")));
+            accounts.put("account3", createAccount(platinumMembership, BillingType.BIWEEKLY, persons.get("person3")));
+            accounts.put("account4", createAccount(goldMembership, BillingType.BIWEEKLY, persons.get("person4")));
+            accounts.put("account5", createAccount(platinumMembership, BillingType.BIWEEKLY, persons.get("person5")));
+            accounts.put("account6", createAccount(platinumMembership, BillingType.BIWEEKLY, persons.get("person6")));
+            accounts.put("account7", createAccount(platinumMembership, BillingType.BIWEEKLY, persons.get("person7")));
+            accounts.put("account8", createAccount(platinumMembership, BillingType.MONTHLY, persons.get("person8")));
+            accounts.put("account9", createAccount(platinumMembership, BillingType.BIWEEKLY, persons.get("person9")));
+            accounts.put("account10", createAccount(platinumMembership, BillingType.BIWEEKLY, persons.get("person10")));
+            accounts.put("account11", createAccount(platinumMembership, BillingType.BIWEEKLY, persons.get("person11")));
+            accounts.put("account12", createAccount(platinumMembership, BillingType.BIWEEKLY, persons.get("person12")));
 
-            person = createPerson("Havelock", "Vetinari", "1 Bloor", "Toronto", "Ontario", "Canada");
-            save(session, person);
-            save(session, createAccount(platinumMembership, BillingType.BIWEEKLY, person));
-
-            person = createPerson("Nobby", "Nobbs", "1 Dufferin", "Toronto", "Ontario", "Canada");
-            save(session, person);
-            save(session, createAccount(goldMembership, BillingType.BIWEEKLY, person));
-
-            person = createPerson("Carrot", "Ironfoundersson", "1 King", "Toronto", "Ontario", "Canada");
-            save(session, person);
-            save(session, createAccount(platinumMembership, BillingType.BIWEEKLY, person));
-             
-            person = createPerson("Magrat", "Garlick", "1 King", "Lancre", "Ramtops", "Canada");
-            save(session, person);
-            save(session, createAccount(platinumMembership, BillingType.BIWEEKLY, person));
-
-            person = createPerson("Gytha", "Ogg", "1 King", "Lancre", "Ramtops", "Canada");
-            save(session, person);
-            save(session, createAccount(platinumMembership, BillingType.BIWEEKLY, person));
-
-            person = createPerson("Esmerelda", "Weatherwax", "1 King", "Lancre", "Ramtops", "Canada");
-            save(session, person);
-            save(session, createAccount(platinumMembership, BillingType.MONTHLY, person));
-
-            person = createPerson("Mustrum", "Ridcully", "1 King", "Lancre", "Ramtops", "Canada");
-            save(session, person);
-            save(session, createAccount(platinumMembership, BillingType.BIWEEKLY, person));
-
-            person = createPerson("Bill", "Door", "1 King", "Lancre", "Ramtops", "Canada");
-            save(session, person);
-            account1 = createAccount(platinumMembership, BillingType.BIWEEKLY, person);
-            save(session, account1);
-
-            person = createPerson("Angua", "von Uberwald", "1 King", "Lancre", "Ramtops", "Canada");
-            save(session, person);
-            account2 = createAccount(platinumMembership, BillingType.BIWEEKLY, person);
-            save(session, account2);
-
-            person = createPerson("Claude", "Dibbler", "1 King", "Lancre", "Ramtops", "Canada");
-            save(session, person);
-            account3 = createAccount(platinumMembership, BillingType.BIWEEKLY, person);
-            save(session, account3);
+            saveMap(session, accounts);
 
 
-            Equipment equipment1 = createEquipment("Engage", "95T Engage by LifeFitness", TREADMILL);
-            save(session, equipment1);
+            Map<String, Equipment> equipments = new HashMap<String, Equipment>();
 
-            Equipment equipment2 = createEquipment("Inclusive", "95T Inclusive by LifeFitness", TREADMILL);
-            save(session, equipment2);
+            equipments.put("equipment1", createEquipment("Engage", "95T Engage by LifeFitness", TREADMILL));
+            equipments.put("equipment2", createEquipment("Inclusive", "95T Inclusive by LifeFitness", TREADMILL));
+            equipments.put("equipment3", createEquipment("Omnidirectional", "by Cyberwalk", TREADMILL));
+            equipments.put("equipment4", createEquipment("Squash", "by Court Company", COURT));
+            equipments.put("equipment5", createEquipment("FreeMotion", "FreeMotion s5.6 by NordicTrack", STEPPER));
+            equipments.put("equipment6", createEquipment("MTN", "MTN 740 by NordicTrack", STEPPER));
 
-            Equipment equipment3 = createEquipment("Omnidirectional", "Cyberwalk", TREADMILL);
-            save(session, equipment3);
+            saveMap(session, equipments);
 
 
-            Reservation reservation = createReservation(createDate(2009,02,01), createDate(2009,10,31), equipment1, account1);
-            save(session, reservation);
+            Map<String, Reservation> reservations = new HashMap<String, Reservation>();
 
-            reservation = createReservation(createDate(2009,01,01), createDate(2009,12,31), equipment2, account2);
-            save(session, reservation);
+            reservations.put("reservation1", createReservation(createDate(2009, 02, 01), createDate(2009, 10, 31), equipments.get("equipment1"), accounts.get("account1")));
+            reservations.put("reservation2", createReservation(createDate(2009, 01, 01), createDate(2009, 12, 31), equipments.get("equipment2"), accounts.get("account2")));
+            reservations.put("reservation3", createReservation(createDate(2009, 05, 01), createDate(2009, 10, 31), equipments.get("equipment3"), accounts.get("account3")));
+            reservations.put("reservation4", createReservation(createDate(2009, 07, 01), createDate(2009, 07, 02), equipments.get("equipment4"), accounts.get("account4")));
+            reservations.put("reservation5", createReservation(createDate(2009, 07, 01), createDate(2009, 07, 02), equipments.get("equipment5"), accounts.get("account5")));
+            reservations.put("reservation6", createReservation(createDate(2009, 07, 01), createDate(2009, 07, 02), equipments.get("equipment6"), accounts.get("account6")));
 
-            reservation = createReservation(createDate(2009,05,01), createDate(2009,10,31), equipment3, account3);
-            save(session, reservation);
+            saveMap(session, reservations);
 
             return null;
          }
       });
+   }
+
+   private static void saveMap(Session session, Map data)
+   {
+      for (String key : (Set<String>)data.keySet())
+      {
+         save(session, data.get(key));
+      }
    }
 
    private static void save(Session session, Object entity)
@@ -204,12 +193,14 @@ public class DatabaseInitializer implements InitializingBean
       return reservation;
    }
 
-   /** Months are human readable and start at 1! */
+   /**
+    * Months are human readable and start at 1!
+    */
    private static Date createDate(int year, int month, int day)
    {
       Calendar cal = Calendar.getInstance(Locale.US);
       cal.clear();
-      cal.set(year, month-1, day);
+      cal.set(year, month - 1, day);
       return cal.getTime();
    }
 }

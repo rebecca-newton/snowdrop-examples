@@ -3,9 +3,12 @@ package org.jboss.snowdrop.samples.stayfit.dao.hibernate;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 import org.hibernate.Criteria;
 import static org.hibernate.criterion.Restrictions.*;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Disjunction;
 
 import java.util.List;
 import java.util.Date;
@@ -40,6 +43,20 @@ public class HibernateReservationRepository extends HibernateRepository<Reservat
          criteria.setMaxResults(reservationSearchCriteria.getRange().length());
       }
 
+      if (reservationSearchCriteria.getEquipmentType() != null)
+      {
+         List<EquipmentType> types = reservationSearchCriteria.getEquipmentType();
+         if (types.size() > 0)
+         {
+            Disjunction dis = Restrictions.disjunction();
+            for (EquipmentType type : types)
+            {
+               dis.add(eq("equipmentType",type));
+            }
+            criteria.createCriteria("equipment").add(dis);
+         }
+
+      }
       return criteria;
    }
 

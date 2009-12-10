@@ -3,8 +3,15 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
               version="1.2">
-  <application>
-      <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
-      <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
-  </application>
+
+    <application>
+        <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    </application>
+    
+    <converter>
+        <converter-id>equipmentTypeConverter</converter-id>
+        <converter-class>org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentTypeConverter</converter-class>
+    </converter>
+
 </faces-config>

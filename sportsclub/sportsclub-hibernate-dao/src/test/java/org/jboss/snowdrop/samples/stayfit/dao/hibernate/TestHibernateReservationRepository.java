@@ -3,6 +3,7 @@ package org.jboss.snowdrop.samples.stayfit.dao.hibernate;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -11,10 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  */
@@ -38,19 +36,30 @@ public class TestHibernateReservationRepository
       criteria.setToDate(to);
 
       List<Reservation> reservations = reservationRepository.getByCriteria(criteria);
-      Assert.assertEquals(3, reservations.size());
+      Assert.assertEquals(6, reservations.size());
 
       criteria = new ReservationSearchCriteria();
       criteria.setFromDate(getDate(2009,02,01));
 
       reservations = reservationRepository.getByCriteria(criteria);
-      Assert.assertEquals(2, reservations.size());
+      Assert.assertEquals(5, reservations.size());
 
       criteria = new ReservationSearchCriteria();
       criteria.setToDate(getDate(2009,11,30));
 
       reservations = reservationRepository.getByCriteria(criteria);
-      Assert.assertEquals(2, reservations.size());
+      Assert.assertEquals(5, reservations.size());
+
+      
+      List<EquipmentType> types = new ArrayList<EquipmentType>();
+      types.add(EquipmentType.COURT);
+      criteria = new ReservationSearchCriteria();
+      criteria.setFromDate(from);
+      criteria.setToDate(to);
+      criteria.setEquipmentType(types);
+
+      reservations = reservationRepository.getByCriteria(criteria);
+      Assert.assertEquals(1, reservations.size());
       
    }
 

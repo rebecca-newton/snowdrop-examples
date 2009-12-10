@@ -14,4 +14,8 @@
         <property name="reservationRepository" ref="reservationRepository"/>
     </bean>
 
+    <bean id="equipmentService" class="org.jboss.snowdrop.samples.stayfit.service.EquipmentServiceImpl">
+        <property name="equipmentRepository" ref="equipmentRepository"/>
+    </bean>
+
 </beans>

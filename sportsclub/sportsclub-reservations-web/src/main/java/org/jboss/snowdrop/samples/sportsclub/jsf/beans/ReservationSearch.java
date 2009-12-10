@@ -1,17 +1,17 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
 import org.jboss.snowdrop.samples.stayfit.service.ReservationService;
+import org.jboss.snowdrop.samples.stayfit.service.EquipmentService;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 import org.ajax4jsf.model.ExtendedDataModel;
 import org.ajax4jsf.model.DataVisitor;
 import org.ajax4jsf.model.Range;
 import org.ajax4jsf.model.SequenceRange;
 
 import javax.faces.context.FacesContext;
-import java.util.Date;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import javax.faces.model.SelectItem;
+import java.util.*;
 import java.io.IOException;
 
 /**
@@ -20,8 +20,11 @@ public class ReservationSearch extends ExtendedDataModel
 {
 
    private ReservationService reservationService;
+   private EquipmentService equipmentService;
    private Date fromDate;
    private Date toDate;
+
+   private List<EquipmentType> selectedEquipmentTypes;
 
    private int currentPage;
    private int currentRow;
@@ -30,10 +33,14 @@ public class ReservationSearch extends ExtendedDataModel
    private Map<Long, Reservation> reservationsMap = new HashMap<Long, Reservation>();
    private Integer rowCount;
 
+   public void init() {
+      selectedEquipmentTypes = Arrays.asList(equipmentService.getEquipmentTypes());
+   }
+
    public String searchReservations()
    {
-      rowCount = reservationService.countReservationsForRange(fromDate, toDate);
-      currentPage = 1;
+      rowCount = reservationService.countReservationsForRange(fromDate, toDate, selectedEquipmentTypes);
+      currentPage = 0;
       return "success";
    }
 
@@ -106,7 +113,7 @@ public class ReservationSearch extends ExtendedDataModel
    {
       if (rowCount == null)
       {
-         rowCount = reservationService.countReservationsForRange(fromDate, toDate);
+         rowCount = reservationService.countReservationsForRange(fromDate, toDate, selectedEquipmentTypes);
       }
       return rowCount;
    }
@@ -122,7 +129,7 @@ public class ReservationSearch extends ExtendedDataModel
    {
       int firstResult = ((SequenceRange) range).getFirstRow();
       int maxResults = ((SequenceRange) range).getRows();
-      List<Reservation> list = reservationService.getReservations(fromDate, toDate, firstResult, maxResults);
+      List<Reservation> list = reservationService.getReservations(fromDate, toDate, firstResult, maxResults, selectedEquipmentTypes);
       reservationsMap = new HashMap<Long, Reservation>();
       for (Reservation row : list)
       {
@@ -154,5 +161,35 @@ public class ReservationSearch extends ExtendedDataModel
    public void setWrappedData(Object data)
    {
       throw new UnsupportedOperationException("Not supported");
+   }
+
+   public List<EquipmentType> getSelectedEquipmentTypes()
+   {
+      return selectedEquipmentTypes;
+   }
+
+   public void setSelectedEquipmentTypes(List<EquipmentType> selectedEquipmentTypes)
+   {
+      System.out.println("setSelectedEquipmentTypes");
+      for (EquipmentType e : selectedEquipmentTypes)
+      {
+         System.out.println("************************************ > " + e);
+      }
+      this.selectedEquipmentTypes = selectedEquipmentTypes;
+   }
+
+   public String equipmentTypeCheckboxChanged() {
+      System.out.println("equipmentTypeCheckboxChanged");
+      return null;
+   }
+
+   public EquipmentService getEquipmentService()
+   {
+      return equipmentService;
+   }
+
+   public void setEquipmentService(EquipmentService equipmentService)
+   {
+      this.equipmentService = equipmentService;
    }
 }

@@ -11,9 +11,17 @@
 
     <import resource="classpath*:infrastructure.xml"/>
 
-    <bean id="reservationSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearch" scope="request">
+    <bean id="reservationSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearch" scope="request" init-method="init">
         <property name="reservationService" ref="reservationService"/>
+        <property name="equipmentService" ref="equipmentService"/>
     </bean>
+
+    <!-- Application scoped service -->
+    <bean id="referenceData" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReferenceData">
+        <property name="equipmentService" ref="equipmentService"/>
+    </bean>
+
+    <!--bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentTypeConverter"/-->
     
     <context:annotation-config/>
     
