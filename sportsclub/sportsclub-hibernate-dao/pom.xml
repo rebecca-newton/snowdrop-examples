@@ -67,7 +67,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>ejb3-persistence</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

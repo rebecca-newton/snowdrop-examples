@@ -1,7 +1,5 @@
 package org.jboss.snowdrop.samples.stayfit.dao.hibernate;
 
-import static org.hibernate.criterion.Restrictions.eq;
-import static org.hibernate.criterion.Restrictions.eqProperty;
 import static org.hibernate.criterion.Restrictions.ilike;
 import static org.hibernate.criterion.Restrictions.or;
 
@@ -10,9 +8,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
@@ -52,6 +48,9 @@ public class HibernateAccountRepository extends HibernateRepository<Account, Int
    private Criteria convert(AccountSearchCriteria accountSearchCriteria)
    {
       Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Account.class);
+      if (accountSearchCriteria.isActiveOnly()) {
+         criteria.add(Restrictions.eq("closed", false));
+      }
       if (accountSearchCriteria.getPersonSearchCriteria() != null)
       {
          PersonSearchCriteria personSearchCriteria = accountSearchCriteria.getPersonSearchCriteria();

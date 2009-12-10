@@ -10,7 +10,6 @@ import java.util.List;
 import org.jboss.annotation.spring.Spring;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.BillingType;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Membership;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Person;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.MembershipRepository;
@@ -44,6 +43,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
       personSearchCriteria.setName(name);
       AccountSearchCriteria accountSearchCriteria = new AccountSearchCriteria();
       accountSearchCriteria.setPersonSearchCriteria(personSearchCriteria);
+      accountSearchCriteria.setActiveOnly(true);
       accountSearchCriteria.setRange(new Range(minIndex, maxIndex));
       return accountRepository.findByCriteria(accountSearchCriteria);
    }
@@ -53,20 +53,20 @@ public class SubscriptionServiceImpl implements SubscriptionService
       PersonSearchCriteria personSearchCriteria = new PersonSearchCriteria();
       personSearchCriteria.setName(name);
       AccountSearchCriteria accountSearchCriteria = new AccountSearchCriteria();
+      accountSearchCriteria.setActiveOnly(true);
       accountSearchCriteria.setPersonSearchCriteria(personSearchCriteria);
       return accountRepository.countByCriteria(accountSearchCriteria);
    }
 
-   @TransactionAttribute
    public Account createAccount(Person person, String membershipCode, BillingType billingType)
    {
       Account account = new Account();
       account.setSubscriber(person);
+      account.setClosed(false);
       membershipRepository.findById(membershipCode);
       account.setMembership(membershipRepository.findById(membershipCode));
       account.setBillingType(billingType);
       account.setCreationDate(new Date());
-      personRepository.save(person);
       accountRepository.save(account);
       return account;
    }
@@ -74,5 +74,17 @@ public class SubscriptionServiceImpl implements SubscriptionService
    public List<String> getMembershipTypes()
    {
       return membershipRepository.findAllMembershipCodes();
+   }
+
+   public void closeAccount(Account account)
+   {
+      account.setClosed(true);
+      account.setCloseDate(new Date());
+      accountRepository.save(account);
+   }
+
+   public void updateAccount(Account account)
+   {
+      accountRepository.save(account);
    }
 }

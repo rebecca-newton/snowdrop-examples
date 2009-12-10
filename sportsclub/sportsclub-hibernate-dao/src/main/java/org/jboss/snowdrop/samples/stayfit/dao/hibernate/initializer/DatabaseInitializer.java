@@ -10,8 +10,6 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import javax.annotation.PostConstruct;
-import java.lang.reflect.Member;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -146,6 +144,7 @@ public class DatabaseInitializer implements InitializingBean
       account.setCreationDate(new Date());
       account.setBillingType(billingType);
       account.setMembership(silverMembership);
+      account.setClosed(false);
       return account;
    }
 

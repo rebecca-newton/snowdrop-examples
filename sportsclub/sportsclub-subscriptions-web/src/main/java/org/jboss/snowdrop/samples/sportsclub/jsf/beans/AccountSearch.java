@@ -4,13 +4,15 @@ import org.ajax4jsf.model.DataVisitor;
 import org.ajax4jsf.model.ExtendedDataModel;
 import org.ajax4jsf.model.Range;
 import org.ajax4jsf.model.SequenceRange;
+import org.richfaces.model.selection.Selection;
+import org.richfaces.model.selection.SimpleSelection;
+
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.ejb.SubscriptionService;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +33,7 @@ public class AccountSearch extends ExtendedDataModel
 
    private Map<Long, Account> accountsMap = new HashMap<Long, Account>();
    private Integer rowCount;
-   private Long selected;
+   private Selection selection;
 
    public String getName()
    {
@@ -109,6 +111,8 @@ public class AccountSearch extends ExtendedDataModel
    {
       int firstResult = ((SequenceRange) range).getFirstRow();
       int maxResults = ((SequenceRange) range).getRows();
+
+
       List<Account> list = subscriptionService.findAccountsBySubscriberName(name, firstResult, maxResults);
       accountsMap = new HashMap<Long, Account>();
       for (Account row : list)
@@ -117,10 +121,7 @@ public class AccountSearch extends ExtendedDataModel
          accountsMap.put(id, row);
          visitor.process(context, id, argument);
       }
-      if (selected != null && !accountsMap.containsKey(selected))
-      {
-         selected = null;
-      }
+
    }
 
    @Override
@@ -149,10 +150,18 @@ public class AccountSearch extends ExtendedDataModel
 
    public Account getCurrentAccount()
    {
-      if (selected != null)
-         return accountsMap.get(selected);
+      if (selection != null && selection.size() > 0)
+         return accountsMap.get(getSelectedKey());
       else
          return null;
+   }
+
+   private Long getSelectedKey()
+   {
+      if (selection == null || selection.size() == 0)
+         return null;
+      else
+         return ((Long) selection.getKeys().next());
    }
 
    public void saveCurrent()
@@ -160,13 +169,21 @@ public class AccountSearch extends ExtendedDataModel
       
    }
 
-   public void setSelected(Long selected)
+   public void setSelection(Selection selection)
    {
-      this.selected = selected;
+      this.selection = selection;
    }
 
-   public Long getSelected()
+   public Selection getSelection()
    {
-      return selected;
+      return selection;
+   }
+
+   public String delete()
+   {
+      subscriptionService.closeAccount(getCurrentAccount());
+      selection = new SimpleSelection();
+      rowCount = null;
+      return "deleted";
    }
 }

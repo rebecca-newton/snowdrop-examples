@@ -3,10 +3,12 @@ package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Address;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Name;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
@@ -22,6 +24,9 @@ public class Person
 
    @Embedded
    private Address address;
+
+   @OneToOne(mappedBy = "subscriber")
+   private Account account;
 
    public Address getAddress()
    {
@@ -41,5 +46,15 @@ public class Person
    public void setName(Name name)
    {
       this.name = name;
+   }
+
+   public Account getAccount()
+   {
+      return account;
+   }
+
+   public void setAccount(Account account)
+   {
+      this.account = account;
    }
 }

@@ -14,7 +14,7 @@ public class Account
    @Id @GeneratedValue
    private Long id;
 
-   @OneToOne
+   @OneToOne(cascade = {CascadeType.ALL})
    private Person subscriber;
 
    private Date creationDate;
@@ -23,6 +23,10 @@ public class Account
    private Membership membership;
 
    private BillingType billingType;
+
+   private boolean closed;
+
+   private Date closeDate;
 
    public long getId()
    {
@@ -37,6 +41,7 @@ public class Account
    public void setSubscriber(Person subscriber)
    {
       this.subscriber = subscriber;
+      subscriber.setAccount(this);
    }
 
    public BillingType getBillingType()
@@ -68,4 +73,27 @@ public class Account
    {
       this.membership = membership;
    }
+
+   public boolean isClosed()
+   {
+      return closed;
+   }
+
+   public void setClosed(boolean closed)
+   {
+      this.closed = closed;
+   }
+
+   public Date getCloseDate()
+   {
+      return closeDate;
+   }
+
+   public void setCloseDate(Date closeDate)
+   {
+      this.closeDate = closeDate;
+   }
+
+
 }
+

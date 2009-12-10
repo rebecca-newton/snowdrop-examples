@@ -7,6 +7,8 @@ public class AccountSearchCriteria extends AbstractRangeCriteria
 {
    private PersonSearchCriteria personSearchCriteria;
 
+   private boolean activeOnly;
+
    public PersonSearchCriteria getPersonSearchCriteria()
    {
       return personSearchCriteria;
@@ -15,6 +17,16 @@ public class AccountSearchCriteria extends AbstractRangeCriteria
    public void setPersonSearchCriteria(PersonSearchCriteria personSearchCriteria)
    {
       this.personSearchCriteria = personSearchCriteria;
+   }
+
+   public boolean isActiveOnly()
+   {
+      return activeOnly;
+   }
+
+   public void setActiveOnly(boolean activeOnly)
+   {
+      this.activeOnly = activeOnly;
    }
 
 }
