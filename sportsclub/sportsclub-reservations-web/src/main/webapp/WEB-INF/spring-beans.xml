@@ -21,7 +21,8 @@
         <property name="equipmentService" ref="equipmentService"/>
     </bean>
 
-    <!--bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentTypeConverter"/-->
+    <!-- JSF Converters managed by Spring -->
+    <bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentTypeConverter"/>
     
     <context:annotation-config/>
     

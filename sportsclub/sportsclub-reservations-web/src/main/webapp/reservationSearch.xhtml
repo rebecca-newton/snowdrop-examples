@@ -16,13 +16,14 @@
                 to:
                 <rich:calendar value="#{reservationSearch.toDate}"/>
                 <h:commandButton id="submit" value="Display Reservations"
-                                 action="#{reservationSearch.searchReservations}" /> <!-- reRender="searchResults"-->
+                                 action="#{reservationSearch.searchReservations}"/> <!-- reRender="searchResults"-->
                 <br/>
                 Equipment Type:
-                <h:selectManyCheckbox id="equipmentTypes" value="#{reservationSearch.selectedEquipmentTypes}" layout="lineDirection"><!--converter="equipmentTypeConverter"-->
+                <h:selectManyCheckbox id="equipmentTypes" value="#{reservationSearch.selectedEquipmentTypes}"
+                                      layout="lineDirection" converter="#{equipmentTypeConverter}">
                     <f:selectItems value="#{referenceData.equipmentTypes}"/>
-                    <f:converter  converterId="equipmentTypeConverter" />
-                    <a4j:support event="onchange" action="#{reservationSearch.equipmentTypeCheckboxChanged}" reRender="searchResults"/>                    
+                    <a4j:support event="onchange" action="#{reservationSearch.equipmentTypeCheckboxChanged}"
+                                 reRender="searchResults"/>
                 </h:selectManyCheckbox>
 
             </h:form>
@@ -76,7 +77,7 @@
 
                         <f:facet name="footer">
                             <rich:datascroller id="scroller" for="searchResultsTable" maxPages="5"
-                                               page="#{reservationSearch.currentPage}" />
+                                               page="#{reservationSearch.currentPage}"/>
                         </f:facet>
 
                     </rich:dataTable>
