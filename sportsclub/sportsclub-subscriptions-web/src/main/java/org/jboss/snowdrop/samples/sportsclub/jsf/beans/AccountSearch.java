@@ -34,6 +34,7 @@ public class AccountSearch extends ExtendedDataModel
    private Map<Long, Account> accountsMap = new HashMap<Long, Account>();
    private Integer rowCount;
    private Selection selection;
+   private boolean editing;
 
    public String getName()
    {
@@ -164,11 +165,6 @@ public class AccountSearch extends ExtendedDataModel
          return ((Long) selection.getKeys().next());
    }
 
-   public void saveCurrent()
-   {
-      
-   }
-
    public void setSelection(Selection selection)
    {
       this.selection = selection;
@@ -179,11 +175,27 @@ public class AccountSearch extends ExtendedDataModel
       return selection;
    }
 
-   public String delete()
+   public String closeAccount()
    {
       subscriptionService.closeAccount(getCurrentAccount());
       selection = new SimpleSelection();
       rowCount = null;
-      return "deleted";
+      return "closed";
+   }
+
+   public void setEditing(boolean editing)
+   {
+      this.editing = editing;
+   }
+
+   public boolean isEditing()
+   {
+      return editing;
+   }
+
+   public void saveCurrent()
+   {
+      subscriptionService.updateAccount(getCurrentAccount());
+      this.editing = false;
    }
 }

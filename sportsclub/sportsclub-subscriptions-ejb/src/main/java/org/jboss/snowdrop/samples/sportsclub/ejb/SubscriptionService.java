@@ -25,4 +25,6 @@ public interface SubscriptionService
    Account createAccount(Person person, String membershipCode, BillingType billingType);
 
    void closeAccount(Account account);
+
+   void updateAccount(Account currentAccount);
 }

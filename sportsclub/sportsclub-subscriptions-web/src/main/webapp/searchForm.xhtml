@@ -25,7 +25,7 @@
                              selectionMode="single"
                              selection="#{accountSearch.selection}"
                              enableContextMenu="true">
-                        <!--<a4j:support event="onselectionchange" reRender="accountData"/>-->
+                        <a4j:support event="onselectionchange" reRender="accountData"/>
                         <rich:column >
                             <f:facet name="header">
                                 <h:outputText value="Account #"/>
@@ -56,10 +56,7 @@
                             </f:facet>
                             <h:outputText value="#{account.membership.code}"/>
                         </rich:column>
-                        <rich:column>
-                            <f:facet name="header"/>
-                            <a4j:commandButton id="closeAcctBtn" value="delete" action="#{accountSearch.delete}" reRender="searchResults"/>
-                        </rich:column>
+
                         <f:facet name="footer">
                             <rich:datascroller id="sc2" for="searchResultsTable" maxPages="5"
                                                page="#{accountSearch.currentPage}"/>
@@ -78,27 +75,55 @@
                     <h:form>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="First name"/>
-                            <h:outputText value="#{accountSearch.currentAccount.subscriber.name.firstName}"/>
+                            <h:outputText value="#{accountSearch.currentAccount.subscriber.name.firstName}" rendered="#{!accountSearch.editing}"/>
+                            <rich:inplaceInput value="#{accountSearch.currentAccount.subscriber.name.firstName}" rendered="#{accountSearch.editing}"/>
+
                             <h:outputLabel value="Middle name"/>
-                            <h:outputText value="#{accountSearch.currentAccount.subscriber.name.middleName}"/>
+                            <h:outputText value="#{accountSearch.currentAccount.subscriber.name.middleName}" rendered="#{!accountSearch.editing}"/>
+                            <rich:inplaceInput value="#{accountSearch.currentAccount.subscriber.name.middleName}" rendered="#{accountSearch.editing}"/>
+
                             <h:outputLabel value="Last name"/>
-                            <h:outputText value="#{accountSearch.currentAccount.subscriber.name.lastName}"/>
+                            <h:outputText value="#{accountSearch.currentAccount.subscriber.name.lastName}" rendered="#{!accountSearch.editing}"/>
+                            <rich:inplaceInput value="#{accountSearch.currentAccount.subscriber.name.lastName}" rendered="#{accountSearch.editing}"/>
+
+
                             <h:outputLabel value="Address"/>
-                            <h:outputText value="#{accountSearch.currentAccount.subscriber.address.streetAddress}"/>
+                            <h:outputText value="#{accountSearch.currentAccount.subscriber.address.streetAddress}" rendered="#{!accountSearch.editing}"/>
+                            <rich:inplaceInput value="#{accountSearch.currentAccount.subscriber.address.streetAddress}" rendered="#{accountSearch.editing}"/>
+
                             <h:outputLabel value="City"/>
-                            <h:outputText value="#{accountSearch.currentAccount.subscriber.address.city}"/>
+                            <h:outputText value="#{accountSearch.currentAccount.subscriber.address.city}" rendered="#{!accountSearch.editing}"/>
+                            <rich:inplaceInput rendered="#{accountSearch.editing}" value="#{accountSearch.currentAccount.subscriber.address.city}"/>
+
                             <h:outputLabel value="Province"/>
-                            <h:outputText value="#{accountSearch.currentAccount.subscriber.address.provinceOrState}"/>
+                            <h:outputText value="#{accountSearch.currentAccount.subscriber.address.provinceOrState}" rendered="#{!accountSearch.editing}"/>
+                            <rich:inplaceInput rendered="#{accountSearch.editing}" value="#{accountSearch.currentAccount.subscriber.address.provinceOrState}"/>
+
                             <h:outputLabel value="Billing"/>
-                            <h:outputText value="#{accountSearch.currentAccount.billingType}"/>
+                            <h:outputText value="#{accountSearch.currentAccount.billingType}" rendered="#{!accountSearch.editing}"/>
+                            <rich:inplaceSelect rendered="#{accountSearch.editing}"
+                                                value="#{accountSearch.currentAccount.billingType}">
+                                <f:converter converterId="enumConverter"/>
+                                <f:selectItems value="#{referenceDataHelper.billingTypes}"/>
+                            </rich:inplaceSelect>
+
                             <h:outputLabel value="Membership"/>
                             <h:outputText value="#{accountSearch.currentAccount.membership.code}"/>
+
                             <h:outputLabel value="Annual Fee"/>
                             <h:outputText value="#{accountSearch.currentAccount.membership.annualFee}"/>
+
+                            <a4j:commandButton id="closeAcctBtn" value="Close" action="#{accountSearch.closeAccount}" reRender="searchResults,accountData" rendered="#{!accountSearch.editing}"/>
+                            <a4j:commandButton id="editAcctBtn" value="Edit" reRender="accountData" rendered="#{!accountSearch.editing}">
+                                <f:setPropertyActionListener value="#{true}" target="#{accountSearch.editing}"/>
+                            </a4j:commandButton>
+
+                            <a4j:commandButton id="saveAcctBtn" value="Save" action="#{accountSearch.saveCurrent}" reRender="accountData" rendered="#{accountSearch.editing}"/>
+
                         </h:panelGrid>
                     </h:form>
                 </rich:panel>
             </a4j:outputPanel>
 
-    </ui:define>
+    </ui:define>                                                      
 </ui:composition>
