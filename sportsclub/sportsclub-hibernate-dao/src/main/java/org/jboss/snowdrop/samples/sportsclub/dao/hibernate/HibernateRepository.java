@@ -1,4 +1,4 @@
-package org.jboss.snowdrop.samples.stayfit.dao.hibernate;
+package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

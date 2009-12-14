@@ -1,7 +1,6 @@
-package org.jboss.snowdrop.samples.stayfit.dao.hibernate;
+package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Membership;

@@ -1,4 +1,4 @@
-package org.jboss.snowdrop.samples.stayfit.service;
+package org.jboss.snowdrop.samples.sportsclub.service;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.EquipmentRepository;

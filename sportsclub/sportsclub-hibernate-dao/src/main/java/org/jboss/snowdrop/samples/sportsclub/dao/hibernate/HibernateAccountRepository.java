@@ -1,4 +1,4 @@
-package org.jboss.snowdrop.samples.stayfit.dao.hibernate;
+package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
 import static org.hibernate.criterion.Restrictions.ilike;
 import static org.hibernate.criterion.Restrictions.or;

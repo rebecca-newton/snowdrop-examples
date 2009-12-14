@@ -1,7 +1,7 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
-import org.jboss.snowdrop.samples.stayfit.service.EquipmentService;
+import org.jboss.snowdrop.samples.sportsclub.service.EquipmentService;
 
 import javax.faces.model.SelectItem;
 

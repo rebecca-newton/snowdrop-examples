@@ -1,4 +1,4 @@
-package org.jboss.snowdrop.samples.stayfit.dao.hibernate;
+package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;

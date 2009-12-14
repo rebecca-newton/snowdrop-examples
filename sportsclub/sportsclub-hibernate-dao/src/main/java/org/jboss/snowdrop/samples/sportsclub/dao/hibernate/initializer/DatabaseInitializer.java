@@ -1,4 +1,4 @@
-package org.jboss.snowdrop.samples.stayfit.dao.hibernate.initializer;
+package org.jboss.snowdrop.samples.sportsclub.dao.hibernate.initializer;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
