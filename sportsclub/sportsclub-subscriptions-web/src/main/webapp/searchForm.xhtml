@@ -21,10 +21,12 @@
         <a4j:outputPanel id="searchResults">
             <h:form>
                 <rich:panel header="Search results" rendered="#{accountSearch.searchInfoAvailable}">
-                    <rich:extendedDataTable id="searchResultsTable" value="#{accountSearch}" var="account" rows="5"
+                    <rich:extendedDataTable id="searchResultsTable" value="#{accountSearch}" var="account"
                              selectionMode="single"
                              selection="#{accountSearch.selection}"
                              enableContextMenu="true"
+                             rows="5"
+                             height="300px"
                              tableState="#{accountSearch.tableState}">
                         <a4j:support event="onselectionchange" reRender="accountData"/>
                         <rich:column label="Account #">

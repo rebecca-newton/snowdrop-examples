@@ -9,7 +9,7 @@
     <ui:define name="content">
 
         <rich:panel>
-            <f:facet name="header">Display reservations in the following date range (dates are optional)</f:facet>
+            <f:facet name="header">Display reservations</f:facet>
             <h:form>
                 from:
                 <rich:calendar value="#{reservationSearch.fromDate}"/>
@@ -18,13 +18,22 @@
                 <h:commandButton id="submit" value="Display Reservations"
                                  action="#{reservationSearch.searchReservations}"/> <!-- reRender="searchResults"-->
                 <br/>
-                Equipment Type:
-                <h:selectManyCheckbox id="equipmentTypes" value="#{reservationSearch.selectedEquipmentTypes}"
-                                      layout="lineDirection" converter="#{equipmentTypeConverter}">
-                    <f:selectItems value="#{referenceData.equipmentTypes}"/>
-                    <a4j:support event="onchange" action="#{reservationSearch.equipmentTypeCheckboxChanged}"
-                                 reRender="searchResults"/>
-                </h:selectManyCheckbox>
+                <table>
+                    <tr>
+                        <td>
+                            Equipment Type:
+                        </td>
+                        <td>
+                            <h:selectManyCheckbox id="equipmentTypes"
+                                                  value="#{reservationSearch.selectedEquipmentTypes}"
+                                                  layout="lineDirection" converter="#{equipmentTypeConverter}">
+                                <f:selectItems value="#{referenceData.equipmentTypes}"/>
+                                <a4j:support event="onchange" action="#{reservationSearch.equipmentTypeCheckboxChanged}"
+                                             reRender="searchResults"/>
+                            </h:selectManyCheckbox>
+                        </td>
+                    </tr>
+                </table>
 
             </h:form>
         </rich:panel>
@@ -34,9 +43,11 @@
                 <rich:panel header="Search results">
 
                     <rich:extendedDataTable id="searchResultsTable" value="#{reservationSearch}"
-                                    var="reservation" rows="5" selectionMode="single"
-                                    enableContextMenu="true"
-                                    tableState="#{reservationSearch.tableState.tableState}">
+                                            var="reservation" selectionMode="single"
+                                            enableContextMenu="true"
+                                            height="250px"
+                                            rows="5"
+                                            tableState="#{reservationSearch.tableState.tableState}">
 
                         <rich:column label="Reservation #">
                             <f:facet name="header">
