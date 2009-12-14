@@ -37,11 +37,9 @@ public class ReservationSearch extends ExtendedDataModel
 
    public   ReservationSearch() {
       super();
-      System.out.println("**************** constructor called!!!");
    }
 
    public void init() {
-      System.out.println("**************** init called!!!");
       selectedEquipmentTypes = Arrays.asList(equipmentService.getEquipmentTypes());
    }
 
