@@ -10,11 +10,11 @@ import org.ajax4jsf.model.Range;
 import org.ajax4jsf.model.SequenceRange;
 
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import java.util.*;
 import java.io.IOException;
 
 /**
+ * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
  */
 public class ReservationSearch extends ExtendedDataModel
 {
@@ -33,14 +33,22 @@ public class ReservationSearch extends ExtendedDataModel
    private Map<Long, Reservation> reservationsMap = new HashMap<Long, Reservation>();
    private Integer rowCount;
 
+   private ReservationTableState tableState;
+
+   public   ReservationSearch() {
+      super();
+      System.out.println("**************** constructor called!!!");
+   }
+
    public void init() {
+      System.out.println("**************** init called!!!");
       selectedEquipmentTypes = Arrays.asList(equipmentService.getEquipmentTypes());
    }
 
    public String searchReservations()
    {
       rowCount = reservationService.countReservationsForRange(fromDate, toDate, selectedEquipmentTypes);
-      currentPage = 0;
+      currentPage = 1;
       return "success";
    }
 
@@ -170,16 +178,10 @@ public class ReservationSearch extends ExtendedDataModel
 
    public void setSelectedEquipmentTypes(List<EquipmentType> selectedEquipmentTypes)
    {
-      System.out.println("setSelectedEquipmentTypes");
-      for (EquipmentType e : selectedEquipmentTypes)
-      {
-         System.out.println("************************************ > " + e);
-      }
       this.selectedEquipmentTypes = selectedEquipmentTypes;
    }
 
    public String equipmentTypeCheckboxChanged() {
-      System.out.println("equipmentTypeCheckboxChanged");
       return null;
    }
 
@@ -191,5 +193,15 @@ public class ReservationSearch extends ExtendedDataModel
    public void setEquipmentService(EquipmentService equipmentService)
    {
       this.equipmentService = equipmentService;
+   }
+
+   public ReservationTableState getTableState()
+   {
+      return tableState;
+   }
+
+   public void setTableState(ReservationTableState tableState)
+   {
+      this.tableState = tableState;
    }
 }

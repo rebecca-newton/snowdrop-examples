@@ -24,33 +24,34 @@
                     <rich:extendedDataTable id="searchResultsTable" value="#{accountSearch}" var="account" rows="5"
                              selectionMode="single"
                              selection="#{accountSearch.selection}"
-                             enableContextMenu="true">
+                             enableContextMenu="true"
+                             tableState="#{accountSearch.tableState}">
                         <a4j:support event="onselectionchange" reRender="accountData"/>
-                        <rich:column >
+                        <rich:column label="Account #">
                             <f:facet name="header">
                                 <h:outputText value="Account #"/>
                             </f:facet>
                             <h:outputText value="#{account.id}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column label="First Name">
                             <f:facet name="header">
                                 <h:outputText value="First Name"/>
                             </f:facet>
                             <h:outputText value="#{account.subscriber.name.firstName}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column label="Last Name">
                             <f:facet name="header">
                                 <h:outputText value="Last Name"/>
                             </f:facet>
                             <h:outputText value="#{account.subscriber.name.lastName}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column label="City">
                             <f:facet name="header">
                                 <h:outputText value="City"/>
                             </f:facet>
                             <h:outputText value="#{account.subscriber.address.city}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column label="Membership">
                             <f:facet name="header">
                                 <h:outputText value="Membership"/>
                             </f:facet>

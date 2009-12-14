@@ -36,6 +36,8 @@ public class AccountSearch extends ExtendedDataModel
    private Selection selection;
    private boolean editing;
 
+   private String tableState;
+
    public String getName()
    {
       return name;
@@ -197,5 +199,15 @@ public class AccountSearch extends ExtendedDataModel
    {
       subscriptionService.updateAccount(getCurrentAccount());
       this.editing = false;
+   }
+
+   public String getTableState()
+   {
+      return tableState;
+   }
+
+   public void setTableState(String tableState)
+   {
+      this.tableState = tableState;
    }
 }
