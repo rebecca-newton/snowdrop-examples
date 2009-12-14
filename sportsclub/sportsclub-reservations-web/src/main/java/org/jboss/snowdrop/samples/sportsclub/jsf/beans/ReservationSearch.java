@@ -20,11 +20,8 @@ public class ReservationSearch extends ExtendedDataModel
 {
 
    private ReservationService reservationService;
-   private EquipmentService equipmentService;
-   private Date fromDate;
-   private Date toDate;
 
-   private List<EquipmentType> selectedEquipmentTypes;
+   private ReservationSearchOptions reservationSearchOptions;
 
    private int currentPage;
    private int currentRow;
@@ -39,17 +36,15 @@ public class ReservationSearch extends ExtendedDataModel
       super();
    }
 
-   public void init() {
-      selectedEquipmentTypes = Arrays.asList(equipmentService.getEquipmentTypes());
-   }
-
-   public String searchReservations()
-   {
-      rowCount = reservationService.countReservationsForRange(fromDate, toDate, selectedEquipmentTypes);
-      currentPage = 1;
-      return "success";
-   }
-
+//   public String searchReservations()
+//   {
+//      rowCount = reservationService.countReservationsForRange(
+//            reservationSearchOptions.getFromDate(),
+//            reservationSearchOptions.getToDate(),
+//            reservationSearchOptions.getSelectedEquipmentTypes());
+//      currentPage = 1;
+//      return "success";
+//   }
 
    public ReservationService getReservationService()
    {
@@ -59,26 +54,6 @@ public class ReservationSearch extends ExtendedDataModel
    public void setReservationService(ReservationService reservationService)
    {
       this.reservationService = reservationService;
-   }
-
-   public Date getFromDate()
-   {
-      return fromDate;
-   }
-
-   public void setFromDate(Date fromDate)
-   {
-      this.fromDate = fromDate;
-   }
-
-   public Date getToDate()
-   {
-      return toDate;
-   }
-
-   public void setToDate(Date toDate)
-   {
-      this.toDate = toDate;
    }
 
    public int getCurrentPage()
@@ -119,7 +94,10 @@ public class ReservationSearch extends ExtendedDataModel
    {
       if (rowCount == null)
       {
-         rowCount = reservationService.countReservationsForRange(fromDate, toDate, selectedEquipmentTypes);
+         rowCount = reservationService.countReservationsForRange(
+               reservationSearchOptions.getFromDate(),
+               reservationSearchOptions.getToDate(),
+               reservationSearchOptions.getSelectedEquipmentTypes());
       }
       return rowCount;
    }
@@ -135,7 +113,10 @@ public class ReservationSearch extends ExtendedDataModel
    {
       int firstResult = ((SequenceRange) range).getFirstRow();
       int maxResults = ((SequenceRange) range).getRows();
-      List<Reservation> list = reservationService.getReservations(fromDate, toDate, firstResult, maxResults, selectedEquipmentTypes);
+      List<Reservation> list = reservationService.getReservations(
+            reservationSearchOptions.getFromDate(),
+            reservationSearchOptions.getToDate(), firstResult, maxResults,
+            reservationSearchOptions.getSelectedEquipmentTypes());
       reservationsMap = new HashMap<Long, Reservation>();
       for (Reservation row : list)
       {
@@ -169,28 +150,8 @@ public class ReservationSearch extends ExtendedDataModel
       throw new UnsupportedOperationException("Not supported");
    }
 
-   public List<EquipmentType> getSelectedEquipmentTypes()
-   {
-      return selectedEquipmentTypes;
-   }
-
-   public void setSelectedEquipmentTypes(List<EquipmentType> selectedEquipmentTypes)
-   {
-      this.selectedEquipmentTypes = selectedEquipmentTypes;
-   }
-
    public String equipmentTypeCheckboxChanged() {
       return null;
-   }
-
-   public EquipmentService getEquipmentService()
-   {
-      return equipmentService;
-   }
-
-   public void setEquipmentService(EquipmentService equipmentService)
-   {
-      this.equipmentService = equipmentService;
    }
 
    public ReservationTableState getTableState()
@@ -201,5 +162,15 @@ public class ReservationSearch extends ExtendedDataModel
    public void setTableState(ReservationTableState tableState)
    {
       this.tableState = tableState;
+   }
+
+   public ReservationSearchOptions getReservationSearchOptions()
+   {
+      return reservationSearchOptions;
+   }
+
+   public void setReservationSearchOptions(ReservationSearchOptions reservationSearchOptions)
+   {
+      this.reservationSearchOptions = reservationSearchOptions;
    }
 }
