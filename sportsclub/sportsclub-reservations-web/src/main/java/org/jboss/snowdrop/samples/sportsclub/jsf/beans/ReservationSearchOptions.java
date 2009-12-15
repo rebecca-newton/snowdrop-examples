@@ -30,7 +30,6 @@ public class ReservationSearchOptions
 
    public void setFromDate(Date fromDate)
    {
-      System.out.println("setting fromDate - " + fromDate);
       this.fromDate = fromDate;
    }
 
@@ -41,7 +40,6 @@ public class ReservationSearchOptions
 
    public void setToDate(Date toDate)
    {
-      System.out.println("setting toDate - " + toDate);
       this.toDate = toDate;
    }
 

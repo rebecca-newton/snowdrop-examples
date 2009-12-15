@@ -13,11 +13,11 @@
             <h:form>
                 from:
                 <rich:calendar id="from" value="#{reservationSearch.reservationSearchOptions.fromDate}">
-                    <a4j:support event="ondateselected" reRender="searchResults"/>
+                    <a4j:support event="onchanged" reRender="searchResults"/>
                 </rich:calendar>
                 to:
                 <rich:calendar id="to" value="#{reservationSearch.reservationSearchOptions.toDate}">
-                    <a4j:support event="ondateselected" reRender="searchResults"/>
+                    <a4j:support event="onchanged" reRender="searchResults"/>
                 </rich:calendar>
                 <br/>
                 <table>
@@ -36,6 +36,8 @@
                         </td>
                     </tr>
                 </table>
+                <br/>
+                <a4j:status id="commonstatus" startText="Retrieving data..." stopText=""/>
 
             </h:form>
         </rich:panel>
