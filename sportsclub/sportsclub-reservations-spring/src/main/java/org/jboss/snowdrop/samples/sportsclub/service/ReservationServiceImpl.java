@@ -13,13 +13,12 @@ import java.util.Date;
 /**
  *
  */
-@Transactional
+@Transactional(readOnly = true)
 public class ReservationServiceImpl implements ReservationService
 {
 
    private ReservationRepository reservationRepository;
 
-   @Transactional(readOnly = true)
    public List<Reservation> getReservations(Date fromDate, Date toDate, Integer min, Integer max, List<EquipmentType> types)
    {
       ReservationSearchCriteria criteria = new ReservationSearchCriteria();
@@ -47,6 +46,12 @@ public class ReservationServiceImpl implements ReservationService
          criteria.setEquipmentType(types);
       }
       return reservationRepository.countByCriteria(criteria);
+   }
+
+   @Transactional(readOnly = false)
+   public void create()
+   {
+      //To change body of implemented methods use File | Settings | File Templates.
    }
 
    public ReservationRepository getReservationRepository()

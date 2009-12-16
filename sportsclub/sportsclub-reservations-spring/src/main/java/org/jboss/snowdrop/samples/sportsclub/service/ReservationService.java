@@ -14,4 +14,6 @@ public interface ReservationService
    List<Reservation> getReservations(Date fromDate, Date toDate, Integer nim, Integer max, List<EquipmentType> types);
 
    Integer countReservationsForRange(Date fromDate, Date toDate, List<EquipmentType> types);
+
+   void create();
 }
