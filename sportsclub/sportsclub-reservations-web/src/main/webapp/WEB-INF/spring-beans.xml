@@ -17,6 +17,10 @@
         <property name="reservationSearchOptions" ref="reservationSearchOptions"/>
     </bean>
 
+    <!--<bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="request" init-method="init">-->
+        <!--<property name="reservationService" ref="reservationService"/>-->
+    <!--</bean>-->
+
     <!-- Keeps search table state in the session -->
     <bean id="reservationSearchTableState" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationTableState" scope="session"/>
 
