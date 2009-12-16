@@ -1,9 +1,5 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Address;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Name;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

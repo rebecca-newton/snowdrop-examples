@@ -23,6 +23,8 @@
     <mapping class="org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment"/>
     <!--<mapping class="org.jboss.snowdrop.samples.sportsclub.domain.entity.Name"/>--> <!-- Embedded class -->
     <mapping class="org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice"/>
+    <mapping class="org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance"/>
+    <mapping class="org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment"/>
     <mapping class="org.jboss.snowdrop.samples.sportsclub.domain.entity.Membership"/>
     <mapping class="org.jboss.snowdrop.samples.sportsclub.domain.entity.Person"/>
     <mapping class="org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation"/>

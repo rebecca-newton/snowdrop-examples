@@ -5,9 +5,23 @@ package org.jboss.snowdrop.samples.sportsclub.domain.entity;
  */
 public enum BillingType
 {
-   MONTHLY,
+   MONTHLY(12),
 
-   BIWEEKLY,
+   SEMIMONTHLY(24),
 
-   WEEKLY
+   BIWEEKLY(26),
+
+   WEEKLY(52);
+
+   private int periods;
+
+   BillingType(int periods)
+   {
+      this.periods = periods;
+   }
+
+   public int periodsPerYear()
+   {
+     return periods;
+   }
 }

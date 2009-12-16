@@ -56,6 +56,13 @@
                 <scope>provided</scope>
             </dependency>
 
+           <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-annotations</artifactId>
+                <version>3.3.1.GA</version>
+                <scope>provided</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-annotations</artifactId>
@@ -143,6 +150,14 @@
 
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+       <dependency>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-annotations</artifactId>
+      </dependency>
+       
+    </dependencies>
 
     <build>
         <plugins>

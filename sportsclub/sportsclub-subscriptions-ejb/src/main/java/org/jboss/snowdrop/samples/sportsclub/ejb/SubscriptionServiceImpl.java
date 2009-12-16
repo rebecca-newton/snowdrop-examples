@@ -4,11 +4,13 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.interceptor.Interceptors;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import org.jboss.annotation.spring.Spring;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.BillingType;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Person;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
@@ -67,6 +69,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
       account.setMembership(membershipRepository.findById(membershipCode));
       account.setBillingType(billingType);
       account.setCreationDate(new Date());
+      account.resetBalance();
       accountRepository.save(account);
       return account;
    }

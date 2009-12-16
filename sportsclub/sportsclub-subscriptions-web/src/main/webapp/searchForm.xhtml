@@ -116,6 +116,9 @@
                             <h:outputLabel value="Annual Fee"/>
                             <h:outputText value="#{accountSearch.currentAccount.membership.annualFee}"/>
 
+                            <h:outputLabel value="Outstanding Balance"/>
+                            <h:outputText value="#{accountSearch.currentAccount.balance.currentBalance}"/>
+
                             <a4j:commandButton id="closeAcctBtn" value="Close" action="#{accountSearch.closeAccount}" reRender="searchResults,accountData" rendered="#{!accountSearch.editing}"/>
                             <a4j:commandButton id="editAcctBtn" value="Edit" reRender="accountData" rendered="#{!accountSearch.editing}">
                                 <f:setPropertyActionListener value="#{true}" target="#{accountSearch.editing}"/>

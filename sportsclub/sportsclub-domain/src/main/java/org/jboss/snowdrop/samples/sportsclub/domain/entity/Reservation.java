@@ -1,7 +1,12 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
