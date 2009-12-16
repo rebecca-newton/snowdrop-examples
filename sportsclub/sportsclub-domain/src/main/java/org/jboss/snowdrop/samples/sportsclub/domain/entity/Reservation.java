@@ -14,10 +14,10 @@ public class Reservation
    @Id @GeneratedValue
    private long id;
 
-   @Column(name = "fromDT")
+   @Column(name = "fromDT", nullable = false)
    private Date from;
 
-   @Column(name = "toDT")
+   @Column(name = "toDT", nullable = false)
    private Date to;
 
    @ManyToOne
