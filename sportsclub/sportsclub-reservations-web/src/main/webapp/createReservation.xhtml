@@ -12,23 +12,11 @@
                     <h:outputLabel value="Equipment"/>
                     <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.equipment.name}"/>
                     <h:outputLabel value="Account"/>
-                    <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.account.person.name.firstName}"/>
+                    <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.account.subscriber.name.firstName}"/>
                     <h:outputLabel value="From"/>
-                    <!--rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.from}"/-->
                     <rich:calendar id="from" value="#{reservationCreate.reservation.from}"/>
                     <h:outputLabel value="To"/>
                     <rich:calendar id="to" value="#{reservationCreate.reservation.to}"/>
-                    <!--rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.to}"/-->
-                    <!--<h:outputLabel value="Billing"/>-->
-                    <!--<rich:inplaceSelect defaultLabel="Click to select"-->
-                                        <!--value="#{accountCreate.billingType}">-->
-                        <!--<f:converter converterId="enumConverter" />-->
-                        <!--<f:selectItems value="#{accountCreate.billingTypeItems}"/>-->
-                    <!--</rich:inplaceSelect>-->
-                    <!--<h:outputLabel value="Membership"/>-->
-                    <!--<rich:inplaceSelect defaultLabel="Click to select" value="#{accountCreate.membershipType}">-->
-                        <!--<f:selectItems value="#{accountCreate.selectableMembershipCodes}"/>-->
-                    <!--</rich:inplaceSelect>-->
                 </h:panelGrid>
                 <h:commandButton value="Save" action="#{reservationCreate.create}"/>
             </h:form>

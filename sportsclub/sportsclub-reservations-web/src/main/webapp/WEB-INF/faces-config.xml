@@ -8,13 +8,6 @@
         <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
     </application>
-
-    <!--
-    <converter>
-        <converter-id>equipmentTypeConverter</converter-id>
-        <converter-class>org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentTypeConverter</converter-class>
-    </converter>
-        -->
     
     <navigation-rule>
         <from-view-id>*</from-view-id>
