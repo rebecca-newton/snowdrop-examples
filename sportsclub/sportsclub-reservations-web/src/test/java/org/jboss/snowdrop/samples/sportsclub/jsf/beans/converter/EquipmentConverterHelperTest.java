@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -31,6 +32,8 @@ public class EquipmentConverterHelperTest extends AbstractTestNGSpringContextTes
       Assert.assertNotNull(equipmentConverterHelper);
 
       Equipment e = equipmentConverterHelper.getAsEquipment("1 Dummy");
+
+      Assert.assertNotNull(e);
    }
 
 }
