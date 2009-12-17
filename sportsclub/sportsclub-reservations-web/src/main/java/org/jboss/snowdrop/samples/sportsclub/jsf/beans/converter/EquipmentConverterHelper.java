@@ -20,7 +20,7 @@ public class EquipmentConverterHelper
    public Equipment getAsEquipment(String s) throws RuntimeException
    {
       String[] items = s.split(" ",2);
-      Equipment e = getEquipmentService().findEquipmentById(Integer.parseInt(items[0]));
+      Equipment e = getEquipmentService().findEquipmentById(Long.valueOf(items[0]));
       return e;
    }
 

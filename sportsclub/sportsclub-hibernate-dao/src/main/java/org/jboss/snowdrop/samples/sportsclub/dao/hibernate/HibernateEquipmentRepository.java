@@ -7,7 +7,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.EquipmentReposito
 import java.util.List;
 import java.util.Date;
 
-public class HibernateEquipmentRepository extends HibernateRepository<Equipment, Integer> implements EquipmentRepository
+public class HibernateEquipmentRepository extends HibernateRepository<Equipment, Long> implements EquipmentRepository
 {
 
    public HibernateEquipmentRepository()

@@ -18,7 +18,7 @@ public class EquipmentServiceImpl  implements EquipmentService
       return equipmentRepository.getEquipmentTypes();
    }
 
-   public Equipment findEquipmentById(int id)
+   public Equipment findEquipmentById(long id)
    {
       return equipmentRepository.findById(id);
    }

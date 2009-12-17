@@ -10,5 +10,5 @@ public interface EquipmentService
 {
    public EquipmentType[] getEquipmentTypes();
 
-   public Equipment findEquipmentById(int id);
+   public Equipment findEquipmentById(long id);
 }
