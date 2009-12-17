@@ -11,6 +11,9 @@
 
     <import resource="classpath*:infrastructure.xml"/>
 
+    <import resource="classpath*:spring-converterHelpers.xml"/>
+    
+    <!-- Request scoped beans -->
     <bean id="reservationSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearch" scope="request">
         <property name="reservationService" ref="reservationService"/>
         <property name="tableState" ref="reservationSearchTableState"/>
@@ -21,20 +24,27 @@
         <property name="reservationService" ref="reservationService"/>
     </bean>
 
-    <!-- Keeps search table state in the session -->
+
+    <!-- Session scoped beans -->
     <bean id="reservationSearchTableState" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationTableState" scope="session"/>
 
     <bean id="reservationSearchOptions" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearchOptions" scope="session" init-method="init">
         <property name="equipmentService" ref="equipmentService"/>
     </bean>
 
+
     <!-- Application scoped service -->
     <bean id="referenceData" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReferenceData">
         <property name="equipmentService" ref="equipmentService"/>
     </bean>
 
+    
     <!-- JSF Converters managed by Spring -->
-    <bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentTypeConverter"/>
+    <bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentTypeConverter"/>
+
+    <bean id="equipmentConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentConverter">
+        <property name="equipmentConverterHelper" ref="equipmentConverterHelper"/>
+    </bean>
     
     <context:annotation-config/>
     

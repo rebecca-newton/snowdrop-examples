@@ -1,4 +1,4 @@
-package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
+package org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 
