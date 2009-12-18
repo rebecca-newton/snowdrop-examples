@@ -47,6 +47,10 @@
     <bean id="equipmentConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentConverter">
         <property name="equipmentConverterHelper" ref="equipmentConverterHelper"/>
     </bean>
+
+    <bean id="accountConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.AccountConverter">
+        <property name="accountConverterHelper" ref="accountConverterHelper"/>
+    </bean>
     
     <context:annotation-config/>
     

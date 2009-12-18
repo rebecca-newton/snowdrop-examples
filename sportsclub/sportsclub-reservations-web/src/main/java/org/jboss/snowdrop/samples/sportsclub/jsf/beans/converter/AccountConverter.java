@@ -11,6 +11,10 @@ public class AccountConverter implements Converter
 {
    private AccountConverterHelper accountConverterHelper;
 
+   public AccountConverter()
+   {
+   }
+   
    public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s)
    {
       return null;  //To change body of implemented methods use File | Settings | File Templates.

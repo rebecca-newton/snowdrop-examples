@@ -9,14 +9,25 @@
         <rich:panel>
             <h:form>
                 <h:panelGrid columns="2" >
+
                     <h:outputLabel value="Equipment"/>
-                    <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.equipment.name}"/>
+                    <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.equipment}">
+                        <f:converter converterId="#{equipmentConverter}"/>
+                        <f:selectItems value="#{reservationCreate.allEquipments}"/>
+                    </rich:inplaceInput>
+
                     <h:outputLabel value="Account"/>
-                    <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.account.subscriber.name.firstName}"/>
+                    <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.account}">
+                        <f:converter converterId="#{accountConverter}"/>
+                        <f:selectItems value="#{reservationCreate.allAccounts}"/>
+                    </rich:inplaceInput>
+
                     <h:outputLabel value="From"/>
                     <rich:calendar id="from" value="#{reservationCreate.reservation.from}"/>
+
                     <h:outputLabel value="To"/>
                     <rich:calendar id="to" value="#{reservationCreate.reservation.to}"/>
+                    
                 </h:panelGrid>
                 <h:commandButton value="Save" action="#{reservationCreate.create}"/>
             </h:form>

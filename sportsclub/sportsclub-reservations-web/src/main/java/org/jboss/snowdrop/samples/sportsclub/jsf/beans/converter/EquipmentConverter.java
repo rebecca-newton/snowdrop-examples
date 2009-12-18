@@ -15,6 +15,10 @@ public class EquipmentConverter implements Converter
 
    private EquipmentConverterHelper equipmentConverterHelper;
 
+   public EquipmentConverter()
+   {
+   }
+
    public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s)
    {
       if (s == null || "".equals(s.trim())) return null;

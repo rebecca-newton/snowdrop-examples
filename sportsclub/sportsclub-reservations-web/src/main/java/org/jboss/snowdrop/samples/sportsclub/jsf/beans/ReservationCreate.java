@@ -47,6 +47,11 @@ public class ReservationCreate
       return equipmentService.getAllEquipments();
    }
 
+   public Collection<Account> getAllAccounts()
+   {
+      return accountService.getAllAccounts();
+   }
+
    public String create()
    {
       reservationService.create();

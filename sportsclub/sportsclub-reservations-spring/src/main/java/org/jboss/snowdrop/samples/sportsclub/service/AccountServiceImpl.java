@@ -4,6 +4,8 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
  */
@@ -15,6 +17,11 @@ public class AccountServiceImpl implements AccountService
    public Account getAccountById(long id)
    {
       return accountRepository.findById(id);
+   }
+
+   public Collection<Account> getAllAccounts()
+   {
+      return accountRepository.findAll();
    }
 
    public AccountRepository getAccountRepository()
