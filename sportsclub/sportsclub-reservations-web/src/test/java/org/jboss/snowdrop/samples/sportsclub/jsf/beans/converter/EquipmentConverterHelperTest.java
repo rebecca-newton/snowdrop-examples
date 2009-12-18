@@ -29,7 +29,6 @@ public class EquipmentConverterHelperTest extends AbstractTestNGSpringContextTes
    @Test
    public void testSpringAutowired()
    {
-      // test Spring Autowired
       Assert.assertNotNull(equipmentConverterHelper);
       Assert.assertNotNull(equipmentService);
    }

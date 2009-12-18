@@ -11,10 +11,8 @@ import java.util.Date;
  */
 public interface EquipmentRepository extends Repository<Equipment, Long>
 {
-   public List<Equipment> getAvailableEquipments(Date fromDate, Date toDate);
-
    /**
-    * @return All available {@link EquipmentType}
+    * @return All available {@link EquipmentType}s
     */
    public EquipmentType[] getEquipmentTypes();
 

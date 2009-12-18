@@ -15,12 +15,6 @@ public class HibernateEquipmentRepository extends HibernateRepository<Equipment,
       super(Equipment.class);
    }
 
-   public List<Equipment> getAvailableEquipments(Date fromDate, Date toDate)
-   {
-      // TODO implement fancy query
-      return null;
-   }
-
    public EquipmentType[] getEquipmentTypes()
    {
       return EquipmentType.values();

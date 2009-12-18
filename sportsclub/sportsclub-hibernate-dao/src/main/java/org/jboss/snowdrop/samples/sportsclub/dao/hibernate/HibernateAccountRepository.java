@@ -19,7 +19,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSe
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
  */
-public class HibernateAccountRepository extends HibernateRepository<Account, Integer> implements AccountRepository
+public class HibernateAccountRepository extends HibernateRepository<Account, Long> implements AccountRepository
 {
 
    public HibernateAccountRepository()

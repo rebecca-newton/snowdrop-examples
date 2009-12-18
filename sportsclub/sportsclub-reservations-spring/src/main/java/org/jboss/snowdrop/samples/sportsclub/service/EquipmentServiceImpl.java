@@ -5,6 +5,8 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.EquipmentRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
  */
@@ -21,6 +23,11 @@ public class EquipmentServiceImpl  implements EquipmentService
    public Equipment findEquipmentById(long id)
    {
       return equipmentRepository.findById(id);
+   }
+
+   public Collection<Equipment> getAllEquipments()
+   {
+      return equipmentRepository.findAll();
    }
 
    public EquipmentRepository getEquipmentRepository()

@@ -22,6 +22,8 @@
 
     <bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="request" init-method="init">
         <property name="reservationService" ref="reservationService"/>
+        <property name="equipmentService" ref="equipmentService"/>
+        <property name="accountService" ref="accountService"/>
     </bean>
 
 
