@@ -13,17 +13,12 @@ public class AccountConverterHelper
 
    public String getAsString(Account a)
    {
-      String s = a.getId() + " " + a.getSubscriber().getName().getFirstName() + " " +
-            a.getSubscriber().getName().getLastName() + " (" +
-            a.getSubscriber().getAddress().getCity() + ", " +
-            a.getSubscriber().getAddress().getCountry() + ")";
-      return s;
+      return String.valueOf(a.getId());
    }
 
    public Account getAsAccount(String s)
    {
-      String[] items = s.split(" ",2);
-      Account a = accountService.getAccountById(Long.decode(items[0]));
+      Account a = accountService.getAccountById(Long.decode(s));
       return a;
    }
 

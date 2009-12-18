@@ -49,9 +49,9 @@ public class ReservationServiceImpl implements ReservationService
    }
 
    @Transactional(readOnly = false)
-   public void create()
+   public void create(Reservation reservation)
    {
-      //To change body of implemented methods use File | Settings | File Templates.
+      reservationRepository.save(reservation);
    }
 
    public ReservationRepository getReservationRepository()

@@ -7,6 +7,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
 
+import javax.faces.model.SelectItem;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Locale;
@@ -36,25 +37,44 @@ public class ReservationCreate
       to = cal.getTime();
 
       reservation = new Reservation();
-      reservation.setAccount(new Account());
-      reservation.setEquipment(new Equipment());
+      reservation.setAccount(null);
+      reservation.setEquipment(null);
       reservation.setFrom(from);
       reservation.setTo(to);
    }
 
-   public Collection<Equipment> getAllEquipments()
+   public SelectItem[] getAllEquipments()
    {
-      return equipmentService.getAllEquipments();
+      Collection<Equipment> equipments =  equipmentService.getAllEquipments();
+      SelectItem[] items = new SelectItem[equipments.size()];
+      int i = 0;
+      for (Equipment e : equipments)
+      {
+         String label = e.getEquipmentType().name() + ", " + e.getDescription();
+         items[i++] = new SelectItem(e, label);
+      }
+      return items;
    }
 
-   public Collection<Account> getAllAccounts()
+   public SelectItem[] getAllAccounts()
    {
-      return accountService.getAllAccounts();
+      Collection<Account> accounts = accountService.getAllAccounts();
+      SelectItem[] items = new SelectItem[accounts.size()];
+      int i = 0;
+      for (Account a : accounts)
+      {
+         String label = a.getSubscriber().getName().getFirstName() + " " +
+            a.getSubscriber().getName().getLastName() + " (" +
+            a.getSubscriber().getAddress().getCity() + ", " +
+            a.getSubscriber().getAddress().getCountry() + ")";
+         items[i++] = new SelectItem(a, label);
+      }
+      return items;
    }
 
    public String create()
    {
-      reservationService.create();
+      reservationService.create(reservation);
       return "success";
    }
 

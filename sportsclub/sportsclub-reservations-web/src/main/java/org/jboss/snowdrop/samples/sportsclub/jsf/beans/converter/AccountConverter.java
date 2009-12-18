@@ -1,6 +1,9 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter;
 
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
+
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.context.FacesContext;
 import javax.faces.component.UIComponent;
 
@@ -14,15 +17,35 @@ public class AccountConverter implements Converter
    public AccountConverter()
    {
    }
-   
+
    public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s)
    {
-      return null;  //To change body of implemented methods use File | Settings | File Templates.
+      if (s == null || "".equals(s.trim())) return null;
+      Account a;
+      try
+      {
+         a = accountConverterHelper.getAsAccount(s);
+      } catch (RuntimeException e)
+      {
+         throw new ConverterException(e);
+      }
+      return a;
    }
 
    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o)
    {
-      return null;  //To change body of implemented methods use File | Settings | File Templates.
+      if (o == null) return null;
+      String s;
+      try
+      {
+         Account a = (Account) o;
+         s = accountConverterHelper.getAsString(a);
+      }
+      catch (RuntimeException e)
+      {
+         throw new ConverterException(e);
+      }
+      return s;
    }
 
    public AccountConverterHelper getAccountConverterHelper()

@@ -11,16 +11,14 @@
                 <h:panelGrid columns="2" >
 
                     <h:outputLabel value="Equipment"/>
-                    <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.equipment}">
-                        <f:converter converterId="#{equipmentConverter}"/>
+                    <rich:inplaceSelect defaultLabel="Click to enter" value="#{reservationCreate.reservation.equipment}" converter="#{equipmentConverter}">
                         <f:selectItems value="#{reservationCreate.allEquipments}"/>
-                    </rich:inplaceInput>
+                    </rich:inplaceSelect>
 
                     <h:outputLabel value="Account"/>
-                    <rich:inplaceInput defaultLabel="Click to enter" value="#{reservationCreate.reservation.account}">
-                        <f:converter converterId="#{accountConverter}"/>
+                    <rich:inplaceSelect defaultLabel="Click to enter" value="#{reservationCreate.reservation.account}" converter="#{accountConverter}">
                         <f:selectItems value="#{reservationCreate.allAccounts}"/>
-                    </rich:inplaceInput>
+                    </rich:inplaceSelect>
 
                     <h:outputLabel value="From"/>
                     <rich:calendar id="from" value="#{reservationCreate.reservation.from}"/>

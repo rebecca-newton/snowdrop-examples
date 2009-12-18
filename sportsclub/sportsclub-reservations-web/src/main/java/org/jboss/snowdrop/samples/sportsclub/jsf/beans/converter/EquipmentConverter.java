@@ -40,8 +40,7 @@ public class EquipmentConverter implements Converter
       try {
          Equipment e = (Equipment)o;
          s = equipmentConverterHelper.getAsString(e);
-      }
-      catch (RuntimeException e)
+      } catch (RuntimeException e)
       {
          throw new ConverterException(e);
       }

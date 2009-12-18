@@ -20,5 +20,12 @@
             <to-view-id>/searchReservation.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/createReservation.xhtml</from-view-id>
+        <navigation-case>
+             <from-action>#{reservationCreate.create}</from-action>
+            <to-view-id>/createResult.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 
 </faces-config>

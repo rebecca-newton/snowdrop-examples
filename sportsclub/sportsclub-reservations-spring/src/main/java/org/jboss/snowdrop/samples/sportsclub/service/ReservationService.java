@@ -15,5 +15,5 @@ public interface ReservationService
 
    Integer countReservationsForRange(Date fromDate, Date toDate, List<EquipmentType> types);
 
-   void create();
+   void create(Reservation reservation);
 }

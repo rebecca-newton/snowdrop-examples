@@ -13,14 +13,12 @@ public class EquipmentConverterHelper
 
    public String getAsString(Equipment e) throws RuntimeException
    {
-      String s = e.getId() + " " + e.getName();
-      return s;
+      return String.valueOf(e.getId());
    }
 
    public Equipment getAsEquipment(String s) throws RuntimeException
    {
-      String[] items = s.split(" ",2);
-      Equipment e = getEquipmentService().findEquipmentById(Long.valueOf(items[0]));
+      Equipment e = getEquipmentService().findEquipmentById(Long.valueOf(s));
       return e;
    }
 
