@@ -3,11 +3,10 @@ package org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
+import org.jboss.snowdrop.samples.sportsclub.service.EquipmentService;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -19,21 +18,36 @@ public class EquipmentConverterHelperTest extends AbstractTestNGSpringContextTes
    @Autowired
    EquipmentConverterHelper equipmentConverterHelper;
 
+   @Autowired
+   EquipmentService equipmentService;
+
    public EquipmentConverterHelperTest()
    {
       super();
    }
 
    @Test
-   @Transactional
-   public void testConversion()
+   public void testSpringAutowired()
    {
-      // test that Spring wired EquipmentConverterHelper
+      // test Spring Autowired
       Assert.assertNotNull(equipmentConverterHelper);
+      Assert.assertNotNull(equipmentService);
+   }
 
-      Equipment e = equipmentConverterHelper.getAsEquipment("1 Dummy");
+   @Test
+   public void testConversionBackAndForth()
+   {
+      // assuming we have Equipment with id = 1
+      Equipment e1 = equipmentService.findEquipmentById(1);
 
-      Assert.assertNotNull(e);
+      Assert.assertNotNull(e1);
+
+      String item = equipmentConverterHelper.getAsString(e1);
+      Equipment e2 = equipmentConverterHelper.getAsEquipment(item);
+
+      Assert.assertNotNull(e2);
+      Assert.assertEquals(e1.getId(), e2.getId());
+
    }
 
 }
