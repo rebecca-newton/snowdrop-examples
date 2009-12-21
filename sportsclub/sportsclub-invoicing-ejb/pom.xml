@@ -7,7 +7,7 @@
    </parent>
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-   <artifactId>sportsclub-invoicing-spring</artifactId>
+   <artifactId>sportsclub-invoicing-ejb</artifactId>
    <version>1.0-SNAPSHOT</version>
    <name>Sports Club Invoicing Spring Business Layer</name>
    <url>http://maven.apache.org</url>

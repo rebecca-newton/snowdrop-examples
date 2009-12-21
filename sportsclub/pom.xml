@@ -15,7 +15,7 @@
         <module>sportsclub-reservations-web</module>
         <module>sportsclub-reservations-spring</module>
         <module>sportsclub-test-infrastructure</module>
-       <module>sportsclub-invoicing-spring</module>
+        <module>sportsclub-invoicing-ejb</module>
     </modules>
     <packaging>pom</packaging>
 
