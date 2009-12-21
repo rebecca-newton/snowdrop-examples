@@ -8,30 +8,42 @@
     <ui:define name="content">
         <rich:panel>
             <h:form>
-                <h:panelGrid columns="2" >
+                <h:panelGrid columns="2">
 
                     <h:outputLabel value="Equipment"/>
                     <h:panelGroup>
-                        <rich:inplaceSelect id="equipment" defaultLabel="Click to enter" value="#{reservationCreate.reservation.equipment}" converter="#{equipmentConverter}">
-                            <f:selectItems value="#{reservationCreate.allEquipments}"/>
+                        <rich:inplaceSelect id="equipment" defaultLabel="Click to enter"
+                                            value="#{reservationCreate.reservation.equipment}"
+                                            required="true"
+                                            converter="#{equipmentConverter}">
+                            <f:selectItems value="#{referenceData.allEquipments}"/>
                         </rich:inplaceSelect>
                         <h:message for="equipment" style="color:RED"/>
                     </h:panelGroup>
 
                     <h:outputLabel value="Account"/>
                     <h:panelGroup>
-                        <rich:inplaceSelect id="account" defaultLabel="Click to enter" value="#{reservationCreate.reservation.account}" converter="#{accountConverter}">
+                        <rich:inplaceSelect id="account" defaultLabel="Click to enter"
+                                            value="#{reservationCreate.reservation.account}"
+                                            required="true"
+                                            converter="#{accountConverter}">
                             <f:selectItems value="#{reservationCreate.allAccounts}"/>
                         </rich:inplaceSelect>
                         <h:message for="account" style="color:RED"/>
                     </h:panelGroup>
 
                     <h:outputLabel value="From"/>
-                    <rich:calendar id="from" value="#{reservationCreate.reservation.from}"/>
+                    <h:panelGroup>
+                        <rich:calendar id="from" value="#{reservationCreate.reservation.from}" required="true"/>
+                        <h:message for="from" style="color:RED"/>
+                    </h:panelGroup>
 
                     <h:outputLabel value="To"/>
-                    <rich:calendar id="to" value="#{reservationCreate.reservation.to}"/>
-                    
+                    <h:panelGroup>
+                        <rich:calendar id="to" value="#{reservationCreate.reservation.to}" required="true"/>
+                        <h:message for="to" style="color:RED"/>
+                    </h:panelGroup>
+
                 </h:panelGrid>
                 <h:commandButton value="Save" action="#{reservationCreate.create}"/>
             </h:form>

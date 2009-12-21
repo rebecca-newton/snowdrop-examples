@@ -22,7 +22,6 @@
 
     <bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="request" init-method="init">
         <property name="reservationService" ref="reservationService"/>
-        <property name="equipmentService" ref="equipmentService"/>
         <property name="accountService" ref="accountService"/>
     </bean>
 
@@ -36,7 +35,7 @@
 
 
     <!-- Application scoped service -->
-    <bean id="referenceData" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReferenceData">
+    <bean id="referenceData" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReferenceData" init-method="init">
         <property name="equipmentService" ref="equipmentService"/>
     </bean>
 

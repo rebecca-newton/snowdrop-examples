@@ -19,7 +19,6 @@ import java.util.Collection;
 public class ReservationCreate
 {
    private ReservationService reservationService;
-   private EquipmentService equipmentService;
    private AccountService accountService;
 
    private Reservation reservation;
@@ -30,7 +29,7 @@ public class ReservationCreate
       Date to;
 
       Calendar cal = Calendar.getInstance(Locale.US);
-      cal.clear();
+      //cal.clear();
       from = cal.getTime();
 
       cal.set(Calendar.MONTH, cal.get(Calendar.MONTH) + 1);
@@ -41,19 +40,6 @@ public class ReservationCreate
       reservation.setEquipment(null);
       reservation.setFrom(from);
       reservation.setTo(to);
-   }
-
-   public SelectItem[] getAllEquipments()
-   {
-      Collection<Equipment> equipments =  equipmentService.getAllEquipments();
-      SelectItem[] items = new SelectItem[equipments.size()];
-      int i = 0;
-      for (Equipment e : equipments)
-      {
-         String label = e.getEquipmentType().name() + ", " + e.getDescription();
-         items[i++] = new SelectItem(e, label);
-      }
-      return items;
    }
 
    public SelectItem[] getAllAccounts()
@@ -96,16 +82,6 @@ public class ReservationCreate
    public void setReservation(Reservation reservation)
    {
       this.reservation = reservation;
-   }
-
-   public EquipmentService getEquipmentService()
-   {
-      return equipmentService;
-   }
-
-   public void setEquipmentService(EquipmentService equipmentService)
-   {
-      this.equipmentService = equipmentService;
    }
 
    public AccountService getAccountService()
