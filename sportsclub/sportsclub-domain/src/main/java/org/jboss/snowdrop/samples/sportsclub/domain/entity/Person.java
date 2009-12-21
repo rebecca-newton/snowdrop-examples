@@ -12,7 +12,8 @@ import javax.persistence.OneToOne;
 @Entity
 public class Person
 {
-   @Id @GeneratedValue
+   @Id
+   @GeneratedValue
    private Long id;
 
    @Embedded
@@ -52,5 +53,33 @@ public class Person
    public void setAccount(Account account)
    {
       this.account = account;
+   }
+
+   @Override
+   public boolean equals(Object o)
+   {
+      if (this == o)
+      {
+         return true;
+      }
+      if (o == null || getClass() != o.getClass())
+      {
+         return false;
+      }
+
+      Person that = (Person) o;
+
+      if (id != null ? !id.equals(that.id) : that.id != null)
+      {
+         return false;
+      }
+
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      return id != null ? id.hashCode() : 0;
    }
 }

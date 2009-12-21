@@ -12,7 +12,8 @@ import javax.persistence.Id;
 @Entity
 public class Equipment
 {
-   @Id @GeneratedValue
+   @Id
+   @GeneratedValue
    private Long id;
 
    private String name;
@@ -56,5 +57,33 @@ public class Equipment
    public void setEquipmentType(EquipmentType equipmentType)
    {
       this.equipmentType = equipmentType;
+   }
+
+   @Override
+   public boolean equals(Object o)
+   {
+      if (this == o)
+      {
+         return true;
+      }
+      if (o == null || getClass() != o.getClass())
+      {
+         return false;
+      }
+
+      Equipment that = (Equipment) o;
+
+      if (id != null ? !id.equals(that.id) : that.id != null)
+      {
+         return false;
+      }
+
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      return id != null ? id.hashCode() : 0;
    }
 }

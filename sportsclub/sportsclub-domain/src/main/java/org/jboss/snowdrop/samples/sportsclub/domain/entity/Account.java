@@ -17,7 +17,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 public class Account
 {
-   @Id @GeneratedValue
+   @Id
+   @GeneratedValue
    private Long id;
 
    @OneToOne(cascade = {CascadeType.ALL})
@@ -119,6 +120,34 @@ public class Account
       this.balance = new Balance();
       this.balance.setAccount(this);
       this.balance.setCurrentBalance(BigDecimal.ZERO);
+   }
+
+   @Override
+   public boolean equals(Object o)
+   {
+      if (this == o)
+      {
+         return true;
+      }
+      if (o == null || getClass() != o.getClass())
+      {
+         return false;
+      }
+
+      Account that = (Account) o;
+
+      if (id != null ? !id.equals(that.id) : that.id != null)
+      {
+         return false;
+      }
+
+      return true;
+   }
+
+   @Override
+   public int hashCode()
+   {
+      return id != null ? id.hashCode() : 0;
    }
 }
 
