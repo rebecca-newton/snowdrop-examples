@@ -3,6 +3,8 @@ package org.jboss.spring.samples.sportsclub.invoicing.services;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.ejb.Stateless;
+
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
@@ -11,6 +13,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.BalanceRepository
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.PaymentRepository;
 
+@Stateless
 public class BillingServiceImpl implements BillingService
 {
    private InvoiceRepository invoiceRepository;
