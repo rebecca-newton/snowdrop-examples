@@ -174,6 +174,7 @@
 
     <build>
         <plugins>
+
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -181,6 +182,45 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-alpha-2</version>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>setJBossProperties</id>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <files>
+                                <file>${basedir}/jbossconf/jbossas.properties</file>
+                            </files>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jboss-maven-plugin</artifactId>
+                <version>1.4</version>
+                <inherited>false</inherited>
+                <configuration>
+                    <jbossHome>${jboss.home}</jbossHome>
+                    <serverName>${jboss.server.name}</serverName>
+                    <timeout>${jboss.timeout}</timeout>
+                    <hostName>localhost</hostName>
+                    <port>${jboss.port}</port>
+                    <fileNames>
+                        <fileName>/sportsclub-ear-1.0-SNAPSHOT.war</fileName>
+                    </fileNames>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
