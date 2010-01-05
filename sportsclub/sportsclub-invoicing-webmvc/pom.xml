@@ -7,9 +7,10 @@
    </parent>
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-   <artifactId>sportsclub-invoicing-ejb</artifactId>
+   <artifactId>sportsclub-invoicing-webmvc</artifactId>
+   <packaging>war</packaging>
    <version>1.0-SNAPSHOT</version>
-   <name>Sports Club Invoicing Spring Business Layer</name>
+   <name>sportsclub-invoicing-webmvc Maven Webapp</name>
    <url>http://maven.apache.org</url>
    <dependencies>
       <dependency>
@@ -17,21 +18,25 @@
          <artifactId>junit</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-         <artifactId>sportsclub-domain</artifactId>
+          <groupId>org.springframework</groupId>
+           <artifactId>spring-webmvc</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.hibernate</groupId>
-         <artifactId>ejb3-persistence</artifactId>
+         <groupId>org.jboss.snowdrop</groupId>
+         <artifactId>snowdrop-vfs</artifactId>
+         <version>1.0.0.GA</version>
       </dependency>
       <dependency>
          <groupId>org.jboss.javaee</groupId>
          <artifactId>jboss-ejb-api</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.jboss.snowdrop</groupId>
-         <artifactId>snowdrop-deployers</artifactId>
-         <version>1.0.0.GA</version>
+         <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
+         <artifactId>sportsclub-invoicing-ejb</artifactId>
+         <version>${project.version}</version>
       </dependency>
    </dependencies>
+   <build>
+      <finalName>sportsclub-invoicing-webmvc</finalName>
+   </build>
 </project>

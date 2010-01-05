@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
+import org.jboss.annotation.spring.Spring;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
@@ -12,28 +14,20 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.BalanceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.PaymentRepository;
+import org.jboss.spring.callback.SpringLifecycleInterceptor;
 
 @Stateless
+@Interceptors(SpringLifecycleInterceptor.class)
 public class BillingServiceImpl implements BillingService
 {
+   @Spring(bean = "invoiceRepository", jndiName = "SpringDao")
    private InvoiceRepository invoiceRepository;
+
+   @Spring(bean = "balanceRepository", jndiName = "SpringDao")
    private BalanceRepository balanceRepository;
+
+   @Spring(bean = "paymentRepository", jndiName = "SpringDao")
    private PaymentRepository paymentRepository;
-
-   public void setInvoiceRepository(InvoiceRepository invoiceRepository)
-   {
-      this.invoiceRepository = invoiceRepository;
-   }
-
-   public void setBalanceRepository(BalanceRepository balanceRepository)
-   {
-      this.balanceRepository = balanceRepository;
-   }
-
-   public void setPaymentRepository(PaymentRepository paymentRepository)
-   {
-      this.paymentRepository = paymentRepository;
-   }
 
    public void generateInvoice(Account account)
    {
@@ -58,6 +52,7 @@ public class BillingServiceImpl implements BillingService
       balance.credit(amount);
       balanceRepository.save(balance);
    }
+   
 
    public Balance getBalance(Account account)
    {

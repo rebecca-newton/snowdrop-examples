@@ -27,6 +27,7 @@
 
     </bean>
 
+
     <bean id="accountRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.hibernate.HibernateAccountRepository">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -44,6 +45,18 @@
     </bean>
 
     <bean id="equipmentRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.hibernate.HibernateEquipmentRepository">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="paymentRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.hibernate.HibernatePaymentRepository">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="invoiceRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.hibernate.HibernateInvoiceRepository">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+   <bean id="balanceRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.hibernate.HibernateBalanceRepository">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
