@@ -5,7 +5,9 @@ import java.math.RoundingMode;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -22,21 +24,19 @@ public class Account
    @GeneratedValue
    private Long id;
 
-   @OneToOne(cascade = {CascadeType.ALL})
+   @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
    private Person subscriber;
 
-   @OneToOne(cascade = {CascadeType.ALL})
-   @PrimaryKeyJoinColumn
+   @Embedded
    private Balance balance;
 
    private Date creationDate;
 
 
-   public void Account()
+   public Account()
    {
       this.balance = new Balance();
-      this.balance.setAccount(this);
-      this.balance.setCurrentBalance(BigDecimal.ZERO);
+      this.balance.setAmount(BigDecimal.ZERO);
    }
 
    @ManyToOne

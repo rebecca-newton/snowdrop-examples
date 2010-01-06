@@ -69,7 +69,6 @@ public class SubscriptionServiceImpl implements SubscriptionService
       account.setMembership(membershipRepository.findById(membershipCode));
       account.setBillingType(billingType);
       account.setCreationDate(new Date());
-      account.resetBalance();
       accountRepository.save(account);
       return account;
    }

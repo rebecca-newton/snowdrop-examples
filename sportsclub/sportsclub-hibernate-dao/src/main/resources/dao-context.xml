@@ -56,8 +56,4 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-   <bean id="balanceRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.hibernate.HibernateBalanceRepository">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
 </beans>

@@ -11,6 +11,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.BalanceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.PaymentRepository;
@@ -23,11 +24,26 @@ public class BillingServiceImpl implements BillingService
    @Spring(bean = "invoiceRepository", jndiName = "SpringDao")
    private InvoiceRepository invoiceRepository;
 
-   @Spring(bean = "balanceRepository", jndiName = "SpringDao")
-   private BalanceRepository balanceRepository;
+   @Spring(bean = "accountRepository", jndiName = "SpringDao")
+   private AccountRepository accountRepository;
 
    @Spring(bean = "paymentRepository", jndiName = "SpringDao")
    private PaymentRepository paymentRepository;
+
+   public void setPaymentRepository(PaymentRepository paymentRepository)
+   {
+      this.paymentRepository = paymentRepository;
+   }
+
+   public void setAccountRepository(AccountRepository accountRepository)
+   {
+      this.accountRepository = accountRepository;
+   }
+
+   public void setInvoiceRepository(InvoiceRepository invoiceRepository)
+   {
+      this.invoiceRepository = invoiceRepository;
+   }
 
    public Invoice generateInvoice(Account account)
    {
@@ -36,9 +52,9 @@ public class BillingServiceImpl implements BillingService
       invoice.setAmount(account.getFeePerBillingPeriod());
       invoice.setDate(new Date());
       invoiceRepository.save(invoice);
-      Balance balance = balanceRepository.findForAccount(account);
+      Balance balance = account.getBalance();
       balance.debit(invoice.getAmount());
-      balanceRepository.save(balance);
+      accountRepository.save(account);
       return invoice;
    }
 
@@ -49,15 +65,9 @@ public class BillingServiceImpl implements BillingService
       payment.setAmount(amount);
       payment.setDate(new Date());
       paymentRepository.save(payment);
-      Balance balance = balanceRepository.findForAccount(account);
+      Balance balance = account.getBalance();
       balance.credit(amount);
-      balanceRepository.save(balance);
+      accountRepository.save(account);
    }
-   
-
-   public Balance getBalance(Account account)
-   {
-      return balanceRepository.findForAccount(account);
-   }
-
+ 
 }

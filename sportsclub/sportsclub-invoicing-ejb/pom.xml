@@ -36,6 +36,40 @@
          <artifactId>snowdrop-deployers</artifactId>
          <version>1.0.0.GA</version>
       </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-test</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring</artifactId>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
+          <artifactId>sportsclub-hibernate-dao</artifactId>
+          <scope>test</scope>
+      </dependency>
+       <dependency>
+          <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
+          <artifactId>sportsclub-hibernate-dao</artifactId>
+          <version>${project.version}</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
+          <artifactId>sportsclub-test-infrastructure</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>commons-dbcp</groupId>
+          <artifactId>commons-dbcp</artifactId>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <scope>test</scope>
+      </dependency>
    </dependencies>
     <build>
         <plugins>

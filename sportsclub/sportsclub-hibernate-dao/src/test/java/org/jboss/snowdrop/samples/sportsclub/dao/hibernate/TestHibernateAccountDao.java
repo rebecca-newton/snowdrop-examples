@@ -1,9 +1,12 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,5 +32,13 @@ public class TestHibernateAccountDao
    {
       Collection<Account> accounts = accountRepository.findAll();
       Assert.assertEquals(12, accounts.size());
+
+      AccountSearchCriteria criteria = new AccountSearchCriteria();
+      PersonSearchCriteria personCriteria = new PersonSearchCriteria();
+      personCriteria.setName("Vetinari");
+      criteria.setPersonSearchCriteria(personCriteria);
+      List<Account> accountList = accountRepository.findByCriteria(criteria);
+      Account account = accountList.get(0);
+      Assert.assertNotNull(account.getBalance());
    }
 }
