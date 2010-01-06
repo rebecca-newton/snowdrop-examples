@@ -29,7 +29,7 @@ public class BillingServiceImpl implements BillingService
    @Spring(bean = "paymentRepository", jndiName = "SpringDao")
    private PaymentRepository paymentRepository;
 
-   public void generateInvoice(Account account)
+   public Invoice generateInvoice(Account account)
    {
       Invoice invoice = new Invoice();
       invoice.setAccount(account);
@@ -39,6 +39,7 @@ public class BillingServiceImpl implements BillingService
       Balance balance = balanceRepository.findForAccount(account);
       balance.debit(invoice.getAmount());
       balanceRepository.save(balance);
+      return invoice;
    }
 
    public void processPayment(Account account, BigDecimal amount)

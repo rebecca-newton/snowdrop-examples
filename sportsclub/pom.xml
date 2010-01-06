@@ -6,6 +6,7 @@
     <artifactId>sportsclub-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Sports Club Parent</name>
+
     <modules>
         <module>sportsclub-domain</module>
         <module>sportsclub-subscriptions-ejb</module>
@@ -16,8 +17,9 @@
         <module>sportsclub-reservations-spring</module>
         <module>sportsclub-test-infrastructure</module>
         <module>sportsclub-invoicing-ejb</module>
-       <module>sportsclub-invoicing-webmvc</module>
+        <module>sportsclub-invoicing-webmvc</module>
     </modules>
+    
     <packaging>pom</packaging>
 
     <dependencyManagement>

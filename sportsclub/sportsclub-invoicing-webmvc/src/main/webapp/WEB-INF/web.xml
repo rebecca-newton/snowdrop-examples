@@ -25,11 +25,15 @@
          <param-name>contextClass</param-name>
          <param-value>org.jboss.spring.vfs.context.VFSXmlWebApplicationContext</param-value>
       </init-param>
+     <init-param>
+         <param-name>contextConfigLocation</param-name>
+         <param-value>/WEB-INF/spring-servlet-context.xml</param-value>
+     </init-param>
    </servlet>
 
    <servlet-mapping>
       <servlet-name>spring-mvc-servlet</servlet-name>
-      <url-pattern>mvc/**</url-pattern>
+      <url-pattern>*.do</url-pattern>
    </servlet-mapping>
 </web-app>
 

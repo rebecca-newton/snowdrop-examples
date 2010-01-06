@@ -144,7 +144,6 @@ public class DatabaseInitializer implements InitializingBean
       account.setCreationDate(new Date());
       account.setBillingType(billingType);
       account.setMembership(silverMembership);
-      account.resetBalance();
       account.setClosed(false);
       return account;
    }

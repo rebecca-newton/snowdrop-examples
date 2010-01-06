@@ -1,6 +1,7 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -29,6 +30,14 @@ public class Account
    private Balance balance;
 
    private Date creationDate;
+
+
+   public void Account()
+   {
+      this.balance = new Balance();
+      this.balance.setAccount(this);
+      this.balance.setCurrentBalance(BigDecimal.ZERO);
+   }
 
    @ManyToOne
    private Membership membership;
@@ -107,19 +116,12 @@ public class Account
 
    public BigDecimal getFeePerBillingPeriod()
    {
-      return membership.getAnnualFee().divide(BigDecimal.valueOf(billingType.periodsPerYear()));
+      return membership.getAnnualFee().divide(BigDecimal.valueOf(billingType.periodsPerYear()), 2, RoundingMode.CEILING);
    }
 
    public Balance getBalance()
    {
       return balance;
-   }
-
-   public void resetBalance()
-   {
-      this.balance = new Balance();
-      this.balance.setAccount(this);
-      this.balance.setCurrentBalance(BigDecimal.ZERO);
    }
 
    @Override
