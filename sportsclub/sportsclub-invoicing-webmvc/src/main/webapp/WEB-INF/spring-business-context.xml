@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+
+    <import resource="classpath*:dao-context.xml"/>
+
+    <import resource="classpath*:infrastructure.xml"/>
+
+    <context:component-scan base-package="org.jboss.snowdrop.samples.sportsclub.service.payment"/>
+
+    <bean id="jmsContainer" class="org.springframework.jms.listener.endpoint.JmsMessageEndpointManager">
+       <property name="messageListener" ref="messageListener"/>
+       <property name="activationSpec">
+           <bean class="org.jboss.resource.adapter.jms.inflow.JmsActivationSpec">
+               <property name="destination" value="queue/sportsclub"/>
+               <property name="destinationType" value="javax.jms.Queue"/>
+               <property name="acknowledgeMode" value="AUTO_ACKNOWLEDGE"/>
+               <property name="clientId" value="remote"/>
+               <property name="subscriptionName" value="jca-payment-processor"/>
+               <property name="maxSession" value="1"/>
+               <property name="maxMessages" value="1"/>
+               <property name="useDLQ" value="false"/>
+           </bean>
+       </property>
+       <property name="resourceAdapter">
+           <bean factory-bean="mBeanServer" factory-method="getAttribute">
+               <constructor-arg>
+                   <bean class="org.springframework.jmx.support.ObjectNameManager" factory-method="getInstance">
+                       <constructor-arg value="jboss.jca:name='jms-ra.rar',service=RARDeployment"/>
+                   </bean>
+               </constructor-arg>
+               <constructor-arg value="ResourceAdapter"/>
+           </bean>
+       </property>
+       <property name="transactionManager">
+          <bean class="org.jboss.snowdrop.samples.sportsclub.infrastructure.NoopTransactionManager"/>
+       </property>
+    </bean>
+
+    <bean id="mBeanServer" class="org.jboss.mx.util.MBeanServerLocator" factory-method="locateJBoss"/>
+
+    <bean id="messageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+        <property name="delegate" ref="paymentProcessor"/>
+       <property name="defaultListenerMethod" value="processPaymentNotification"/>
+    </bean>
+
+   <jee:jndi-lookup id="jcaConnectionFactory"  jndi-name="java:/JmsXA"/>
+
+   <bean class="org.springframework.jms.core.JmsTemplate">
+      <property name="connectionFactory" ref="jcaConnectionFactory"/>
+      <property name="defaultDestinationName" value="queue/sportsclub"/>
+      <property name="destinationResolver">
+         <bean class="org.springframework.jms.support.destination.JndiDestinationResolver"/>
+      </property>
+   </bean>
 
 </beans>

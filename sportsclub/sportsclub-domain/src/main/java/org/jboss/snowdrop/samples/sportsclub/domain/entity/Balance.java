@@ -22,11 +22,11 @@ public class Balance
 
    public void credit(BigDecimal amount)
    {
-      this.amount.subtract(amount);
+      this.amount = this.amount.subtract(amount);
    }
 
    public void debit(BigDecimal amount)
    {
-      this.amount.add(amount);
+      this.amount = this.amount.add(amount);
    }
 }

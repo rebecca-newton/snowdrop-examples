@@ -58,16 +58,5 @@ public class BillingServiceImpl implements BillingService
       return invoice;
    }
 
-   public void processPayment(Account account, BigDecimal amount)
-   {
-      Payment payment = new Payment();
-      payment.setAccount(account);
-      payment.setAmount(amount);
-      payment.setDate(new Date());
-      paymentRepository.save(payment);
-      Balance balance = account.getBalance();
-      balance.credit(amount);
-      accountRepository.save(account);
-   }
  
 }

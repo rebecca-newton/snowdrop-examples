@@ -12,5 +12,4 @@ public interface BillingService
 {
    Invoice generateInvoice(Account account);
 
-   void processPayment(Account account, BigDecimal amount);
 }

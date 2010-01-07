@@ -1,20 +1,21 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class PaymentNotification
+public class PaymentNotification implements Serializable
 {
 
-   String accountNumber;
+   Long accountNumber;
 
    BigDecimal amount;
 
-   public String getAccountNumber()
+   public Long getAccountNumber()
    {
       return accountNumber;
    }
 
-   public void setAccountNumber(String accountNumber)
+   public void setAccountNumber(Long accountNumber)
    {
       this.accountNumber = accountNumber;
    }
