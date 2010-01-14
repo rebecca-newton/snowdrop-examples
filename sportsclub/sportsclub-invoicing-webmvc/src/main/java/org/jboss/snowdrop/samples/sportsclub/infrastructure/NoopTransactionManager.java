@@ -7,13 +7,6 @@ import javax.transaction.Transaction;
 
 import org.springframework.transaction.jta.JtaTransactionManager;
 
-/**
- * Created by IntelliJ IDEA.
- * User: marius
- * Date: 7-Jan-2010
- * Time: 3:38:05 PM
- * To change this template use File | Settings | File Templates.
- */
 public class NoopTransactionManager extends JtaTransactionManager
 {
 
