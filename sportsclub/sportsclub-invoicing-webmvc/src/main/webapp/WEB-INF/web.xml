@@ -31,9 +31,21 @@
      </init-param>
    </servlet>
 
+   <servlet>
+       <servlet-name>PaymentNotificationService</servlet-name>
+       <servlet-class>org.jboss.snowdrop.samples.sportsclub.ws.PaymentNotificationService</servlet-class>
+   </servlet>
+
    <servlet-mapping>
       <servlet-name>spring-mvc-servlet</servlet-name>
       <url-pattern>*.do</url-pattern>
    </servlet-mapping>
+
+   <servlet-mapping>
+       <servlet-name>PaymentNotificationService</servlet-name>
+       <url-pattern>/ws/payment</url-pattern>
+   </servlet-mapping>
+
+
 </web-app>
 
