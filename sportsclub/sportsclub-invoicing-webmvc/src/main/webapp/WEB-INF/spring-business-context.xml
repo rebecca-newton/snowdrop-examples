@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--suppress DuplicatedBeanNamesInspection -->
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jee="http://www.springframework.org/schema/jee"
-        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <import resource="classpath*:dao-context.xml"/>
@@ -62,4 +65,31 @@
    </bean>
 
    <tx:annotation-driven/>
+    
+   <aop:config>
+       <aop:aspect ref="paymentAuditor">
+           <aop:pointcut id="processingPayment" expression="execution(* *..PaymentProcessor+.*(..)) &amp;&amp; args(accountId, amount)"/>
+           <aop:before arg-names="accountId, amount" pointcut-ref="processingPayment" method="auditPayment"/> 
+       </aop:aspect>
+   </aop:config>
+
+   <bean id="paymentAuditor" class="org.jboss.snowdrop.samples.sportsclub.audit.PaymentAuditor"/>
+
+   <bean id="attributeSource" class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource"/>
+
+   <bean class="org.springframework.jmx.export.MBeanExporter">
+       <property name="autodetectModeName" value="AUTODETECT_ASSEMBLER"/>
+       <property name="ensureUniqueRuntimeObjectNames" value="true"/>
+       <property name="namingStrategy">
+           <bean class="org.springframework.jmx.export.naming.MetadataNamingStrategy">
+               <property name="attributeSource" ref="attributeSource"/>
+           </bean>
+       </property>
+       <property name="assembler">
+           <bean class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler">
+               <property name="attributeSource" ref="attributeSource"/>
+           </bean>
+       </property>
+   </bean>
+    
 </beans>
