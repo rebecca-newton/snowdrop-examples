@@ -86,6 +86,7 @@
                 <configuration>
                     <displayName>Sports Club Sample Application</displayName>
                     <defaultLibBundleDir>/lib/</defaultLibBundleDir>
+                    <generateApplicationXml>true</generateApplicationXml>
                     <modules>
                         <ejbModule>
                             <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
@@ -126,5 +127,6 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>sportsclub</finalName>
     </build>
 </project>
