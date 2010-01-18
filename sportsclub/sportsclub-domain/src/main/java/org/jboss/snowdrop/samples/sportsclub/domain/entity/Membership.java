@@ -1,9 +1,9 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.math.BigDecimal;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
