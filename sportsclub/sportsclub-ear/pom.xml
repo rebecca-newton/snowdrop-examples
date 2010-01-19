@@ -87,6 +87,7 @@
                     <displayName>Sports Club Sample Application</displayName>
                     <defaultLibBundleDir>/lib/</defaultLibBundleDir>
                     <generateApplicationXml>true</generateApplicationXml>
+                    <workDirectory>${project.build.directory}/${project.build.finalName}-exploded.ear</workDirectory>
                     <modules>
                         <ejbModule>
                             <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
