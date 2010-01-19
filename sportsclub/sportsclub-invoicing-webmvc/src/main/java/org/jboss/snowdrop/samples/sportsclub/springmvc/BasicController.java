@@ -19,25 +19,24 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BasicController
 {
-  @EJB(mappedName = "sportsclub-ear-1.0-SNAPSHOT/BillingServiceImpl/local")
-  BillingService billingService;
+   @EJB(mappedName = "sportsclub/BillingServiceImpl/local")
+   BillingService billingService;
 
-
-  @EJB(mappedName = "sportsclub-ear-1.0-SNAPSHOT/SubscriptionServiceImpl/local")
-  SubscriptionService subscriptionService;
+   @EJB(mappedName = "sportsclub/SubscriptionServiceImpl/local")
+   SubscriptionService subscriptionService;
 
    @Autowired
    private JmsTemplate jmsTemplate;
 
-  @RequestMapping("/basic.do")
-  ModelAndView doSomething()
-  {
-     Account account = subscriptionService.findAccountsBySubscriberName("Vimes", 0, 1).get(0);
-     Invoice invoice = billingService.generateInvoice(account);
-     PaymentNotification paymentNotification = new PaymentNotification();
-     paymentNotification.setAccountNumber(account.getId());
-     paymentNotification.setAmount(BigDecimal.valueOf(50l));
-     jmsTemplate.convertAndSend(paymentNotification);
-     return new ModelAndView("dummy", "invoice", invoice);
-  }
+   @RequestMapping("/basic.do")
+   ModelAndView doSomething()
+   {
+      Account account = subscriptionService.findAccountsBySubscriberName("Vimes", 0, 1).get(0);
+      Invoice invoice = billingService.generateInvoice(account);
+      PaymentNotification paymentNotification = new PaymentNotification();
+      paymentNotification.setAccountNumber(account.getId());
+      paymentNotification.setAmount(BigDecimal.valueOf(50l));
+      jmsTemplate.convertAndSend(paymentNotification);
+      return new ModelAndView("dummy", "invoice", invoice);
+   }
 }
