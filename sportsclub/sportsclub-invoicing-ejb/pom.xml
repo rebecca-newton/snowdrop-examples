@@ -32,6 +32,10 @@
             <artifactId>jboss-ejb-api</artifactId>
         </dependency>
         <dependency>
+           <groupId>org.jboss.ejb3</groupId>
+           <artifactId>jboss-ejb3-ext-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.snowdrop</groupId>
             <artifactId>snowdrop-deployers</artifactId>
             <version>1.0.0.GA</version>

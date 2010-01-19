@@ -34,6 +34,13 @@
         </dependency>
 
        <dependency>
+           <groupId>org.jboss.ejb3</groupId>
+           <artifactId>jboss-ejb3-ext-api</artifactId>
+       </dependency>
+
+       
+
+       <dependency>
            <groupId>org.hibernate</groupId>
            <artifactId>ejb3-persistence</artifactId>
         </dependency>

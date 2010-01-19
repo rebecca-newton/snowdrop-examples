@@ -1,5 +1,6 @@
 package org.jboss.snowdrop.samples.sportsclub.ejb;
 
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.interceptor.Interceptors;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.jboss.annotation.spring.Spring;
+import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.BillingType;
@@ -25,8 +27,9 @@ import org.jboss.spring.callback.SpringLifecycleInterceptor;
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
  */
-@Stateless
+@Stateless(mappedName = "SubscriptionService", name = "SubscriptionService")
 @Interceptors(SpringLifecycleInterceptor.class)
+@LocalBinding(jndiBinding = "sportsclub/SubscriptionService")
 public class SubscriptionServiceImpl implements SubscriptionService
 {
 

@@ -19,10 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BasicController
 {
-   @EJB(mappedName = "sportsclub/BillingServiceImpl/local")
+   @EJB(mappedName = "sportsclub/BillingService")
    BillingService billingService;
 
-   @EJB(mappedName = "sportsclub/SubscriptionServiceImpl/local")
+   @EJB(mappedName = "sportsclub/SubscriptionService")
    SubscriptionService subscriptionService;
 
    @Autowired
