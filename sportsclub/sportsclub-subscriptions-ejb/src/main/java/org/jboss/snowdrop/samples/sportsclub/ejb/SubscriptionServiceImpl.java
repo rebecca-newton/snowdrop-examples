@@ -1,18 +1,8 @@
 package org.jboss.snowdrop.samples.sportsclub.ejb;
 
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.interceptor.Interceptors;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-
 import org.jboss.annotation.spring.Spring;
 import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.BillingType;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Person;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
@@ -21,13 +11,17 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.PersonRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
-import org.jboss.snowdrop.samples.sportsclub.ejb.SubscriptionService;
 import org.jboss.spring.callback.SpringLifecycleInterceptor;
+
+import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
  */
-@Stateless(mappedName = "SubscriptionService", name = "SubscriptionService")
+@Stateless
 @Interceptors(SpringLifecycleInterceptor.class)
 @LocalBinding(jndiBinding = "sportsclub/SubscriptionService")
 public class SubscriptionServiceImpl implements SubscriptionService
