@@ -1,18 +1,9 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
@@ -32,13 +23,6 @@ public class Account
 
    private Date creationDate;
 
-
-   public Account()
-   {
-      this.balance = new Balance();
-      this.balance.setAmount(BigDecimal.ZERO);
-   }
-
    @ManyToOne
    private Membership membership;
 
@@ -47,6 +31,13 @@ public class Account
    private boolean closed;
 
    private Date closeDate;
+
+   
+   public Account()
+   {
+      this.balance = new Balance();
+      this.balance.setAmount(BigDecimal.ZERO);
+   }
 
    public long getId()
    {
