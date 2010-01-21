@@ -1,27 +1,22 @@
 package org.jboss.spring.samples.sportsclub.invoicing.services;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-import javax.interceptor.Interceptors;
-
 import org.jboss.annotation.spring.Spring;
 import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.BalanceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.PaymentRepository;
 import org.jboss.spring.callback.SpringLifecycleInterceptor;
 
+import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
+import java.util.Date;
+
 @Stateless
 @Interceptors(SpringLifecycleInterceptor.class)
-@LocalBinding(jndiBinding="sportsclub/BillingService")
+@LocalBinding(jndiBinding="sportsclub/BillingService") 
 public class BillingServiceImpl implements BillingService
 {
    @Spring(bean = "invoiceRepository", jndiName = "SpringDao")

@@ -3,8 +3,13 @@ package org.jboss.snowdrop.samples.sportsclub.springmvc;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
+import org.jboss.snowdrop.samples.sportsclub.ejb.SubscriptionService;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
+
+import javax.ejb.EJB;
+import java.util.List;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -13,24 +18,49 @@ import org.springframework.validation.BindingResult;
 public class AccountController
 {
 
+   private static final String[] invoiceStatus = new String[]{UserInput.INVOICE_WITH, UserInput.INVOICE_WITHOUT};
+
+   @EJB(mappedName = "sportsclub/SubscriptionService")
+   SubscriptionService subscriptionService;
+
+
+   /**
+    * Just forwarding to the view with fresh-empty model.
+    *
+    * @param userInput
+    * @return
+    */
    @RequestMapping(value = "/searchAccount.do", method = RequestMethod.GET)
    ModelMap enterPage(UserInput userInput)
    {
-      userInput.setData("get");
-
       ModelMap model = new ModelMap();
-      model.addAttribute(userInput);
+      model.addAttribute(userInput)
+           .addAttribute(invoiceStatus);
       return model;
    }
 
    @RequestMapping(value = "/searchAccount.do", method = RequestMethod.POST)
    ModelMap updateAccount(UserInput userInput)
    {
+      String nameFragment = userInput.getNameFragment();
+      Integer maxAccountNum = userInput.getMaxAccountNum();
 
-      userInput.setData("post");
+      List<Account> accountList = subscriptionService.findAccountsBySubscriberName(nameFragment, 0, maxAccountNum);
 
       ModelMap model = new ModelMap();
-      model.addAttribute(userInput);
+      model.addAttribute(userInput)
+           .addAttribute(accountList)
+           .addAttribute(invoiceStatus);
+      return model;
+   }
+
+   @RequestMapping(value = "/accountDetail.do", method = RequestMethod.GET)
+   ModelMap getAccountDetail(@RequestParam("id") String id)
+   {
+      Account account = subscriptionService.findAccountById(Long.parseLong(id));
+
+      ModelMap model = new ModelMap();
+      model.addAttribute(account);
       return model;
    }
 

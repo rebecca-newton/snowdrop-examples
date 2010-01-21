@@ -70,6 +70,11 @@ public class SubscriptionServiceImpl implements SubscriptionService
       return account;
    }
 
+   public Account findAccountById(Long id)
+   {
+      return accountRepository.findById(id);
+   }
+
    public List<String> getMembershipTypes()
    {
       return membershipRepository.findAllMembershipCodes();

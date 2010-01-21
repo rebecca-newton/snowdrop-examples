@@ -5,48 +5,54 @@ package org.jboss.snowdrop.samples.sportsclub.springmvc;
  */
 public class UserInput
 {
-   private boolean currentInvoice;
-   private String data;
-   private String firstName;
-   private String lastName;
+   private static final int DEFAULT_MAX_ACCOUNT_NUM = 20;
+   static final String INVOICE_WITH = "with";
+   static final String INVOICE_WITHOUT = "without";
 
-   public String getData()
+   private String invoiceStatus;
+   private Integer maxAccountNum = DEFAULT_MAX_ACCOUNT_NUM;
+   private String nameFragment;
+
+   public String getNameFragment()
    {
-      return data;
+      return nameFragment;
    }
 
-   public void setData(String data)
+   /**
+    * @param nameFragment if not null then it is always trimmed
+    */
+   public void setNameFragment(String nameFragment)
    {
-      this.data = data;
+      if (nameFragment != null)
+      {
+         nameFragment = nameFragment.trim();
+      }
+      this.nameFragment = nameFragment;
    }
 
-   public String getFirstName()
+   public Integer getMaxAccountNum()
    {
-      return firstName;
+      return maxAccountNum;
    }
 
-   public void setFirstName(String firstName)
+   /**
+    * @param maxAccountNum if null then the value is set to DEFAULT_MAX_ACCOUNT_NUM
+    */
+   public void setMaxAccountNum(Integer maxAccountNum)
    {
-      this.firstName = firstName;
+      if (maxAccountNum == null)
+         this.maxAccountNum = DEFAULT_MAX_ACCOUNT_NUM;
+      else
+         this.maxAccountNum = maxAccountNum;
    }
 
-   public String getLastName()
+   public String getInvoiceStatus()
    {
-      return lastName;
+      return invoiceStatus;
    }
 
-   public void setLastName(String lastName)
+   public void setInvoiceStatus(String invoiceStatus)
    {
-      this.lastName = lastName;
-   }
-
-   public boolean isCurrentInvoice()
-   {
-      return currentInvoice;
-   }
-
-   public void setCurrentInvoice(boolean currentInvoice)
-   {
-      this.currentInvoice = currentInvoice;
+      this.invoiceStatus = invoiceStatus;
    }
 }

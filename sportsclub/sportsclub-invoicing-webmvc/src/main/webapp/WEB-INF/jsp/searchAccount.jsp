@@ -3,34 +3,47 @@
 <%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%--<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>--%>
 
 <html>
 <head><title>Sports Club: Invoicing - search account</title></head>
-<body>Hello in invoicing!
-<p>This is it: <c:out value="${userInput.data}"/></p>
+<body>
 
 <form:form commandName="userInput">
-    <table>
-        <tr>
-        <tr>
-            <td>Current Invoice:</td>
-            <td><form:checkbox path="currentInvoice"/></td>
-        </tr>
-            <td>First Name:</td>
-            <td><form:input path="firstName"/></td>
-        </tr>
-        <tr>
-            <td>Last Name:</td>
-            <td><form:input path="lastName"/></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Save Changes"/>
-            </td>
-        </tr>
-    </table>
+
+    Search accounts <form:select path="invoiceStatus" items="${stringList}"/> current invoice by subscriber name:<br/>
+    <form:input path="nameFragment"/> <input type="submit" value="Search"/><br/>
+    <span style="font-size:70%">
+        Display up to
+        <form:input path="maxAccountNum" maxlength="2" size="2" cssStyle="font-size:70%"/>
+        relevant accounts.
+    </span>
 </form:form>
+
+<c:if test="${empty accountList}">
+    Sorry no result matches...
+</c:if>
+<c:if test="${not empty accountList}">
+<table border="1">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>ID</td>
+            <td>Subscriber name</td>
+            <td>Membership</td>
+            <td></td>
+        </tr>
+    </thead>
+    <c:forEach items="${accountList}" var="account" varStatus="s">
+        <tr>
+            <td><c:out value="${s.index}" /></td>
+            <td><c:out value="${account.id}" /></td>
+            <td><c:out value="${account.subscriber.name.firstName} ${account.subscriber.name.lastName}" /></td>
+            <td><c:out value="${account.membership.code}" /></td>
+            <td><a href='accountDetail.do?id=<c:out value="${account.id}"/>'>Detail</a></td>
+        </tr>
+    </c:forEach>
+</table>
+</c:if>
 
 </body>
 </html>
