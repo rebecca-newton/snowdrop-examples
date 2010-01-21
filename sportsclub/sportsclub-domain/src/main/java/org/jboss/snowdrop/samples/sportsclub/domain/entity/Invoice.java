@@ -19,7 +19,9 @@ public class Invoice
    @ManyToOne
    private Account account;
 
-   private Date date;
+   private Date issueDate;
+
+   private TimeInterval billingPeriod;
 
    private BigDecimal amount;
 
@@ -48,13 +50,24 @@ public class Invoice
       this.amount = amount;
    }
 
-   public Date getDate()
+   public Date getIssueDate()
    {
-      return date;
+      return issueDate;
    }
 
-   public void setDate(Date date)
+   public void setIssueDate(Date issueDate)
    {
-      this.date = date;
+      this.issueDate = issueDate;
+   }
+
+   public TimeInterval getBillingPeriod()
+   {
+      return billingPeriod;
+   }
+
+   public void setBillingPeriod(TimeInterval billingPeriod)
+   {
+      this.billingPeriod = billingPeriod;
    }
 }
+

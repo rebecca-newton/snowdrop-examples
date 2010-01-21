@@ -16,7 +16,7 @@ import java.util.Date;
 
 @Stateless
 @Interceptors(SpringLifecycleInterceptor.class)
-@LocalBinding(jndiBinding="sportsclub/BillingService") 
+@LocalBinding(jndiBinding="sportsclub/BillingService")
 public class BillingServiceImpl implements BillingService
 {
    @Spring(bean = "invoiceRepository", jndiName = "SpringDao")
@@ -48,7 +48,9 @@ public class BillingServiceImpl implements BillingService
       Invoice invoice = new Invoice();
       invoice.setAccount(account);
       invoice.setAmount(account.getFeePerBillingPeriod());
-      invoice.setDate(new Date());
+      Date date = new Date();       
+      invoice.setIssueDate(date);
+      invoice.setBillingPeriod(account.getBillingPeriodFor(date));
       invoiceRepository.save(invoice);
       Balance balance = account.getBalance();
       balance.debit(invoice.getAmount());

@@ -3,7 +3,12 @@ package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+import org.jboss.snowdrop.samples.sportsclub.utils.DateUtils;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
@@ -31,8 +36,10 @@ public class Account
    private boolean closed;
 
    private Date closeDate;
+   private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("EST");
+   private static final int TWO_WEEKS = (14 * 24 * 3600 * 1000);
 
-   
+
    public Account()
    {
       this.balance = new Balance();
@@ -72,7 +79,45 @@ public class Account
 
    public void setCreationDate(Date creationDate)
    {
-      this.creationDate = creationDate;
+      this.creationDate = DateUtils.normalizeDate(creationDate, TIME_ZONE);
+   }
+
+   public TimeInterval getBillingPeriodFor(Date date)
+   {
+      Date normalizedDate = DateUtils.normalizeDate(date, TIME_ZONE);
+      Calendar calendar = new GregorianCalendar(TIME_ZONE);
+      calendar.setTime(normalizedDate);
+      TimeInterval timeInterval = new TimeInterval();
+      switch (billingType)
+      {
+         case MONTHLY:
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            timeInterval.setStartDate(calendar.getTime());
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+            timeInterval.setEndDate(calendar.getTime());
+            break;
+         case WEEKLY:
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+            timeInterval.setStartDate(calendar.getTime());
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+            timeInterval.setEndDate(calendar.getTime());
+            break;
+         case BIWEEKLY:
+            long duration = normalizedDate.getTime() - getCreationDate().getTime();
+            long intervals = duration / TWO_WEEKS;
+            if (duration % TWO_WEEKS != 0)
+               intervals ++;
+            calendar.setTime(getCreationDate());
+            calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+            calendar.add(Calendar.DAY_OF_MONTH, (int)intervals * 14);
+            timeInterval.setStartDate(calendar.getTime());
+            calendar.add(Calendar.DAY_OF_MONTH, 13);
+            timeInterval.setEndDate(calendar.getTime());
+            break;
+         default:
+            throw new IllegalArgumentException("Invalid BillingType value for account:" + billingType);
+      }
+     return timeInterval;
    }
 
    public Membership getMembership()
@@ -102,7 +147,7 @@ public class Account
 
    public void setCloseDate(Date closeDate)
    {
-      this.closeDate = closeDate;
+      this.closeDate = DateUtils.normalizeDate(closeDate, TIME_ZONE);
    }
 
    public BigDecimal getFeePerBillingPeriod()
