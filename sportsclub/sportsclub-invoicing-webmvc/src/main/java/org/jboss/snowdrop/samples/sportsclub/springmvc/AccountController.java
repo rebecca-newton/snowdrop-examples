@@ -64,4 +64,12 @@ public class AccountController
       return model;
    }
 
+   @RequestMapping(value = "/generateInvoice.do", method = RequestMethod.POST)
+   ModelMap generateInvoice(@RequestParam("id") String id)
+   {
+      ModelMap model = new ModelMap();
+      model.addAttribute("id",id);
+      return model;
+   }
+
 }
