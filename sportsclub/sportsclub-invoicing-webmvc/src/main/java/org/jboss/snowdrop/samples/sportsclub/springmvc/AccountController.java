@@ -36,9 +36,6 @@ public class AccountController
    @EJB(mappedName = "sportsclub/SubscriptionService")
    SubscriptionService subscriptionService;
 
-   @Autowired
-   private JmsTemplate jmsTemplate;
-
    /**
     * Just forwarding to the view with fresh-empty model.
     *
@@ -87,13 +84,10 @@ public class AccountController
       // doublecheck that account does not have current invoice
       Account account = subscriptionService.findAccountById(Long.parseLong(id));
       Invoice invoice = billingService.generateInvoice(account);
-      PaymentNotification paymentNotification = new PaymentNotification();
-      paymentNotification.setAccountNumber(account.getId());
-      paymentNotification.setAmount(BigDecimal.valueOf(50l));
-      jmsTemplate.convertAndSend(paymentNotification);
 
       ModelMap model = new ModelMap();
       model.addAttribute("id",id);
+      model.addAttribute(invoice);
       return model;
    }
 
