@@ -5,11 +5,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.ModelMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 import org.jboss.snowdrop.samples.sportsclub.ejb.SubscriptionService;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.PaymentNotification;
+import org.jboss.spring.samples.sportsclub.invoicing.services.BillingService;
 
 import javax.ejb.EJB;
 import java.util.List;
+import java.math.BigDecimal;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -24,9 +30,14 @@ public class AccountController
       invoiceStatus = new String[]{UserInput.INVOICE_WITHOUT, UserInput.INVOICE_WITH};
    }
 
+   @EJB(mappedName = "sportsclub/BillingService")
+   BillingService billingService;
+
    @EJB(mappedName = "sportsclub/SubscriptionService")
    SubscriptionService subscriptionService;
 
+   @Autowired
+   private JmsTemplate jmsTemplate;
 
    /**
     * Just forwarding to the view with fresh-empty model.
@@ -50,8 +61,6 @@ public class AccountController
       Integer maxAccountNum = userInput.getMaxAccountNum();
       boolean currentInvoice = (UserInput.INVOICE_WITH.equals(userInput.getInvoiceStatus()) ? true : false);
 
-      System.out.println("****** currentInvoice = " + currentInvoice);
-
       List<Account> accountList = subscriptionService.findAccountsBySubscriberName(nameFragment, 0, maxAccountNum, currentInvoice);
 
       ModelMap model = new ModelMap();
@@ -74,6 +83,15 @@ public class AccountController
    @RequestMapping(value = "/generateInvoice.do", method = RequestMethod.POST)
    ModelMap generateInvoice(@RequestParam("id") String id)
    {
+
+      // doublecheck that account does not have current invoice
+      Account account = subscriptionService.findAccountById(Long.parseLong(id));
+      Invoice invoice = billingService.generateInvoice(account);
+      PaymentNotification paymentNotification = new PaymentNotification();
+      paymentNotification.setAccountNumber(account.getId());
+      paymentNotification.setAmount(BigDecimal.valueOf(50l));
+      jmsTemplate.convertAndSend(paymentNotification);
+
       ModelMap model = new ModelMap();
       model.addAttribute("id",id);
       return model;
