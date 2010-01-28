@@ -9,7 +9,7 @@
 
 <form:form commandName="userInput">
 
-    Search accounts <form:select path="invoiceStatus" items="${stringList}"/> current invoice by subscriber name:<br/>
+    Search accounts <form:select path="invoiceStatus" items="${booleanOptionList}" itemLabel="label" itemValue="value" /> current invoice by subscriber name:<br/>
     <form:input path="nameFragment"/> <input type="submit" value="Search"/><br/>
     <span style="font-size:70%">
         Display up to
@@ -18,7 +18,7 @@
     </span>
 </form:form>
 
-<c:if test="${empty accountList}">
+<c:if test="${(accountList ne null) and (empty accountList)}">
     Sorry no result matches...
 </c:if>
 <c:if test="${not empty accountList}">

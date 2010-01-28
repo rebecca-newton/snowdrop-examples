@@ -18,7 +18,13 @@ import java.util.List;
 public class AccountController
 {
 
-   private static final String[] invoiceStatus = new String[]{UserInput.INVOICE_WITH, UserInput.INVOICE_WITHOUT};
+   private static final BooleanOption[] invoiceStatus;
+
+   static {
+      invoiceStatus = new BooleanOption[2];
+      invoiceStatus[0] = new BooleanOption(UserInput.INVOICE_WITH, true);
+      invoiceStatus[1] = new BooleanOption(UserInput.INVOICE_WITHOUT, false);
+   }
 
    @EJB(mappedName = "sportsclub/SubscriptionService")
    SubscriptionService subscriptionService;
@@ -44,7 +50,7 @@ public class AccountController
    {
       String nameFragment = userInput.getNameFragment();
       Integer maxAccountNum = userInput.getMaxAccountNum();
-
+      
       List<Account> accountList = subscriptionService.findAccountsBySubscriberName(nameFragment, 0, maxAccountNum);
 
       ModelMap model = new ModelMap();

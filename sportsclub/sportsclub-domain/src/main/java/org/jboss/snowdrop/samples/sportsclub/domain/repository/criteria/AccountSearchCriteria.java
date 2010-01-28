@@ -7,6 +7,8 @@ public class AccountSearchCriteria extends AbstractRangeCriteria
 {
    private PersonSearchCriteria personSearchCriteria;
 
+   private InvoiceSearchCriteria invoiceSearchCriteria;
+
    private boolean activeOnly;
 
    public PersonSearchCriteria getPersonSearchCriteria()
@@ -29,4 +31,13 @@ public class AccountSearchCriteria extends AbstractRangeCriteria
       this.activeOnly = activeOnly;
    }
 
+   public InvoiceSearchCriteria getInvoiceSearchCriteria()
+   {
+      return invoiceSearchCriteria;
+   }
+
+   public void setInvoiceSearchCriteria(InvoiceSearchCriteria invoiceSearchCriteria)
+   {
+      this.invoiceSearchCriteria = invoiceSearchCriteria;
+   }
 }

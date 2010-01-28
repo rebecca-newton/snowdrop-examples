@@ -11,6 +11,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.PersonRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
 import org.jboss.spring.callback.SpringLifecycleInterceptor;
 
 import javax.ejb.Stateless;
@@ -42,6 +43,20 @@ public class SubscriptionServiceImpl implements SubscriptionService
       personSearchCriteria.setName(name);
       AccountSearchCriteria accountSearchCriteria = new AccountSearchCriteria();
       accountSearchCriteria.setPersonSearchCriteria(personSearchCriteria);
+      accountSearchCriteria.setActiveOnly(true);
+      accountSearchCriteria.setRange(new Range(minIndex, maxIndex));
+      return accountRepository.findByCriteria(accountSearchCriteria);
+   }
+
+   public List<Account> findAccountsBySubscriberName(String name, int minIndex, int maxIndex, boolean currentInvoice)
+   {
+      PersonSearchCriteria personSearchCriteria = new PersonSearchCriteria();
+      personSearchCriteria.setName(name);
+      InvoiceSearchCriteria invoiceSearchCriteria = new InvoiceSearchCriteria();
+      invoiceSearchCriteria.setCurrentInvoice(currentInvoice);
+      AccountSearchCriteria accountSearchCriteria = new AccountSearchCriteria();
+      accountSearchCriteria.setPersonSearchCriteria(personSearchCriteria);
+      accountSearchCriteria.setInvoiceSearchCriteria(invoiceSearchCriteria);
       accountSearchCriteria.setActiveOnly(true);
       accountSearchCriteria.setRange(new Range(minIndex, maxIndex));
       return accountRepository.findByCriteria(accountSearchCriteria);
