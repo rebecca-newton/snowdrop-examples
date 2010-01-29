@@ -42,11 +42,11 @@ public abstract class JpaRepository<T, I extends Serializable> implements Reposi
 
    public Collection<T> findAll()
    {
-      return entityManager.createQuery("FROM " + clazz.getName()).getResultList();
+      return entityManager.createQuery("FROM " + clazz.getSimpleName()).getResultList();
    }
 
    public int countAll()
    {
-      return (Integer)entityManager.createQuery("SELECT COUNT(c) FROM " + clazz.getName() + " c").getSingleResult();
+      return (Integer)entityManager.createQuery("SELECT COUNT(c) FROM " + clazz.getSimpleName() + " c").getSingleResult();
    }
 }
