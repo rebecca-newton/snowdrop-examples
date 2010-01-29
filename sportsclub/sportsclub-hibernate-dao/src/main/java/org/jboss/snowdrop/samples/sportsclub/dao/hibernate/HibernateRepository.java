@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
+ * Abstract repository using Hibernate SessionFactory.
+ *
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
  */
 public abstract class HibernateRepository<T, I extends Serializable> implements Repository<T, I>
