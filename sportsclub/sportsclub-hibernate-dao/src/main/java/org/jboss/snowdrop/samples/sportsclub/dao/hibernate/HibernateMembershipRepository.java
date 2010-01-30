@@ -25,7 +25,7 @@ public class HibernateMembershipRepository extends HibernateRepository<Membershi
       return query.list();
    }
 
-   public int countAll()
+   public long countAll()
    {
       return (Integer)getCurrentSession().createCriteria(Membership.class).setProjection(Projections.count("code")).uniqueResult();
    }

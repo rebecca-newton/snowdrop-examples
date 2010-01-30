@@ -1,12 +1,12 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.Repository;
-import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Abstract repository using JPA EntityManager.
@@ -15,7 +15,7 @@ import java.util.Collection;
  */
 public abstract class JpaRepository<T, I extends Serializable> implements Repository<T, I>
 {
-   @PersistenceContext
+   @Autowired
    protected EntityManager entityManager;
 
    Class<T> clazz;
@@ -42,11 +42,11 @@ public abstract class JpaRepository<T, I extends Serializable> implements Reposi
 
    public Collection<T> findAll()
    {
-      return entityManager.createQuery("FROM " + clazz.getSimpleName()).getResultList();
+      return entityManager.createQuery("SELECT c FROM " + clazz.getSimpleName() + " c").getResultList();
    }
 
-   public int countAll()
+   public long countAll()
    {
-      return (Integer)entityManager.createQuery("SELECT COUNT(c) FROM " + clazz.getSimpleName() + " c").getSingleResult();
+      return (Long)entityManager.createQuery("SELECT COUNT(c) FROM " + clazz.getSimpleName() + " c").getSingleResult();
    }
 }

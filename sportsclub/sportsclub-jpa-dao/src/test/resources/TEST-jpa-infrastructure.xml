@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jee
+       http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+        </property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="HSQL"/>
+                <property name="generateDdl" value="true"/>
+            </bean>
+        </property>
+        <property name="persistenceXmlLocation" value="test-persistence.xml"/>
+        <property name="dataSource" ref="stayFitDS"/> 
+    </bean>
+
+    <bean id="entityManagerWrapper" class="org.springframework.orm.jpa.support.SharedEntityManagerBean">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+    
+</beans>

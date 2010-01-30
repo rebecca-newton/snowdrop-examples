@@ -23,4 +23,8 @@
           <artifactId>hibernate-annotations</artifactId>
        </dependency>
     </dependencies>
+
+    <build>
+        <finalName>sportsclub-domain</finalName>
+    </build>
 </project>

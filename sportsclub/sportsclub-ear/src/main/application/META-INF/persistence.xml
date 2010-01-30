@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+   <persistence-unit name="sportsclubPU" transaction-type="JTA">
+       <jta-data-source>java:/SportsClubDS</jta-data-source>
+       <jar-file>lib/sportsclub-domain.jar</jar-file>
+       <properties>
+            <property name="jboss.entity.manager.jndi.name" value="java:/sportsclub/em"/>
+       </properties>
+   </persistence-unit>
+</persistence>

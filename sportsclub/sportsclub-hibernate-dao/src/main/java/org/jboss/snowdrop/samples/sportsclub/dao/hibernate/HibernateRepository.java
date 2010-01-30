@@ -56,7 +56,7 @@ public abstract class HibernateRepository<T, I extends Serializable> implements 
    }
 
 
-   public int countAll()
+   public long countAll()
    {
       return (Integer)getCurrentSession().createCriteria(clazz).setProjection(Projections.count("id")).uniqueResult();
    }

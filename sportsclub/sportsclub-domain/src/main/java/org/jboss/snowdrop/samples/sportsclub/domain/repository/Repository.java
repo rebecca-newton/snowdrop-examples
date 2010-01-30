@@ -15,5 +15,5 @@ public interface Repository<T, I>
 
    Collection<T> findAll();
    
-   int countAll();
+   long countAll();
 }
