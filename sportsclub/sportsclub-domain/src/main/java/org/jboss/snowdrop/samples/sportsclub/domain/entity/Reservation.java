@@ -2,11 +2,7 @@ package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
@@ -25,10 +21,10 @@ public class Reservation
    @Column(name = "toDT", nullable = false)
    private Date to;
 
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.LAZY)
    private Equipment equipment;
 
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.LAZY)
    private Account account;
 
 

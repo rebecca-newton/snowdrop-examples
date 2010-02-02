@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface PaymentRepository extends Repository<Payment, Long>
 {
-
+    // TODO if not used then remove!
     List<Payment> findForAccount(Account account);
 }

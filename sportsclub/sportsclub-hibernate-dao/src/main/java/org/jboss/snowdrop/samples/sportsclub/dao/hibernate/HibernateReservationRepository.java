@@ -66,11 +66,11 @@ public class HibernateReservationRepository extends HibernateRepository<Reservat
       return cri.list();
    }
 
-   public Integer countByCriteria(ReservationSearchCriteria criteria)
+   public Long countByCriteria(ReservationSearchCriteria criteria)
    {
       Criteria cri = convert(criteria);
       cri.setProjection(Projections.count("id"));
-      return (Integer) cri.uniqueResult();
+      return new Long((Integer)cri.uniqueResult());
    }
 
 }

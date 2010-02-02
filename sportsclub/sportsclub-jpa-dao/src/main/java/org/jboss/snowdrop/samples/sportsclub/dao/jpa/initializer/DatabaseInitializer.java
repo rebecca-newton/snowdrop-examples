@@ -21,15 +21,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Address;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.BillingType;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Membership;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Name;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Person;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.*;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
@@ -102,6 +94,13 @@ public class DatabaseInitializer implements InitializingBean
             saveMap(DatabaseInitializer.this.entityManager, accounts);
 
 
+            Map<String, Invoice> invoices = new HashMap<String, Invoice>();
+
+            invoices.put("invoice1", createInvoice(accounts.get("account1")));
+
+            saveMap(DatabaseInitializer.this.entityManager, invoices);
+
+
             Map<String, Equipment> equipments = new HashMap<String, Equipment>();
 
             equipments.put("equipment1", createEquipment("Engage", "95T Engage by LifeFitness", TREADMILL));
@@ -130,7 +129,7 @@ public class DatabaseInitializer implements InitializingBean
       });
    }
 
-   private static void saveMap(EntityManager entityManager, Map data)
+   private void saveMap(EntityManager entityManager, Map data)
    {
       for (String key : (Set<String>)data.keySet())
       {
@@ -138,13 +137,13 @@ public class DatabaseInitializer implements InitializingBean
       }
    }
 
-   private static void save(EntityManager entityManager, Object entity)
+   private void save(EntityManager entityManager, Object entity)
    {
       entityManager.persist(entity);
       //entityManager.flush();
    }
 
-   private static Account createAccount(Membership silverMembership, BillingType billingType, Person person)
+   private Account createAccount(Membership silverMembership, BillingType billingType, Person person)
    {
       Account account = new Account();
       account.setSubscriber(person);
@@ -155,7 +154,20 @@ public class DatabaseInitializer implements InitializingBean
       return account;
    }
 
-   private static Person createPerson(String firstname, String lastname, String street, String city, String province, String country)
+   private Invoice createInvoice(Account account)
+   {
+      Date date = createDate(2009, 02, 01);
+
+      Invoice invoice = new Invoice();
+      invoice.setAccount(account);
+      invoice.setAmount(account.getFeePerBillingPeriod());
+      invoice.setIssueDate(date);
+      invoice.setBillingPeriod(account.getBillingPeriodFor(date));
+
+      return invoice;
+   }
+
+   private Person createPerson(String firstname, String lastname, String street, String city, String province, String country)
    {
       Person person = new Person();
       person.setName(new Name());
@@ -171,7 +183,7 @@ public class DatabaseInitializer implements InitializingBean
       return person;
    }
 
-   private static Membership createMembership(String code, String amount)
+   private Membership createMembership(String code, String amount)
    {
       Membership membership = new Membership(code);
       membership.setActive(true);
@@ -179,7 +191,7 @@ public class DatabaseInitializer implements InitializingBean
       return membership;
    }
 
-   private static Equipment createEquipment(String name, String description, EquipmentType type)
+   private Equipment createEquipment(String name, String description, EquipmentType type)
    {
       Equipment equipment = new Equipment();
       equipment.setDescription(description);
@@ -188,7 +200,7 @@ public class DatabaseInitializer implements InitializingBean
       return equipment;
    }
 
-   private static Reservation createReservation(Date fromDate, Date toDate, Equipment equipment, Account account)
+   private Reservation createReservation(Date fromDate, Date toDate, Equipment equipment, Account account)
    {
       assert fromDate.before(toDate);
       Reservation reservation = new Reservation();
@@ -202,7 +214,7 @@ public class DatabaseInitializer implements InitializingBean
    /**
     * Months are human readable and start at 1!
     */
-   private static Date createDate(int year, int month, int day)
+   private Date createDate(int year, int month, int day)
    {
       Calendar cal = Calendar.getInstance(Locale.US);
       cal.clear();

@@ -18,7 +18,7 @@ import org.junit.runner.RunWith;
                                    "classpath:TEST-jpa-infrastructure.xml",
                                    "classpath:dao-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestJpaPersonDao
+public class TestJpaPersonRepository
 {
    @Autowired
    PersonRepository personRepository;

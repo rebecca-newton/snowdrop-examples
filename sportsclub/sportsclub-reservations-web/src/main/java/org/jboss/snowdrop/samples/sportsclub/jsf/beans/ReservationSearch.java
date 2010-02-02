@@ -28,7 +28,7 @@ public class ReservationSearch extends ExtendedDataModel
    private Long currentId;
 
    private Map<Long, Reservation> reservationsMap = new HashMap<Long, Reservation>();
-   private Integer rowCount;
+   private Long rowCount;
 
    private ReservationTableState tableState;
 
@@ -99,7 +99,7 @@ public class ReservationSearch extends ExtendedDataModel
                reservationSearchOptions.getToDate(),
                reservationSearchOptions.getSelectedEquipmentTypes());
       }
-      return rowCount;
+      return rowCount.intValue();
    }
 
    @Override

@@ -36,7 +36,7 @@ public class ReservationServiceImpl implements ReservationService
       return reservationRepository.getByCriteria(criteria);
    }
 
-   public Integer countReservationsForRange(Date fromDate, Date toDate, List<EquipmentType> types)
+   public Long countReservationsForRange(Date fromDate, Date toDate, List<EquipmentType> types)
    {
       ReservationSearchCriteria criteria = new ReservationSearchCriteria();
       criteria.setFromDate(fromDate);

@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 public class JpaEquipmentRepository extends JpaRepository<Equipment,Long> implements EquipmentRepository{
 
     public JpaEquipmentRepository() {
-        super(Equipment.class); //TODO: create real implementation
+        super(Equipment.class);
     }
 
     public EquipmentType[] getEquipmentTypes() {
-        return new EquipmentType[0]; //TODO: create real implementation
+        return EquipmentType.values();
     }
 }

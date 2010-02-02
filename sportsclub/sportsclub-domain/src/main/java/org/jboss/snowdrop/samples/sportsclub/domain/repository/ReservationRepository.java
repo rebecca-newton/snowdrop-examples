@@ -9,5 +9,5 @@ public interface ReservationRepository extends Repository<Reservation, Long>
 {
    List<Reservation> getByCriteria(ReservationSearchCriteria criteria);
 
-   Integer countByCriteria(ReservationSearchCriteria criteria);
+   Long countByCriteria(ReservationSearchCriteria criteria);
 }

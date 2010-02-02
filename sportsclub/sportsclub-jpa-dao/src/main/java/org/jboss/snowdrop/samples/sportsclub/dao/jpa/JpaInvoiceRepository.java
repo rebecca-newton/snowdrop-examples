@@ -5,6 +5,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,13 +14,18 @@ import java.util.List;
  * @author Marius Bogoevici
  */
 @Repository
-public class JpaInvoiceRepository extends JpaRepository<Invoice, Long> implements InvoiceRepository {
+public class JpaInvoiceRepository extends JpaRepository<Invoice, Long> implements InvoiceRepository
+{
 
-    public JpaInvoiceRepository() {
-        super(Invoice.class);
-    }
+   public JpaInvoiceRepository()
+   {
+      super(Invoice.class);
+   }
 
-    public List<Invoice> findForAccount(Account account) {
-        return Collections.emptyList(); //TODO create real implementation
-    }
+   public List<Invoice> findForAccount(Account account)
+   {
+      Query q = entityManager.createQuery("FROM " + Invoice.class.getSimpleName() + " i WHERE i.account.id = :id");
+      q.setParameter("id", account.getId());
+      return q.getResultList();
+   }
 }

@@ -1,23 +1,26 @@
-package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
+package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
-import org.junit.Assert;
-import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.Test;
+import org.junit.Assert;
 
 import java.util.*;
 
-@ContextConfiguration(locations = {"classpath:test-infrastructure.xml", "classpath:dao-context.xml"})
+/**
+ * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
+ */
+@ContextConfiguration(locations = {"classpath:test-infrastructure.xml",
+                                   "classpath:TEST-jpa-infrastructure.xml",
+                                   "classpath:dao-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@Transactional
-public class TestHibernateReservationRepository
+public class TestJpaReservationRepository
 {
    @Autowired
    ReservationRepository reservationRepository;

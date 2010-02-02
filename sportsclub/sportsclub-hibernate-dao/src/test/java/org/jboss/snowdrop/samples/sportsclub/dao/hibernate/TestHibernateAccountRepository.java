@@ -20,14 +20,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @ContextConfiguration(locations = {"classpath:test-infrastructure.xml", "classpath:dao-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestHibernateAccountDao
+@Transactional
+public class TestHibernateAccountRepository
 {
 
    @Autowired
    AccountRepository accountRepository;
 
    @Test
-   @Transactional
    public void testAccountRepository()
    {
       Collection<Account> accounts = accountRepository.findAll();

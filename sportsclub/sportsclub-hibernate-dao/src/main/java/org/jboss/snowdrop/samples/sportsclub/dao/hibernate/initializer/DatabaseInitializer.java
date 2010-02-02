@@ -95,6 +95,13 @@ public class DatabaseInitializer implements InitializingBean
             saveMap(session, accounts);
 
 
+            Map<String, Invoice> invoices = new HashMap<String, Invoice>();
+
+            invoices.put("invoice1", createInvoice(accounts.get("account1")));
+
+            saveMap(session, invoices);
+
+
             Map<String, Equipment> equipments = new HashMap<String, Equipment>();
 
             equipments.put("equipment1", createEquipment("Engage", "95T Engage by LifeFitness", TREADMILL));
@@ -123,7 +130,7 @@ public class DatabaseInitializer implements InitializingBean
       });
    }
 
-   private static void saveMap(Session session, Map data)
+   private void saveMap(Session session, Map data)
    {
       for (String key : (Set<String>)data.keySet())
       {
@@ -131,13 +138,13 @@ public class DatabaseInitializer implements InitializingBean
       }
    }
 
-   private static void save(Session session, Object entity)
+   private void save(Session session, Object entity)
    {
       session.save(entity);
       session.flush();
    }
 
-   private static Account createAccount(Membership silverMembership, BillingType billingType, Person person)
+   private Account createAccount(Membership silverMembership, BillingType billingType, Person person)
    {
       Account account = new Account();
       account.setSubscriber(person);
@@ -148,7 +155,20 @@ public class DatabaseInitializer implements InitializingBean
       return account;
    }
 
-   private static Person createPerson(String firstname, String lastname, String street, String city, String province, String country)
+   private Invoice createInvoice(Account account)
+   {
+      Date date = createDate(2009, 02, 01);
+
+      Invoice invoice = new Invoice();
+      invoice.setAccount(account);
+      invoice.setAmount(account.getFeePerBillingPeriod());
+      invoice.setIssueDate(date);
+      invoice.setBillingPeriod(account.getBillingPeriodFor(date));
+
+      return invoice;
+   }
+
+   private Person createPerson(String firstname, String lastname, String street, String city, String province, String country)
    {
       Person person = new Person();
       person.setName(new Name());
@@ -164,7 +184,7 @@ public class DatabaseInitializer implements InitializingBean
       return person;
    }
 
-   private static Membership createMembership(String code, String amount)
+   private Membership createMembership(String code, String amount)
    {
       Membership membership = new Membership(code);
       membership.setActive(true);
@@ -172,7 +192,7 @@ public class DatabaseInitializer implements InitializingBean
       return membership;
    }
 
-   private static Equipment createEquipment(String name, String description, EquipmentType type)
+   private Equipment createEquipment(String name, String description, EquipmentType type)
    {
       Equipment equipment = new Equipment();
       equipment.setDescription(description);
@@ -181,7 +201,7 @@ public class DatabaseInitializer implements InitializingBean
       return equipment;
    }
 
-   private static Reservation createReservation(Date fromDate, Date toDate, Equipment equipment, Account account)
+   private Reservation createReservation(Date fromDate, Date toDate, Equipment equipment, Account account)
    {
       assert fromDate.before(toDate);
       Reservation reservation = new Reservation();
@@ -195,7 +215,7 @@ public class DatabaseInitializer implements InitializingBean
    /**
     * Months are human readable and start at 1!
     */
-   private static Date createDate(int year, int month, int day)
+   private Date createDate(int year, int month, int day)
    {
       Calendar cal = Calendar.getInstance(Locale.US);
       cal.clear();
