@@ -14,11 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@Deprecated
-public class BasicController
+public class PaymentController
 {
    @EJB(mappedName = "sportsclub/BillingService")
    BillingService billingService;
@@ -29,15 +29,13 @@ public class BasicController
    @Autowired
    private JmsTemplate jmsTemplate;
 
-   @RequestMapping("/basic.do")
-   ModelAndView doSomething()
+   @RequestMapping("/executePayment.do")
+   ModelAndView doSomething(@RequestParam("accountId") Long accountId, @RequestParam("amount") double amount)
    {
-      Account account = subscriptionService.findAccountsBySubscriberName("Vimes", 0, 1).get(0);
-      Invoice invoice = billingService.generateInvoice(account);
       PaymentNotification paymentNotification = new PaymentNotification();
-      paymentNotification.setAccountNumber(account.getId());
-      paymentNotification.setAmount(BigDecimal.valueOf(50l));
+      paymentNotification.setAccountNumber(accountId);
+      paymentNotification.setAmount(BigDecimal.valueOf(amount));
       jmsTemplate.convertAndSend(paymentNotification);
-      return new ModelAndView("dummy", "invoice", invoice);
+      return new ModelAndView("paymentNotification", "amount", amount);
    }
 }
