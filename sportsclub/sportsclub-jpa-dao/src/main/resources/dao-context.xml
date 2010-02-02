@@ -8,7 +8,21 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="org.jboss.snowdrop.samples.sportsclub.dao.jpa"/>
+    <context:annotation-config/>
+
+    <bean id="accountRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.JpaAccountRepository"/>
+
+    <bean id="personRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.JpaPersonRepository"/>
+
+    <bean id="membershipRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.JpaMembershipRepository"/>
+
+    <bean id="reservationRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.JpaReservationRepository"/>
+
+    <bean id="equipmentRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.JpaEquipmentRepository"/>
+
+    <bean id="paymentRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.JpaPaymentRepository"/>
+
+    <bean id="invoiceRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.JpaInvoiceRepository"/>
 
     <bean id="databaseInitializer" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.initializer.DatabaseInitializer"/>
 </beans>

@@ -5,6 +5,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.Repository;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,7 +33,7 @@ public abstract class JpaRepository<T, I extends Serializable> implements Reposi
 
    public void save(T object)
    {
-      this.entityManager.persist(object);
+      this.entityManager.merge(object);
    }
 
    public void delete(T object)
@@ -40,7 +41,7 @@ public abstract class JpaRepository<T, I extends Serializable> implements Reposi
       this.entityManager.remove(object);
    }
 
-   public Collection<T> findAll()
+   public List<T> findAll()
    {
       return entityManager.createQuery("SELECT c FROM " + clazz.getSimpleName() + " c").getResultList();
    }

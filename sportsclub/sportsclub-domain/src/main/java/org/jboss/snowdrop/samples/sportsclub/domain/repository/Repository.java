@@ -1,6 +1,7 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.repository;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
@@ -13,7 +14,7 @@ public interface Repository<T, I>
 
    void delete(T object);
 
-   Collection<T> findAll();
+   List<T> findAll();
    
    long countAll();
 }

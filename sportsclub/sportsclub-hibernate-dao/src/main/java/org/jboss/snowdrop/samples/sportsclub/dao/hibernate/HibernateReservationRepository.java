@@ -15,7 +15,7 @@ import java.util.Date;
 
 /**
  */
-public class HibernateReservationRepository extends HibernateRepository<Reservation, Integer> implements ReservationRepository
+public class HibernateReservationRepository extends HibernateRepository<Reservation, Long> implements ReservationRepository
 {
 
    public HibernateReservationRepository()

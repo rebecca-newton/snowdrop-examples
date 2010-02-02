@@ -17,7 +17,7 @@ public class Reservation
 {
 
    @Id @GeneratedValue
-   private long id;
+   private Long id;
 
    @Column(name = "fromDT", nullable = false)
    private Date from;

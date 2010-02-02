@@ -1,0 +1,24 @@
+package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
+
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.PaymentRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * @author Marius Bogoevici
+ */
+@Repository
+public class JpaPaymentRepository extends JpaRepository<Payment, Long> implements PaymentRepository{
+
+    public JpaPaymentRepository() {
+        super(Payment.class);
+    }
+
+    public List<Payment> findForAccount(Account account) {
+        return Collections.emptyList();
+    }
+}

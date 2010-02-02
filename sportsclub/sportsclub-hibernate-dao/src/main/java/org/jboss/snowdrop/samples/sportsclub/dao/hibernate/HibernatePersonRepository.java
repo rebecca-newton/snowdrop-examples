@@ -8,7 +8,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.PersonRepository;
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
  */
-public class HibernatePersonRepository extends HibernateRepository<Person, Integer> implements PersonRepository
+public class HibernatePersonRepository extends HibernateRepository<Person, Long> implements PersonRepository
 {
 
    public HibernatePersonRepository()

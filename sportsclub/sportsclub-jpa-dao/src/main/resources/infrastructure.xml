@@ -13,7 +13,7 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <jee:jndi-lookup jndi-name="java:/sportsclub/em"/>
+    <jee:jndi-lookup id="entityManager" jndi-name="java:/sportsclub/em"/>
 
     <tx:jta-transaction-manager/>
     

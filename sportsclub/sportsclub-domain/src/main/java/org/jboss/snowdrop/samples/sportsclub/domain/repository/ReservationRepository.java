@@ -5,7 +5,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Reservat
 
 import java.util.List;
 
-public interface ReservationRepository extends Repository<Reservation, Integer>
+public interface ReservationRepository extends Repository<Reservation, Long>
 {
    List<Reservation> getByCriteria(ReservationSearchCriteria criteria);
 

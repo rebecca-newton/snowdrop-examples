@@ -5,6 +5,7 @@
        <jar-file>lib/sportsclub-domain.jar</jar-file>
        <properties>
             <property name="jboss.entity.manager.jndi.name" value="java:/sportsclub/em"/>
+            <property name="hibernate.hbm2ddl.auto" value="create" />
        </properties>
    </persistence-unit>
 </persistence>

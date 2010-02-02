@@ -7,6 +7,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.Repository;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Abstract repository using Hibernate SessionFactory.
@@ -50,9 +51,9 @@ public abstract class HibernateRepository<T, I extends Serializable> implements 
       getCurrentSession().delete(object);
    }
 
-   public Collection<T> findAll()
+   public List<T> findAll()
    {
-      return (Collection<T>)getCurrentSession().createCriteria(clazz).list();
+      return getCurrentSession().createCriteria(clazz).list();
    }
 
 

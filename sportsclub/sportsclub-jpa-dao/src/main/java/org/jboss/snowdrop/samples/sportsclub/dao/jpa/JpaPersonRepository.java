@@ -9,7 +9,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.PersonRepository;
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
  */
 @Repository
-public class JpaPersonRepository extends JpaRepository<Person, Integer> implements PersonRepository
+public class JpaPersonRepository extends JpaRepository<Person, Long> implements PersonRepository
 {
    public JpaPersonRepository()
    {

@@ -19,6 +19,7 @@
         <module>sportsclub-test-infrastructure</module>
         <module>sportsclub-invoicing-ejb</module>
         <module>sportsclub-invoicing-webmvc</module>
+        <module>sportsclub-jpa-ear</module>
     </modules>
     
     <packaging>pom</packaging>

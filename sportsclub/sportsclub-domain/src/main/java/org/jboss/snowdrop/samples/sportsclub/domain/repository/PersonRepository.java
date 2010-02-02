@@ -8,7 +8,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountS
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
  */
-public interface PersonRepository extends Repository<Person, Integer>
+public interface PersonRepository extends Repository<Person, Long>
 {
 
 }
