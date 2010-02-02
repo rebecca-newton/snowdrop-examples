@@ -50,17 +50,7 @@ public class JpaReservationRepository extends JpaRepository<Reservation, Long> i
       }
       if (criteria.getEquipmentType() != null && !criteria.getEquipmentType().isEmpty())
       {
-         StringBuilder sb = new StringBuilder();
-         String d = "";
-         for (EquipmentType type : criteria.getEquipmentType())
-         {
-            sb.append(d);
-            sb.append("'");
-            sb.append(type);
-            sb.append("'");
-            if (d.isEmpty()) d = ",";
-         }
-         q += " AND r.equipment.equipmentType IN (" + sb.toString() + ")";
+         q += " AND r.equipment.equipmentType IN (:equipmentTypes)";
       }
 
       Query query = entityManager.createQuery(q);
@@ -72,6 +62,10 @@ public class JpaReservationRepository extends JpaRepository<Reservation, Long> i
       if (criteria.getToDate() != null)
       {
          query.setParameter("to", criteria.getToDate());
+      }
+      if (criteria.getEquipmentType() != null && !criteria.getEquipmentType().isEmpty())
+      {
+         query.setParameter("equipmentTypes", criteria.getEquipmentType());
       }
       return query;
    }
