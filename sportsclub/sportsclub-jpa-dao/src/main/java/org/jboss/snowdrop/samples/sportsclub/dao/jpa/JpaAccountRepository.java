@@ -31,9 +31,13 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
    public List<Account> findByCriteria(AccountSearchCriteria criteria)
    {
       Query query = getQuery(criteria, null);
-      return (criteria.getRange() != null ?
-            query.getResultList().subList(criteria.getRange().getMinIndex(), criteria.getRange().getMaxIndex()) :
-            query.getResultList());
+      List<Account> list = query.getResultList();
+      if (criteria.getRange() != null)
+      {
+         int max = (criteria.getRange().getMaxIndex() > list.size() ? list.size() : criteria.getRange().getMaxIndex());
+         list = list.subList(criteria.getRange().getMinIndex(), max);
+      }
+      return list;
    }
 
    private Query getQuery(AccountSearchCriteria criteria, String select)

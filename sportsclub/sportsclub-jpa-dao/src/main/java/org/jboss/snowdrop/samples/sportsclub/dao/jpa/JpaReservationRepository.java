@@ -29,9 +29,13 @@ public class JpaReservationRepository extends JpaRepository<Reservation, Long> i
    public List<Reservation> getByCriteria(ReservationSearchCriteria criteria)
    {
       Query query = getQuery(criteria, null);
-      return (criteria.getRange() != null ?
-            query.getResultList().subList(criteria.getRange().getMinIndex(), criteria.getRange().getMaxIndex()) :
-            query.getResultList());
+      List<Reservation> list = query.getResultList();
+      if (criteria.getRange() != null)
+      {
+         int max = (criteria.getRange().getMaxIndex() > list.size() ? list.size() : criteria.getRange().getMaxIndex());
+         list = list.subList(criteria.getRange().getMinIndex(), max);
+      }
+      return list;
    }
 
    private Query getQuery(ReservationSearchCriteria criteria, String select)
