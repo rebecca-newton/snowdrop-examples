@@ -24,15 +24,15 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
       super(Account.class);
    }
 
-   public List<Account> findByPersonName(String name)
-   {
-      Query query = entityManager.createQuery(" from " + Account.class.getSimpleName() + " a " +
-            "where a.subscriber.name.firstName like :name " +
-            "or a.subscriber.name.lastName like :name " +
-            "or a.subscriber.name.middleName like :name");
-      query.setParameter("name", "%" + name + "%");
-      return query.getResultList();
-   }
+//   public List<Account> findByPersonName(String name)
+//   {
+//      Query query = entityManager.createQuery(" from " + Account.class.getSimpleName() + " a " +
+//            "where a.subscriber.name.firstName like :name " +
+//            "or a.subscriber.name.lastName like :name " +
+//            "or a.subscriber.name.middleName like :name");
+//      query.setParameter("name", "%" + name + "%");
+//      return query.getResultList();
+//   }
 
    public int countByCriteria(AccountSearchCriteria accountSearchCriteria)
    {

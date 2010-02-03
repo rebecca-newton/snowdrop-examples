@@ -1,11 +1,6 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
-import java.util.List;
-import java.util.Date;
-
 import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.criterion.*;
 import static org.hibernate.criterion.Restrictions.*;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
@@ -13,6 +8,9 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
@@ -24,17 +22,6 @@ public class HibernateAccountRepository extends HibernateRepository<Account, Lon
    {
       super(Account.class);
    }
-
-   public List<Account> findByPersonName(String name)
-   {
-      Session session = sessionFactory.getCurrentSession();
-      Query query = session.createQuery(" from Account a where a.subscriber.name.firstName like :name " +
-            "or a.subscriber.name.lastName like :name " +
-            "or a.subscriber.name.middleName like :name");
-      query.setString("name", "%" + name + "%");
-      return (List<Account>) query.list();
-   }
-
 
    public int countByCriteria(AccountSearchCriteria accountSearchCriteria)
    {

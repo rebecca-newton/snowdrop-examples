@@ -10,9 +10,6 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountS
  */
 public interface AccountRepository extends Repository<Account, Long>
 {
-   // TODO if no usages then remove this method!
-   List<Account> findByPersonName(String name);
-
    int countByCriteria(AccountSearchCriteria accountSearchCriteria);
 
    List<Account> findByCriteria(AccountSearchCriteria accountSearchCriteria);
