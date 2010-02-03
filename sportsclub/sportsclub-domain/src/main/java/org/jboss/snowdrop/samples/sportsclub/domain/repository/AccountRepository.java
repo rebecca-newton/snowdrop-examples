@@ -10,7 +10,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountS
  */
 public interface AccountRepository extends Repository<Account, Long>
 {
-   int countByCriteria(AccountSearchCriteria accountSearchCriteria);
+   long countByCriteria(AccountSearchCriteria accountSearchCriteria);
 
    List<Account> findByCriteria(AccountSearchCriteria accountSearchCriteria);
 }

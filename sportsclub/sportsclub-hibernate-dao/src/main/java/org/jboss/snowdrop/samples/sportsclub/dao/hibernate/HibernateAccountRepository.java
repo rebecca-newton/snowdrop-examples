@@ -9,7 +9,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -23,11 +23,11 @@ public class HibernateAccountRepository extends HibernateRepository<Account, Lon
       super(Account.class);
    }
 
-   public int countByCriteria(AccountSearchCriteria accountSearchCriteria)
+   public long countByCriteria(AccountSearchCriteria accountSearchCriteria)
    {
       Criteria criteria = convert(accountSearchCriteria);
       criteria.setProjection(Projections.count("id"));
-      return (Integer) criteria.uniqueResult();
+      return new Long((Integer) criteria.uniqueResult());
    }
 
    private Criteria convert(AccountSearchCriteria accountSearchCriteria)
@@ -55,10 +55,10 @@ public class HibernateAccountRepository extends HibernateRepository<Account, Lon
       }
       if (accountSearchCriteria.getInvoiceSearchCriteria() != null)
       {
-         Date now = new Date();
+         Timestamp now = new Timestamp(System.currentTimeMillis());
          DetachedCriteria invcEntries = DetachedCriteria.forClass(Invoice.class)
-               .setProjection(Property.forName("id"));
-         invcEntries.add(and(ge("billingPeriod.startDate", now), le("billingPeriod.endDate", now)));
+               .setProjection(Property.forName("account.id"));
+         invcEntries.add(and(le("billingPeriod.startDate", now), ge("billingPeriod.endDate", now)));
 
          if (accountSearchCriteria.getInvoiceSearchCriteria().isCurrentInvoice())
             criteria.add(Subqueries.propertyIn("id", invcEntries));

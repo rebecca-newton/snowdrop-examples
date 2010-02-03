@@ -1,13 +1,11 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,7 +29,9 @@ public class JpaReservationRepository extends JpaRepository<Reservation, Long> i
    public List<Reservation> getByCriteria(ReservationSearchCriteria criteria)
    {
       Query query = getQuery(criteria, null);
-      return query.getResultList();
+      return (criteria.getRange() != null ?
+            query.getResultList().subList(criteria.getRange().getMinIndex(), criteria.getRange().getMaxIndex()) :
+            query.getResultList());
    }
 
    private Query getQuery(ReservationSearchCriteria criteria, String select)

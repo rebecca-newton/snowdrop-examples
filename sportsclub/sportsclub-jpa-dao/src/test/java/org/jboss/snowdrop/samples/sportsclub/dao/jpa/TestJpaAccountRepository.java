@@ -32,12 +32,12 @@ public class TestJpaAccountRepository
       Collection<Account> accounts = accountRepository.findAll();
       Assert.assertEquals(12, accounts.size());
 
-//      AccountSearchCriteria criteria = new AccountSearchCriteria();
-//      PersonSearchCriteria personCriteria = new PersonSearchCriteria();
-//      personCriteria.setName("Vetinari");
-//      criteria.setPersonSearchCriteria(personCriteria);
-//      List<Account> accountList = accountRepository.findByCriteria(criteria);
-//      Account account = accountList.get(0);
-//      Assert.assertNotNull(account.getBalance());
+      AccountSearchCriteria criteria = new AccountSearchCriteria();
+      PersonSearchCriteria personCriteria = new PersonSearchCriteria();
+      personCriteria.setName("Vetinari");
+      criteria.setPersonSearchCriteria(personCriteria);
+      List<Account> accountList = accountRepository.findByCriteria(criteria);
+      Account account = accountList.get(0);
+      Assert.assertNotNull(account.getBalance());
    }
 }
