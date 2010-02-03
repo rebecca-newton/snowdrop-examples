@@ -69,7 +69,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
       AccountSearchCriteria accountSearchCriteria = new AccountSearchCriteria();
       accountSearchCriteria.setActiveOnly(true);
       accountSearchCriteria.setPersonSearchCriteria(personSearchCriteria);
-      return accountRepository.countByCriteria(accountSearchCriteria);
+      return new Long(accountRepository.countByCriteria(accountSearchCriteria)).intValue();
    }
 
    public Account createAccount(Person person, String membershipCode, BillingType billingType)
