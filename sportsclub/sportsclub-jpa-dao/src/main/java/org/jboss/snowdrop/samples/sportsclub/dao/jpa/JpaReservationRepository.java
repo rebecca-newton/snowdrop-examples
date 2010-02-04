@@ -41,8 +41,9 @@ public class JpaReservationRepository extends JpaRepository<Reservation, Long> i
    private Query getQuery(ReservationSearchCriteria criteria, String select)
    {
       String q = (select != null ? select : "");
-
-      q += "FROM " + Reservation.class.getSimpleName() + " r WHERE 1 = 1";
+      String fetch = (select == null ? " left join fetch r.equipment" : "");
+      
+      q += "FROM " + Reservation.class.getSimpleName() + " r" + fetch + " WHERE 1 = 1";
 
       if (criteria.getFromDate() != null)
       {
