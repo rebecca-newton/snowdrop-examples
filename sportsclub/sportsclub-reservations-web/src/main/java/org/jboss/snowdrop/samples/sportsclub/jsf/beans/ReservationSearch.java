@@ -36,16 +36,6 @@ public class ReservationSearch extends ExtendedDataModel
       super();
    }
 
-//   public String searchReservations()
-//   {
-//      rowCount = reservationService.countReservationsForRange(
-//            reservationSearchOptions.getFromDate(),
-//            reservationSearchOptions.getToDate(),
-//            reservationSearchOptions.getSelectedEquipmentTypes());
-//      currentPage = 1;
-//      return "success";
-//   }
-
    public ReservationService getReservationService()
    {
       return reservationService;
