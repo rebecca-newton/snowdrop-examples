@@ -37,7 +37,7 @@ public class Account
 
    private Date closeDate;
    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("EST");
-   private static final int TWO_WEEKS = (14 * 24 * 3600 * 1000);
+   private static final long TWO_WEEKS = (14 * 24 * 3600 * 1000);
 
 
    public Account()
@@ -99,14 +99,12 @@ public class Account
          case WEEKLY:
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             timeInterval.setStartDate(calendar.getTime());
-            calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+            calendar.add(Calendar.DAY_OF_MONTH, 6);
             timeInterval.setEndDate(calendar.getTime());
             break;
          case BIWEEKLY:
             long duration = normalizedDate.getTime() - getCreationDate().getTime();
             long intervals = duration / TWO_WEEKS;
-            if (duration % TWO_WEEKS != 0)
-               intervals ++;
             calendar.setTime(getCreationDate());
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             calendar.add(Calendar.DAY_OF_MONTH, (int)intervals * 14);

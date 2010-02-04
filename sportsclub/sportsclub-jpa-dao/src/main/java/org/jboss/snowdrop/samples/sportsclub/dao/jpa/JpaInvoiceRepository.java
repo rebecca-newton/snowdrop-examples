@@ -3,6 +3,8 @@ package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
+
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;

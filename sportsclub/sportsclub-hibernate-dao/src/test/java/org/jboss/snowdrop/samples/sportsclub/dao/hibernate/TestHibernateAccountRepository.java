@@ -6,6 +6,7 @@ import java.util.List;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,5 +41,32 @@ public class TestHibernateAccountRepository
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Account account = accountList.get(0);
       Assert.assertNotNull(account.getBalance());
+   }
+
+   @Test
+   public void testAccountRepositoryWithInvoices()
+   {
+      AccountSearchCriteria criteria = new AccountSearchCriteria();
+      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria());
+      criteria.getInvoiceSearchCriteria().setCurrentInvoice(true);
+      List<Account> accountList = accountRepository.findByCriteria(criteria);
+      Assert.assertEquals(1, accountList.size());
+      Account account = accountList.get(0);
+      Assert.assertEquals(2l, account.getId());
+      Assert.assertNotNull(account.getBalance());
+   }
+
+   @Test
+   public void testAccountRepositoryWithoutInvoices()
+   {
+      AccountSearchCriteria criteria = new AccountSearchCriteria();
+      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria());
+      criteria.getInvoiceSearchCriteria().setCurrentInvoice(false);
+      List<Account> accountList = accountRepository.findByCriteria(criteria);
+      Assert.assertEquals(11, accountList.size());
+      for (Account account : accountList)
+      {
+         Assert.assertFalse(2l == account.getId());
+      }
    }
 }

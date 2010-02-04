@@ -62,9 +62,9 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
       }
       if (criteria.getInvoiceSearchCriteria() != null)
       {
-         String not = (criteria.getInvoiceSearchCriteria().isCurrentInvoice() ? "NOT" : "");
+         String not = (!criteria.getInvoiceSearchCriteria().isCurrentInvoice() ? "NOT" : "");
          q += " AND a.id "+not+" IN (SELECT i.account.id FROM " + Invoice.class.getSimpleName() +
-               " i WHERE i.billingPeriod.startDate <= :now AND i.billingPeriod.endDate >= :now )";
+              " i WHERE :now between i.billingPeriod.startDate and i.billingPeriod.endDate )";
       }
 
       Query query = entityManager.createQuery(q);

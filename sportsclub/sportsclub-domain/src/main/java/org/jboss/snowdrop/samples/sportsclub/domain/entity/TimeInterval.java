@@ -32,4 +32,9 @@ public class TimeInterval
    {
       this.startDate = startDate;
    }
+
+   public boolean contains(Date someDate)
+   {
+      return someDate.compareTo(startDate) >= 0 && someDate.compareTo(endDate)<=0;
+   }
 }

@@ -156,14 +156,14 @@ public class DatabaseInitializer implements InitializingBean
 
    private Invoice createInvoice(Account account)
    {
-      Date date = createDate(2009, 02, 01);
+      Date date = createDate(2010, 02, 01);
 
       Invoice invoice = new Invoice();
       invoice.setAccount(account);
       invoice.setAmount(account.getFeePerBillingPeriod());
       invoice.setIssueDate(date);
       invoice.setBillingPeriod(account.getBillingPeriodFor(date));
-
+      account.getBalance().debit(invoice.getAmount());
       return invoice;
    }
 

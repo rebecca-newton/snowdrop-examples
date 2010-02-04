@@ -3,6 +3,10 @@ package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
 import org.junit.runner.RunWith;
 import org.junit.Test;
 import org.junit.Assert;
@@ -26,6 +30,9 @@ public class TestJpaAccountRepository
    @Autowired
    AccountRepository accountRepository;
 
+   @Autowired
+   InvoiceRepository invoiceRepository;
+
    @Test
    public void testAccountRepository()
    {
@@ -39,5 +46,32 @@ public class TestJpaAccountRepository
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Account account = accountList.get(0);
       Assert.assertNotNull(account.getBalance());
+   }
+
+   @Test
+   public void testAccountRepositoryWithInvoices()
+   {
+      AccountSearchCriteria criteria = new AccountSearchCriteria();
+      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria());
+      criteria.getInvoiceSearchCriteria().setCurrentInvoice(true);
+      List<Account> accountList = accountRepository.findByCriteria(criteria);
+      Assert.assertEquals(1, accountList.size());
+      Account account = accountList.get(0);
+      Assert.assertEquals(2l, account.getId());
+      Assert.assertNotNull(account.getBalance());
+   }
+
+   @Test
+   public void testAccountRepositoryWithoutInvoices()
+   {
+      AccountSearchCriteria criteria = new AccountSearchCriteria();
+      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria());
+      criteria.getInvoiceSearchCriteria().setCurrentInvoice(false);
+      List<Account> accountList = accountRepository.findByCriteria(criteria);
+      Assert.assertEquals(11, accountList.size());
+      for (Account account : accountList)
+      {
+         Assert.assertFalse(2l == account.getId());
+      }      
    }
 }
