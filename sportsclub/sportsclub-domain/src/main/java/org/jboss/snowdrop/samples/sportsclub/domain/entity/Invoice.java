@@ -1,6 +1,7 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
@@ -13,8 +14,8 @@ import java.util.Date;
 public class Invoice
 {
 
-   @Id
-   private long id;
+   @Id @GeneratedValue
+   private Long id;
 
    @ManyToOne
    private Account account;

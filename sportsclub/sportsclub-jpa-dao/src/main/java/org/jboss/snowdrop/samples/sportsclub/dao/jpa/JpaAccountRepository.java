@@ -50,11 +50,13 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
       {
          q += " AND a.closed = :active";
       }
-      if (criteria.getPersonSearchCriteria() != null && criteria.getPersonSearchCriteria().getName() != null)
+      if (criteria.getPersonSearchCriteria() != null
+            && criteria.getPersonSearchCriteria().getName() != null
+            && criteria.getPersonSearchCriteria().getName().trim().length() != 0)
       {
-         q += " AND a.subscriber.name.firstName like :name" +
+         q += " AND (a.subscriber.name.firstName like :name" +
               " OR a.subscriber.name.lastName like :name" +
-              " OR a.subscriber.name.middleName like :name";
+              " OR a.subscriber.name.middleName like :name)";
       }
       if (criteria.getPersonSearchCriteria() != null && criteria.getPersonSearchCriteria().getCity() != null)
       {
@@ -73,7 +75,9 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
       {
          query.setParameter("active", false);
       }
-      if (criteria.getPersonSearchCriteria() != null && criteria.getPersonSearchCriteria().getName() != null)
+      if (criteria.getPersonSearchCriteria() != null
+            && criteria.getPersonSearchCriteria().getName() != null
+            && criteria.getPersonSearchCriteria().getName().trim().length() != 0)
       {
          query.setParameter("name", "%" + criteria.getPersonSearchCriteria().getName() + "%");
       }
