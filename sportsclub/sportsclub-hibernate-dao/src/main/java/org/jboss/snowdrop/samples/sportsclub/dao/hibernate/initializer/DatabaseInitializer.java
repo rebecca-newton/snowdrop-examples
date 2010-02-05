@@ -164,7 +164,7 @@ public class DatabaseInitializer implements InitializingBean
       invoice.setAmount(account.getFeePerBillingPeriod());
       invoice.setIssueDate(date);
       invoice.setBillingPeriod(account.getBillingPeriodFor(date));
-
+      account.getBalance().debit(invoice.getAmount());
       return invoice;
    }
 
