@@ -124,6 +124,9 @@
                                 <f:setPropertyActionListener value="#{true}" target="#{accountSearch.editing}"/>
                             </a4j:commandButton>
 
+                            <a4j:commandButton id="cancelAcctBtn" value="Cancel" rendered="#{accountSearch.editing}" reRender="accountData">
+                                <f:setPropertyActionListener value="#{false}" target="#{accountSearch.editing}"/>
+                            </a4j:commandButton>
                             <a4j:commandButton id="saveAcctBtn" value="Save" action="#{accountSearch.saveCurrent}" reRender="accountData" rendered="#{accountSearch.editing}"/>
 
                         </h:panelGrid>
