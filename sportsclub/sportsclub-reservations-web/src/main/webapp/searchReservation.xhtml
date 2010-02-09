@@ -37,7 +37,7 @@
                     </tr>
                 </table>
                 <br/>
-                <a4j:status id="commonstatus" startText="Retrieving data..." stopText=""/>
+                <!--<a4j:status id="commonstatus" startText="Retrieving data..." stopText=""/>-->
 
             </h:form>
         </rich:panel>
@@ -46,13 +46,14 @@
             <h:form>
                 <rich:panel header="Search results">
 
-                    <rich:extendedDataTable id="searchResultsTable" value="#{reservationSearch}"
-                                            var="reservation" selectionMode="single"
+                    <rich:extendedDataTable id="searchResultsTable" value="#{reservationSearch}" var="reservation"
+                                            selectionMode="single"
+                                            selection="#{reservationSearch.selection}"
                                             enableContextMenu="true"
                                             height="250px"
                                             rows="5"
                                             tableState="#{reservationSearch.tableState.tableState}">
-
+                        <a4j:support event="onselectionchange" reRender="reservationData"/>
                         <rich:column label="Reservation #">
                             <f:facet name="header">
                                 <h:outputText value="Reservation #"/>
@@ -96,12 +97,44 @@
                             <rich:datascroller id="scroller" for="searchResultsTable" maxPages="5"
                                                page="#{reservationSearch.currentPage}"/>
                         </f:facet>
-
                     </rich:extendedDataTable>
+                    <rich:componentControl attachTo="deleteRsrvBtn" event="onclick" operation="selectionchange"
+                                           for="searchResults"/>
                 </rich:panel>
             </h:form>
         </a4j:outputPanel>
 
+        <a4j:outputPanel id="reservationData">
+            <rich:panel rendered="#{reservationSearch.currentReservation != null}" >
+                <h:form>
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Equipment"/>
+                        <h:outputText value="#{reservationSearch.currentReservation.equipment}" converter="#{equipmentConverter}"/>
+
+                        <h:outputLabel value="Account"/>
+                        <h:outputText value="#{reservationSearch.currentReservation.account}" converter="#{accountConverter}"/>
+
+                        <h:outputLabel value="From"/>
+                        <h:outputText value="#{reservationSearch.currentReservation.from}"/>
+
+                        <h:outputLabel value="To"/>
+                        <h:outputText value="#{reservationSearch.currentReservation.to}"/>
+
+                        <a4j:commandButton id="deleteRsrvBtn" value="Delete" action="#{reservationSearch.deleteReservation}" reRender="searchResults,reservationData" rendered="#{!reservationSearch.editing}"/>
+                        <a4j:commandButton id="editRsrvBtn" value="Edit" reRender="reservationData" rendered="#{!reservationSearch.editing}">
+                            <f:setPropertyActionListener value="#{true}" target="#{reservationSearch.editing}"/>
+                        </a4j:commandButton>
+
+                        <a4j:commandButton id="cancelRsrvBtn" value="Cancel" rendered="#{reservationSearch.editing}" reRender="reservationData">
+                            <f:setPropertyActionListener value="#{false}" target="#{reservationSearch.editing}"/>
+                        </a4j:commandButton>
+                        <a4j:commandButton id="saveRsrvBtn" value="Save" action="#{reservationSearch.saveCurrent}" reRender="reservationData" rendered="#{reservationSearch.editing}"/>
+
+                    </h:panelGrid>
+                </h:form>
+            </rich:panel>
+        </a4j:outputPanel>
     </ui:define>
 
 </ui:composition>

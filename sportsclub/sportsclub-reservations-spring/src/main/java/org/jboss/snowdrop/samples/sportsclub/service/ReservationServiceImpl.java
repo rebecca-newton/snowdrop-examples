@@ -54,6 +54,20 @@ public class ReservationServiceImpl implements ReservationService
       reservationRepository.save(reservation);
    }
 
+   @Transactional(readOnly = false)
+   public void delete(Reservation reservation)
+   {
+      Reservation r = reservationRepository.findById(reservation.getId());
+      reservationRepository.delete(r);
+   }
+
+   @Transactional(readOnly = false)
+   public Reservation updateReservation(Reservation reservation)
+   {
+      reservationRepository.save(reservation);
+      return null;
+   }
+
    public ReservationRepository getReservationRepository()
    {
       return reservationRepository;

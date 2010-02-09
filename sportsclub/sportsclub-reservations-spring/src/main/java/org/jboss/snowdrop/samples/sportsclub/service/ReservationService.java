@@ -16,4 +16,8 @@ public interface ReservationService
    Long countReservationsForRange(Date fromDate, Date toDate, List<EquipmentType> types);
 
    void create(Reservation reservation);
+
+   public void delete(Reservation reservation);
+
+   public Reservation updateReservation(Reservation reservation);
 }

@@ -1,17 +1,19 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
-import org.jboss.snowdrop.samples.sportsclub.service.ReservationService;
-import org.jboss.snowdrop.samples.sportsclub.service.EquipmentService;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
-import org.ajax4jsf.model.ExtendedDataModel;
 import org.ajax4jsf.model.DataVisitor;
+import org.ajax4jsf.model.ExtendedDataModel;
 import org.ajax4jsf.model.Range;
 import org.ajax4jsf.model.SequenceRange;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.service.ReservationService;
+import org.richfaces.model.selection.Selection;
+import org.richfaces.model.selection.SimpleSelection;
 
 import javax.faces.context.FacesContext;
-import java.util.*;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -31,6 +33,8 @@ public class ReservationSearch extends ExtendedDataModel
    private Long rowCount;
 
    private ReservationTableState tableState;
+   private Selection selection;
+   private boolean editing;
 
    public   ReservationSearch() {
       super();
@@ -162,5 +166,55 @@ public class ReservationSearch extends ExtendedDataModel
    public void setReservationSearchOptions(ReservationSearchOptions reservationSearchOptions)
    {
       this.reservationSearchOptions = reservationSearchOptions;
+   }
+   
+   public void setSelection(Selection selection)
+   {
+      this.selection = selection;
+   }
+
+   public Selection getSelection()
+   {
+      return selection;
+   }
+
+   private Long getSelectedKey()
+   {
+      if (selection == null || selection.size() == 0)
+         return null;
+      else
+         return ((Long) selection.getKeys().next());
+   }
+
+   public Reservation getCurrentReservation()
+   {
+      if (selection != null && selection.size() > 0)
+         return reservationsMap.get(getSelectedKey());
+      else
+         return null;
+   }
+
+   public String deleteReservation()
+   {
+      reservationService.delete(getCurrentReservation());
+      selection = new SimpleSelection();
+      rowCount = null;
+      return "closed";
+   }
+
+   public void saveCurrent()
+   {
+      System.out.println("save current " + getCurrentReservation());
+      reservationService.updateReservation(getCurrentReservation());
+   }
+
+   public void setEditing(boolean editing)
+   {
+      this.editing = editing;
+   }
+
+   public boolean isEditing()
+   {
+      return editing;
    }
 }

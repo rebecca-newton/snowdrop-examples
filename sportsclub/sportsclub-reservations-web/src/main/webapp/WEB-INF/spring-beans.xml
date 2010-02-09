@@ -14,12 +14,6 @@
     <import resource="classpath*:spring-converterHelpers.xml"/>
     
     <!-- Request scoped beans -->
-    <bean id="reservationSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearch" scope="request">
-        <property name="reservationService" ref="reservationService"/>
-        <property name="tableState" ref="reservationSearchTableState"/>
-        <property name="reservationSearchOptions" ref="reservationSearchOptions"/>
-    </bean>
-
     <bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="request" init-method="init">
         <property name="reservationService" ref="reservationService"/>
         <property name="accountService" ref="accountService"/>
@@ -27,6 +21,12 @@
 
 
     <!-- Session scoped beans -->
+    <bean id="reservationSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearch" scope="session">
+        <property name="reservationService" ref="reservationService"/>
+        <property name="tableState" ref="reservationSearchTableState"/>
+        <property name="reservationSearchOptions" ref="reservationSearchOptions"/>
+    </bean>
+    
     <bean id="reservationSearchTableState" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationTableState" scope="session"/>
 
     <bean id="reservationSearchOptions" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearchOptions" scope="session" init-method="init">
