@@ -229,6 +229,45 @@
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
+                <artifactId>hibernate3-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <components>
+                        <component>
+                            <name>hbm2ddl</name>
+                            <implementation>annotationconfiguration</implementation>
+                        </component>
+                    </components>
+                    <componentProperties>
+                        <configurationfile>/src/main/resources/hibernate/hibernate.cfg.xml</configurationfile>
+                        <outputfilename>schema.ddl</outputfilename>
+                        <drop>true</drop>
+                        <create>true</create>
+                        <export>false</export>
+                    </componentProperties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>oracle</groupId>
+                        <artifactId>ojdbc14</artifactId>
+                        <version>10.2.0.2</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.6</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>hsqldb</groupId>
+                        <artifactId>hsqldb</artifactId>
+                        <version>1.8.0.10</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+           
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jboss-maven-plugin</artifactId>
                 <version>1.4</version>
                 <inherited>false</inherited>

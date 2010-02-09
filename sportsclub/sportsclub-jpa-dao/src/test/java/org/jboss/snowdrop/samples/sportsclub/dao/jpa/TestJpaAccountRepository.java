@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
  */
-@ContextConfiguration(locations = {"classpath:test-infrastructure.xml",
+@ContextConfiguration(locations = {"classpath:test-db-infrastructure.xml",
                                    "classpath:TEST-jpa-infrastructure.xml",
                                    "classpath:dao-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)

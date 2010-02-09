@@ -19,9 +19,12 @@ import org.springframework.transaction.support.TransactionTemplate;
 /**
  * @author Marius Bogoevici
  */
-@ContextConfiguration(locations = {"classpath:test-infrastructure.xml", "classpath:dao-context.xml", "classpath:service-context.xml"})
+@ContextConfiguration(locations = {"classpath:test-db-infrastructure.xml",
+      "classpath:dao-context.xml",
+      "classpath:test-hibernate-infrastructure.xml",
+      "classpath:service-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TestBillingService
+public class TestBillingServiceHibernateIntegration
 {
 
    @Autowired

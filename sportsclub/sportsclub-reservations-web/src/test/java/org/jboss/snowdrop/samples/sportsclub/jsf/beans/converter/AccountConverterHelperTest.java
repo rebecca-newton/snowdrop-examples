@@ -11,7 +11,11 @@ import org.testng.Assert;
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
  */
-@ContextConfiguration(locations = {"classpath:test-infrastructure.xml", "classpath:dao-context.xml", "classpath:spring-converterHelpers.xml"})
+@ContextConfiguration(locations = {
+      "classpath:test-db-infrastructure.xml",
+      "classpath:test-hibernate-infrastructure.xml",
+      "classpath:dao-context.xml",
+      "classpath:spring-converterHelpers.xml"})
 public class AccountConverterHelperTest extends AbstractTestNGSpringContextTests
 {
    @Autowired
