@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "guide.ent">
+%BOOK_ENTITIES;
+]>
+<bookinfo id="book-guide-guide">
+  <edition>0</edition>
+  <title>Sports Club</title>
+  <subtitle>An introduction to the JBoss and Spring integration example </subtitle>
+  <productname>Documentation</productname>
+  <productnumber>0.1</productnumber>
+  <pubsnumber>0</pubsnumber>
+  <abstract>
+    <para>
+A description of the Sports Club example, that illustrates a few JBoss and Spring integration use cases.</para>
+  </abstract>
+  <corpauthor>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="Common_Content/images/title_logo.svg" format="SVG"/>
+      </imageobject>
+    </inlinemediaobject>
+  </corpauthor>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="Common_Content/Legal_Notice.xml">
+    <xi:fallback xmlns:xi="http://www.w3.org/2001/XInclude">
+        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="fallback_content/Legal_Notice.xml"/>
+    </xi:fallback>
+  </xi:include>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="Author_Group.xml"/>
+</bookinfo>
