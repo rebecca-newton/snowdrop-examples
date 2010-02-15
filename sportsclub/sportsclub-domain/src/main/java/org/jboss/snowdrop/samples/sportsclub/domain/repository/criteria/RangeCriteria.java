@@ -2,7 +2,7 @@ package org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria;
 
 /**
  */
-public abstract class AbstractRangeCriteria
+public class RangeCriteria
 {
    private Range range;
 

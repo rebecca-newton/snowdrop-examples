@@ -15,4 +15,8 @@ public interface EquipmentService
    public Equipment findEquipmentById(long id);
 
    public Collection<Equipment> getAllEquipments();
+
+   public Long countAllEquipments();
+
+   public Collection<Equipment> getAllEquipments(int firstResult, int maxResults);
 }

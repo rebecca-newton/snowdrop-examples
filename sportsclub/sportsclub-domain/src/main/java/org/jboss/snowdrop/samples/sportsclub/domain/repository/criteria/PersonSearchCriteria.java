@@ -3,7 +3,7 @@ package org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria;
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
  */
-public class PersonSearchCriteria extends AbstractRangeCriteria
+public class PersonSearchCriteria extends RangeCriteria
 {
    private String name;
 

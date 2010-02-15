@@ -1,7 +1,6 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
 import org.jboss.snowdrop.samples.sportsclub.service.ReservationService;
-import org.jboss.snowdrop.samples.sportsclub.service.EquipmentService;
 import org.jboss.snowdrop.samples.sportsclub.service.AccountService;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
@@ -18,6 +17,9 @@ import java.util.Collection;
  */
 public class ReservationCreate
 {
+   private AccountFilter accountFilter;
+   private EquipmentFilter equipmentFilter;
+
    private ReservationService reservationService;
    private AccountService accountService;
 
@@ -64,6 +66,20 @@ public class ReservationCreate
       return "success";
    }
 
+   public void updateSelectedAccount()
+   {
+      System.out.println("Current account = " + reservation.getAccount());
+      Account account = accountFilter.getSelectedAccount();
+      System.out.println("setting account " + account.getId());
+      reservation.setAccount(account);
+   }
+
+   public void updateSelectedEquipment()
+   {
+      Equipment equipment = getEquipmentFilter().getSelectedEquipment();
+      reservation.setEquipment(equipment);
+   }
+
    public ReservationService getReservationService()
    {
       return reservationService;
@@ -92,5 +108,25 @@ public class ReservationCreate
    public void setAccountService(AccountService accountService)
    {
       this.accountService = accountService;
+   }
+
+   public AccountFilter getAccountFilter()
+   {
+      return accountFilter;
+   }
+
+   public void setAccountFilter(AccountFilter accountFilter)
+   {
+      this.accountFilter = accountFilter;
+   }
+
+   public EquipmentFilter getEquipmentFilter()
+   {
+      return equipmentFilter;
+   }
+
+   public void setEquipmentFilter(EquipmentFilter equipmentFilter)
+   {
+      this.equipmentFilter = equipmentFilter;
    }
 }

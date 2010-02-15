@@ -1,7 +1,6 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
 import org.ajax4jsf.model.DataVisitor;
-import org.ajax4jsf.model.ExtendedDataModel;
 import org.ajax4jsf.model.Range;
 import org.ajax4jsf.model.SequenceRange;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
@@ -18,25 +17,19 @@ import java.util.Map;
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
  */
-public class ReservationSearch extends ExtendedDataModel
+public class ReservationSearch extends AbstractExtendedDataModelHelper
 {
 
    private ReservationService reservationService;
-
    private ReservationSearchOptions reservationSearchOptions;
 
-   private int currentPage;
-   private int currentRow;
-   private Long currentId;
-
    private Map<Long, Reservation> reservationsMap = new HashMap<Long, Reservation>();
-   private Long rowCount;
 
    private ReservationTableState tableState;
-   private Selection selection;
    private boolean editing;
 
-   public   ReservationSearch() {
+   public ReservationSearch()
+   {
       super();
    }
 
@@ -50,56 +43,19 @@ public class ReservationSearch extends ExtendedDataModel
       this.reservationService = reservationService;
    }
 
-   public int getCurrentPage()
+   @Override
+   public Map<Long,? extends Object> getDomainObjectMap()
    {
-      return currentPage;
-   }
-
-   public void setCurrentPage(int currentPage)
-   {
-      this.currentPage = currentPage;
+      return reservationsMap;
    }
 
    @Override
-   public Object getRowKey()
+   public Long getCurrentRowCount()
    {
-      return currentId;
-   }
-
-   @Override
-   public void setRowKey(Object key)
-   {
-      if (key != null)
-         currentId = (Long) key;
-   }
-
-   @Override
-   public boolean isRowAvailable()
-   {
-      if (currentId == null)
-         return false;
-      if (reservationsMap.containsKey(currentId))
-         return true;
-      return false;
-   }
-
-   @Override
-   public int getRowCount()
-   {
-      if (rowCount == null)
-      {
-         rowCount = reservationService.countReservationsForRange(
+      return reservationService.countReservationsForRange(
                reservationSearchOptions.getFromDate(),
                reservationSearchOptions.getToDate(),
                reservationSearchOptions.getSelectedEquipmentTypes());
-      }
-      return rowCount.intValue();
-   }
-
-   @Override
-   public Object getRowData()
-   {
-      return reservationsMap.get(currentId);
    }
 
    @Override
@@ -120,32 +76,9 @@ public class ReservationSearch extends ExtendedDataModel
       }
    }
 
-   @Override
-   public int getRowIndex()
+   public String equipmentTypeCheckboxChanged()
    {
-      return currentRow;
-   }
-
-   @Override
-   public void setRowIndex(int rowIndex)
-   {
-      this.currentRow = rowIndex;
-   }
-
-   @Override
-   public Object getWrappedData()
-   {
-      throw new UnsupportedOperationException("Not supported");
-   }
-
-   @Override
-   public void setWrappedData(Object data)
-   {
-      throw new UnsupportedOperationException("Not supported");
-   }
-
-   public String equipmentTypeCheckboxChanged() {
-      return null;
+      return null; // TODO ?
    }
 
    public ReservationTableState getTableState()
@@ -167,28 +100,18 @@ public class ReservationSearch extends ExtendedDataModel
    {
       this.reservationSearchOptions = reservationSearchOptions;
    }
-   
-   public void setSelection(Selection selection)
-   {
-      this.selection = selection;
-   }
-
-   public Selection getSelection()
-   {
-      return selection;
-   }
 
    private Long getSelectedKey()
    {
-      if (selection == null || selection.size() == 0)
+      if (getSelection() == null || getSelection().size() == 0)
          return null;
       else
-         return ((Long) selection.getKeys().next());
+         return ((Long) getSelection().getKeys().next());
    }
 
    public Reservation getCurrentReservation()
    {
-      if (selection != null && selection.size() > 0)
+      if (getSelection() != null && getSelection().size() > 0)
          return reservationsMap.get(getSelectedKey());
       else
          return null;
@@ -197,14 +120,13 @@ public class ReservationSearch extends ExtendedDataModel
    public String deleteReservation()
    {
       reservationService.delete(getCurrentReservation());
-      selection = new SimpleSelection();
-      rowCount = null;
+      setSelection(new SimpleSelection());
+      resetCurrentRowCount();
       return "closed";
    }
 
    public void saveCurrent()
    {
-      System.out.println("save current " + getCurrentReservation());
       reservationService.updateReservation(getCurrentReservation());
    }
 

@@ -3,6 +3,8 @@ package org.jboss.snowdrop.samples.sportsclub.service;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.EquipmentRepository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.RangeCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -28,6 +30,18 @@ public class EquipmentServiceImpl  implements EquipmentService
    public Collection<Equipment> getAllEquipments()
    {
       return equipmentRepository.findAll();
+   }
+
+   public Long countAllEquipments()
+   {
+      return equipmentRepository.countAll();
+   }
+
+   public Collection<Equipment> getAllEquipments(int firstResult, int maxResults)
+   {
+      RangeCriteria criteria = new RangeCriteria();
+      criteria.setRange(new Range(firstResult, maxResults));
+      return equipmentRepository.findByCriteria(criteria);
    }
 
    public EquipmentRepository getEquipmentRepository()

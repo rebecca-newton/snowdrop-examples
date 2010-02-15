@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  */
-public class ReservationSearchCriteria extends AbstractRangeCriteria
+public class ReservationSearchCriteria extends RangeCriteria
 {
    private Date fromDate;
 

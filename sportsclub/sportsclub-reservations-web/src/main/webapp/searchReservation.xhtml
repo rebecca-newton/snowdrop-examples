@@ -30,8 +30,7 @@
                                                   value="#{reservationSearch.reservationSearchOptions.selectedEquipmentTypes}"
                                                   layout="lineDirection" converter="#{equipmentTypeConverter}">
                                 <f:selectItems value="#{referenceData.equipmentTypes}"/>
-                                <a4j:support event="onchange" action="#{reservationSearch.equipmentTypeCheckboxChanged}"
-                                             reRender="searchResults"/>
+                                <a4j:support event="onchange" reRender="searchResults"/>
                             </h:selectManyCheckbox>
                         </td>
                     </tr>
