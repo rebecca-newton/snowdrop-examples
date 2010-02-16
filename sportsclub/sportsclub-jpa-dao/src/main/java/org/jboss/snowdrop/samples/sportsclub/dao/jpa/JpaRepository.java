@@ -1,13 +1,13 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.Repository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Abstract repository using JPA EntityManager.
@@ -49,5 +49,10 @@ public abstract class JpaRepository<T, I extends Serializable> implements Reposi
    public long countAll()
    {
       return (Long)entityManager.createQuery("SELECT COUNT(c) FROM " + clazz.getSimpleName() + " c").getSingleResult();
+   }
+
+   public Query applyRange(Query query, Range range)
+   {
+      return query.setFirstResult(range.getMinIndex()).setMaxResults(range.length());
    }
 }

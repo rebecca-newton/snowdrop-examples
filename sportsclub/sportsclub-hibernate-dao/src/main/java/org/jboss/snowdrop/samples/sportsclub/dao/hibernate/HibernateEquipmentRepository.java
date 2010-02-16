@@ -31,10 +31,7 @@ public class HibernateEquipmentRepository extends HibernateRepository<Equipment,
    {
       Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Equipment.class);
       if (rangeCriteria.getRange() != null)
-      {
-         criteria.setFirstResult(rangeCriteria.getRange().getMinIndex());
-         criteria.setMaxResults(rangeCriteria.getRange().length());
-      }
+         criteria = applyRange(criteria, rangeCriteria.getRange());
       return criteria;
    }
 }

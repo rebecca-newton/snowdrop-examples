@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Marius Bogoevici
@@ -26,13 +25,9 @@ public class JpaEquipmentRepository extends JpaRepository<Equipment,Long> implem
 
    public Collection<Equipment> findByCriteria(RangeCriteria criteria)
    {
-      Query q = entityManager.createQuery("FROM " + Equipment.class.getSimpleName());
-      List<Equipment> list = q.getResultList();
+      Query query = entityManager.createQuery("FROM " + Equipment.class.getSimpleName());
       if (criteria.getRange() != null)
-      {
-         int max = (criteria.getRange().getMaxIndex() > list.size() ? list.size() : criteria.getRange().getMaxIndex());
-         list = list.subList(criteria.getRange().getMinIndex(), max);
-      }
-      return list;
+         query = applyRange(query, criteria.getRange());
+      return query.getResultList();
    }
 }

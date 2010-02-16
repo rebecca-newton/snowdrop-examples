@@ -5,6 +5,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 import org.junit.runner.RunWith;
@@ -68,6 +69,15 @@ public class TestJpaReservationRepository
       Assert.assertEquals(1, reservationRepository.countByCriteria(criteria).longValue());
    }
 
+   @Test
+   public void testRangeCriteria()
+   {
+      ReservationSearchCriteria criteria = new ReservationSearchCriteria();
+      criteria.setRange(new Range(1,3));
+      List<Reservation> accountList = reservationRepository.getByCriteria(criteria);
+      Assert.assertEquals(3, accountList.size());
+   }
+   
    private Date getDate(int year, int month, int day)
    {
       Calendar cal = Calendar.getInstance(Locale.US);

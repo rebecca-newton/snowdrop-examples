@@ -72,10 +72,7 @@ public class HibernateAccountRepository extends HibernateRepository<Account, Lon
    {
       Criteria criteria = convert(accountSearchCriteria);
       if (accountSearchCriteria.getRange() != null)
-      {
-         criteria.setFirstResult(accountSearchCriteria.getRange().getMinIndex());
-         criteria.setMaxResults(accountSearchCriteria.getRange().length());
-      }
+         criteria = applyRange(criteria, accountSearchCriteria.getRange());
       return (List<Account>) criteria.list();
    }
 }

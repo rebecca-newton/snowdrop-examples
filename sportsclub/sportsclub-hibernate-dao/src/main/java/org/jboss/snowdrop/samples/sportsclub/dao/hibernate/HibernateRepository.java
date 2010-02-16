@@ -1,12 +1,13 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.Repository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -62,5 +63,8 @@ public abstract class HibernateRepository<T, I extends Serializable> implements 
       return (Integer)getCurrentSession().createCriteria(clazz).setProjection(Projections.count("id")).uniqueResult();
    }
 
-
+   public Criteria applyRange(Criteria criteria, Range range)
+   {
+      return criteria.setFirstResult(range.getMinIndex()).setMaxResults(range.length());
+   }
 }

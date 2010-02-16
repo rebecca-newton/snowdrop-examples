@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +41,15 @@ public class TestHibernateAccountRepository
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Account account = accountList.get(0);
       Assert.assertNotNull(account.getBalance());
+   }
+
+   @Test
+   public void testRangeCriteria()
+   {
+      AccountSearchCriteria criteria = new AccountSearchCriteria();
+      criteria.setRange(new Range(1,3));
+      List<Account> accountList = accountRepository.findByCriteria(criteria);
+      Assert.assertEquals(3, accountList.size());
    }
 
    @Test

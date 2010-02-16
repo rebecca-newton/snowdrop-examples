@@ -1,19 +1,18 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
-import org.junit.runner.RunWith;
-import org.junit.Test;
-import org.junit.Assert;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,6 +45,15 @@ public class TestJpaAccountRepository
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Account account = accountList.get(0);
       Assert.assertNotNull(account.getBalance());
+   }
+
+   @Test
+   public void testRangeCriteria()
+   {
+      AccountSearchCriteria criteria = new AccountSearchCriteria();
+      criteria.setRange(new Range(1,3));
+      List<Account> accountList = accountRepository.findByCriteria(criteria);
+      Assert.assertEquals(3, accountList.size());
    }
 
    @Test

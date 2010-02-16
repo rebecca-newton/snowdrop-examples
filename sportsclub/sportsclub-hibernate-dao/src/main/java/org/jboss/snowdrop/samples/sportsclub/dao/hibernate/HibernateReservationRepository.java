@@ -38,10 +38,7 @@ public class HibernateReservationRepository extends HibernateRepository<Reservat
       }
 
       if (reservationSearchCriteria.getRange() != null)
-      {
-         criteria.setFirstResult(reservationSearchCriteria.getRange().getMinIndex());
-         criteria.setMaxResults(reservationSearchCriteria.getRange().length());
-      }
+         criteria = applyRange(criteria, reservationSearchCriteria.getRange());
 
       if (reservationSearchCriteria.getEquipmentType() != null)
       {

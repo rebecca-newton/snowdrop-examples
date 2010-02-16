@@ -1,16 +1,17 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.*;
 
@@ -65,6 +66,15 @@ public class TestHibernateReservationRepository
 
       Assert.assertEquals(1, reservationRepository.getByCriteria(criteria).size());
       Assert.assertEquals(1, reservationRepository.countByCriteria(criteria).longValue());
+   }
+
+   @Test
+   public void testRangeCriteria()
+   {
+      ReservationSearchCriteria criteria = new ReservationSearchCriteria();
+      criteria.setRange(new Range(1,3));
+      List<Reservation> accountList = reservationRepository.getByCriteria(criteria);
+      Assert.assertEquals(3, accountList.size());
    }
 
    private Date getDate(int year, int month, int day)
