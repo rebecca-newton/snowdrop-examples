@@ -44,6 +44,7 @@
 
     
     <!-- Application scoped service -->
+    <!-- TODO remove if not needed -->
     <bean id="referenceData" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReferenceData" init-method="init">
         <property name="equipmentService" ref="equipmentService"/>
     </bean>

@@ -24,6 +24,7 @@ public class ReservationCreate
    private AccountService accountService;
 
    private Reservation reservation;
+   private long createdReservationId;
 
    public void init()
    {
@@ -44,25 +45,11 @@ public class ReservationCreate
       reservation.setTo(to);
    }
 
-   public SelectItem[] getAllAccounts()
-   {
-      Collection<Account> accounts = accountService.getAllAccounts();
-      SelectItem[] items = new SelectItem[accounts.size()];
-      int i = 0;
-      for (Account a : accounts)
-      {
-         String label = a.getSubscriber().getName().getFirstName() + " " +
-            a.getSubscriber().getName().getLastName() + " (" +
-            a.getSubscriber().getAddress().getCity() + ", " +
-            a.getSubscriber().getAddress().getCountry() + ")";
-         items[i++] = new SelectItem(a, label);
-      }
-      return items;
-   }
-
    public String create()
    {
       reservationService.create(reservation);
+      createdReservationId = reservation.getId();
+      init();
       return "success";
    }
 
@@ -126,5 +113,15 @@ public class ReservationCreate
    public void setEquipmentFilter(EquipmentFilter equipmentFilter)
    {
       this.equipmentFilter = equipmentFilter;
+   }
+
+   public long getCreatedReservationId()
+   {
+      return createdReservationId;
+   }
+
+   public void setCreatedReservationId(long createdReservationId)
+   {
+      this.createdReservationId = createdReservationId;
    }
 }

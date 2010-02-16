@@ -1,4 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:c="http://java.sun.com/jstl/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -130,28 +131,14 @@
                 <h:panelGrid columns="2">
 
                     <h:outputLabel value="Equipment"/>
-                    <!--h:panelGroup>
-                        <rich:inplaceSelect id="equipment" defaultLabel="Click to enter"
-                                            value="#{reservationCreate.reservation.equipment}"
-                                            required="true"
-                                            converter="#{equipmentConverter}">
-                            <f:selectItems value="#{referenceData.allEquipments}"/>
-                        </rich:inplaceSelect>
-                        <h:message for="equipment" style="color:RED"/>
-                    </h:panelGroup-->
-                    <h:outputText value="#{reservationCreate.reservation.equipment}" converter="#{equipmentConverter}"/>
+                    <h:outputText rendered="#{reservationCreate.reservation.equipment != null}"
+                            value="#{reservationCreate.reservation.equipment.name} (#{reservationCreate.reservation.equipment.description})"/>
+                    <h:outputText rendered="#{reservationCreate.reservation.equipment == null}" value="Not selected"/>
 
                     <h:outputLabel value="Account"/>
-                    <!--h:panelGroup>
-                        <rich:inplaceSelect id="account" defaultLabel="Click to enter"
-                                            value="#{reservationCreate.reservation.account}"
-                                            required="true"
-                                            converter="#{accountConverter}">
-                            <f:selectItems value="#{reservationCreate.allAccounts}"/>
-                        </rich:inplaceSelect>
-                        <h:message for="account" style="color:RED"/>
-                    </h:panelGroup-->
-                    <h:outputText value="#{reservationCreate.reservation.account}" converter="#{accountConverter}"/>
+                    <h:outputText rendered="#{reservationCreate.reservation.account != null}"
+                            value="#{reservationCreate.reservation.account.subscriber.name.firstName} #{reservationCreate.reservation.account.subscriber.name.lastName} (#{reservationCreate.reservation.account.subscriber.address.city}, #{reservationCreate.reservation.account.subscriber.address.country})"/>
+                    <h:outputText rendered="#{reservationCreate.reservation.account == null}" value="Not selected"/>
 
                     <h:outputLabel value="From"/>
                     <h:panelGroup>

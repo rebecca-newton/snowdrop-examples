@@ -119,7 +119,6 @@ public abstract class AbstractExtendedDataModelHelper extends ExtendedDataModel
 
    public void setSelection(Selection selection)
    {
-      System.out.println("Setting selection " + selection);
       this.selection = selection;
    }
 }
