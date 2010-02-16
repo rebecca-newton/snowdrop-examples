@@ -47,18 +47,25 @@
                                     <h:outputText value="#{account.subscriber.name.firstName}"/>
                                 </rich:column>
 
-                                <rich:column label="Middle Name">
-                                    <f:facet name="header">
-                                        <h:outputText value="Middle Name"/>
-                                    </f:facet>
-                                    <h:outputText value="#{account.subscriber.name.middleName}"/>
-                                </rich:column>
-
                                 <rich:column label="Last Name">
                                     <f:facet name="header">
                                         <h:outputText value="Last Name"/>
                                     </f:facet>
                                     <h:outputText value="#{account.subscriber.name.lastName}"/>
+                                </rich:column>
+
+                                <rich:column label="City">
+                                    <f:facet name="header">
+                                        <h:outputText value="City"/>
+                                    </f:facet>
+                                    <h:outputText value="#{account.subscriber.address.city}"/>
+                                </rich:column>
+
+                                <rich:column label="Country">
+                                    <f:facet name="header">
+                                        <h:outputText value="Country"/>
+                                    </f:facet>
+                                    <h:outputText value="#{account.subscriber.address.country}"/>
                                 </rich:column>
 
                                 <f:facet name="footer">

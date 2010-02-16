@@ -68,9 +68,7 @@ public class ReservationCreate
 
    public void updateSelectedAccount()
    {
-      System.out.println("Current account = " + reservation.getAccount());
       Account account = accountFilter.getSelectedAccount();
-      System.out.println("setting account " + account.getId());
       reservation.setAccount(account);
    }
 

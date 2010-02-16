@@ -13,16 +13,23 @@
 
     <import resource="classpath*:spring-converterHelpers.xml"/>
     
-    <!-- Request scoped beans -->
-    <bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="request" init-method="init">
+    <!-- Session scoped beans -->
+    <bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="session" init-method="init">
         <property name="reservationService" ref="reservationService"/>
         <property name="accountService" ref="accountService"/>
         <property name="accountFilter" ref="accountFilter"/>
         <property name="equipmentFilter" ref="equipmentFilter"/>
     </bean>
 
+    <bean id="accountFilter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.AccountFilter" scope="session">
+        <property name="accountService" ref="accountService"/>
+    </bean>
 
-    <!-- Session scoped beans -->
+    <bean id="equipmentFilter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentFilter" scope="session">
+        <property name="equipmentService" ref="equipmentService"/>
+    </bean>
+
+
     <bean id="reservationSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearch" scope="session">
         <property name="reservationService" ref="reservationService"/>
         <property name="tableState" ref="reservationSearchTableState"/>
@@ -35,14 +42,7 @@
         <property name="equipmentService" ref="equipmentService"/>
     </bean>
 
-    <bean id="accountFilter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.AccountFilter" scope="session">
-        <property name="accountService" ref="accountService"/>
-    </bean>
-
-    <bean id="equipmentFilter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentFilter" scope="session">
-        <property name="equipmentService" ref="equipmentService"/>
-    </bean>
-
+    
     <!-- Application scoped service -->
     <bean id="referenceData" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReferenceData" init-method="init">
         <property name="equipmentService" ref="equipmentService"/>
