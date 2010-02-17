@@ -11,7 +11,6 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import sun.misc.GC;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
