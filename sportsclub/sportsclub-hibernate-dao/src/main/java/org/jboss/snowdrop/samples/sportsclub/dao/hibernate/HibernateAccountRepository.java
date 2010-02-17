@@ -55,12 +55,12 @@ public class HibernateAccountRepository extends HibernateRepository<Account, Lon
       }
       if (accountSearchCriteria.getInvoiceSearchCriteria() != null)
       {
-         Timestamp now = new Timestamp(System.currentTimeMillis());
+         Timestamp now = new Timestamp(accountSearchCriteria.getInvoiceSearchCriteria().getReferenceDate().getTime());
          DetachedCriteria invcEntries = DetachedCriteria.forClass(Invoice.class)
                .setProjection(Property.forName("account.id"));
          invcEntries.add(and(le("billingPeriod.startDate", now), ge("billingPeriod.endDate", now)));
 
-         if (accountSearchCriteria.getInvoiceSearchCriteria().isCurrentInvoice())
+         if (accountSearchCriteria.getInvoiceSearchCriteria().isExistingInvoice())
             criteria.add(Subqueries.propertyIn("id", invcEntries));
          else
             criteria.add(Subqueries.propertyNotIn("id", invcEntries));

@@ -20,6 +20,7 @@
         <module>sportsclub-invoicing-ejb</module>
         <module>sportsclub-invoicing-webmvc</module>
         <module>sportsclub-jpa-ear</module>
+        <module>assembly</module>
     </modules>
     
     <packaging>pom</packaging>

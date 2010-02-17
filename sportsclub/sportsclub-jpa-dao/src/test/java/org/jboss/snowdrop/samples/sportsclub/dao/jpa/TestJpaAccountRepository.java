@@ -15,6 +15,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -31,6 +33,8 @@ public class TestJpaAccountRepository
 
    @Autowired
    InvoiceRepository invoiceRepository;
+   
+   public static final Date TEST_DATE = new GregorianCalendar(2010, 1, 4).getTime();
 
    @Test
    public void testAccountRepository()
@@ -60,8 +64,8 @@ public class TestJpaAccountRepository
    public void testAccountRepositoryWithInvoices()
    {
       AccountSearchCriteria criteria = new AccountSearchCriteria();
-      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria());
-      criteria.getInvoiceSearchCriteria().setCurrentInvoice(true);
+      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria(TEST_DATE));
+      criteria.getInvoiceSearchCriteria().setExistingInvoice(true);
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Assert.assertEquals(1, accountList.size());
       Account account = accountList.get(0);
@@ -73,8 +77,8 @@ public class TestJpaAccountRepository
    public void testAccountRepositoryWithoutInvoices()
    {
       AccountSearchCriteria criteria = new AccountSearchCriteria();
-      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria());
-      criteria.getInvoiceSearchCriteria().setCurrentInvoice(false);
+      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria(TEST_DATE));
+      criteria.getInvoiceSearchCriteria().setExistingInvoice(false);
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Assert.assertEquals(11, accountList.size());
       for (Account account : accountList)

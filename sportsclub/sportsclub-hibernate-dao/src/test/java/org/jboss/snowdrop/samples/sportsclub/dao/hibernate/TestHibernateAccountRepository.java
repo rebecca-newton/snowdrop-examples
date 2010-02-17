@@ -1,6 +1,8 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
@@ -9,6 +11,8 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import sun.misc.GC;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -27,6 +31,7 @@ public class TestHibernateAccountRepository
 
    @Autowired
    AccountRepository accountRepository;
+   private static final Date TEST_DATE = new GregorianCalendar(2010, 1, 4).getTime();
 
    @Test
    public void testAccountRepository()
@@ -56,8 +61,8 @@ public class TestHibernateAccountRepository
    public void testAccountRepositoryWithInvoices()
    {
       AccountSearchCriteria criteria = new AccountSearchCriteria();
-      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria());
-      criteria.getInvoiceSearchCriteria().setCurrentInvoice(true);
+      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria(TEST_DATE));
+      criteria.getInvoiceSearchCriteria().setExistingInvoice(true);
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Assert.assertEquals(1, accountList.size());
       Account account = accountList.get(0);
@@ -69,8 +74,8 @@ public class TestHibernateAccountRepository
    public void testAccountRepositoryWithoutInvoices()
    {
       AccountSearchCriteria criteria = new AccountSearchCriteria();
-      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria());
-      criteria.getInvoiceSearchCriteria().setCurrentInvoice(false);
+      criteria.setInvoiceSearchCriteria(new InvoiceSearchCriteria(TEST_DATE));
+      criteria.getInvoiceSearchCriteria().setExistingInvoice(false);
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Assert.assertEquals(11, accountList.size());
       for (Account account : accountList)

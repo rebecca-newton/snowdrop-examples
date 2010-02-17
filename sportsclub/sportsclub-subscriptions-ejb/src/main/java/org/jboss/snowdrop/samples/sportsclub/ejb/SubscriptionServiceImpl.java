@@ -52,8 +52,12 @@ public class SubscriptionServiceImpl implements SubscriptionService
    {
       PersonSearchCriteria personSearchCriteria = new PersonSearchCriteria();
       personSearchCriteria.setName(name);
-      InvoiceSearchCriteria invoiceSearchCriteria = new InvoiceSearchCriteria();
-      invoiceSearchCriteria.setCurrentInvoice(currentInvoice);
+      InvoiceSearchCriteria invoiceSearchCriteria = null;
+      if (currentInvoice)
+      {
+         invoiceSearchCriteria = new InvoiceSearchCriteria(new Date());
+         invoiceSearchCriteria.setExistingInvoice(currentInvoice);
+      }
       AccountSearchCriteria accountSearchCriteria = new AccountSearchCriteria();
       accountSearchCriteria.setPersonSearchCriteria(personSearchCriteria);
       accountSearchCriteria.setInvoiceSearchCriteria(invoiceSearchCriteria);

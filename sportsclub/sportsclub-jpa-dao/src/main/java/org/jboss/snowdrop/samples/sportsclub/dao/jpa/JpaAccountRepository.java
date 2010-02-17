@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import java.util.List;
-import java.sql.Timestamp;
 
 /**
  * @author Marius Bogoevici
@@ -60,7 +59,7 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
       }
       if (criteria.getInvoiceSearchCriteria() != null)
       {
-         String not = (!criteria.getInvoiceSearchCriteria().isCurrentInvoice() ? "NOT" : "");
+         String not = (!criteria.getInvoiceSearchCriteria().isExistingInvoice() ? "NOT" : "");
          q += " AND a.id "+not+" IN (SELECT i.account.id FROM " + Invoice.class.getSimpleName() +
               " i WHERE :now between i.billingPeriod.startDate and i.billingPeriod.endDate )";
       }
@@ -81,9 +80,9 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
       {
          query.setParameter("city", "%" + criteria.getPersonSearchCriteria().getCity() + "%");
       }
-      if (criteria.getInvoiceSearchCriteria() != null)
+      if (criteria.getInvoiceSearchCriteria() != null && criteria.getInvoiceSearchCriteria().getReferenceDate() != null)
       {
-         query.setParameter("now", new Timestamp(System.currentTimeMillis()));
+         query.setParameter("now", criteria.getInvoiceSearchCriteria().getReferenceDate());
       }
 
       return query;
