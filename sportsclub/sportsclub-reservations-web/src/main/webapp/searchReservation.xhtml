@@ -12,11 +12,19 @@
             <f:facet name="header">Filter reservations</f:facet>
             <h:form>
                 from:
-                <rich:calendar id="from" value="#{reservationSearch.reservationSearchOptions.fromDate}">
+                <rich:calendar id="from"
+                               value="#{reservationSearch.reservationSearchOptions.fromDate}"
+                               datePattern="d/M/yyyy HH:mm"
+                               showApplyButton="true"
+                               locale="#{reservationSearch.reservationSearchOptions.locale}">
                     <a4j:support event="onchanged" reRender="searchResults"/>
                 </rich:calendar>
                 to:
-                <rich:calendar id="to" value="#{reservationSearch.reservationSearchOptions.toDate}">
+                <rich:calendar id="to"
+                               value="#{reservationSearch.reservationSearchOptions.toDate}"
+                               datePattern="d/M/yyyy HH:mm"
+                               showApplyButton="true"
+                               locale="#{reservationSearch.reservationSearchOptions.locale}">
                     <a4j:support event="onchanged" reRender="searchResults"/>
                 </rich:calendar>
                 <br/>

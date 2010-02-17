@@ -25,6 +25,7 @@ public class ReservationCreate
 
    private Reservation reservation;
    private long createdReservationId;
+   private Locale locale;
 
    public void init()
    {
@@ -43,6 +44,13 @@ public class ReservationCreate
       reservation.setEquipment(null);
       reservation.setFrom(from);
       reservation.setTo(to);
+
+      locale = Locale.getDefault();
+   }
+
+   public Locale getLocale()
+   {
+      return locale;
    }
 
    public String create()

@@ -6,6 +6,7 @@ import org.jboss.snowdrop.samples.sportsclub.service.EquipmentService;
 import java.util.Date;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -17,10 +18,17 @@ public class ReservationSearchOptions
    private Date fromDate;
    private Date toDate;
    private List<EquipmentType> selectedEquipmentTypes;
+   private Locale locale;
 
    public void init()
    {
+      locale = Locale.getDefault();
       selectedEquipmentTypes = Arrays.asList(getEquipmentService().getEquipmentTypes());
+   }
+
+   public Locale getLocale()
+   {
+      return locale;
    }
 
    public Date getFromDate()

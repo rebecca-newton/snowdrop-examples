@@ -142,13 +142,23 @@
 
                     <h:outputLabel value="From"/>
                     <h:panelGroup>
-                        <rich:calendar id="from" value="#{reservationCreate.reservation.from}" required="true"/>
+                        <rich:calendar id="from"
+                                       value="#{reservationCreate.reservation.from}"
+                                       datePattern="d/M/yy HH:mm"
+                                       showApplyButton="true"
+                                       required="true"
+                                       locale="#{reservationCreate.locale}"/>
                         <h:message for="from" style="color:RED"/>
                     </h:panelGroup>
 
                     <h:outputLabel value="To"/>
                     <h:panelGroup>
-                        <rich:calendar id="to" value="#{reservationCreate.reservation.to}" required="true"/>
+                        <rich:calendar id="to"
+                                       value="#{reservationCreate.reservation.to}"
+                                       datePattern="d/M/yy HH:mm"
+                                       showApplyButton="true"
+                                       required="true"
+                                       locale="#{reservationCreate.locale}"/>
                         <h:message for="to" style="color:RED"/>
                     </h:panelGroup>
 
