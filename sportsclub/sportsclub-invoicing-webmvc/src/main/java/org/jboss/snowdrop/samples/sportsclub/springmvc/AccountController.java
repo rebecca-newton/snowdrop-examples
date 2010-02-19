@@ -53,9 +53,9 @@ public class AccountController
    {
       String nameFragment = userInput.getNameFragment();
       Integer maxAccountNum = userInput.getMaxAccountNum();
-      boolean currentInvoice = (UserInput.INVOICE_WITH.equals(userInput.getInvoiceStatus()) ? true : false);
+      boolean withInvoice = (UserInput.INVOICE_WITH.equals(userInput.getInvoiceStatus()) ? true : false);
 
-      List<Account> accountList = subscriptionService.findAccountsBySubscriberName(nameFragment, 0, maxAccountNum, currentInvoice);
+      List<Account> accountList = subscriptionService.findAccountsBySubscriberName(nameFragment, 0, maxAccountNum, withInvoice);
 
       ModelMap model = new ModelMap();
       model.addAttribute(userInput)
