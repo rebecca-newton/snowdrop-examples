@@ -5,6 +5,7 @@ import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.PaymentRepository;
@@ -13,6 +14,7 @@ import org.jboss.spring.callback.SpringLifecycleInterceptor;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import java.util.Date;
+import java.util.List;
 
 @Stateless
 @Interceptors(SpringLifecycleInterceptor.class)
@@ -58,5 +60,15 @@ public class BillingServiceImpl implements BillingService
       return invoice;
    }
 
- 
+   public List<Invoice> getInvoices(Account account)
+   {
+      return invoiceRepository.findForAccount(account);
+   }
+
+   public List<Payment> getPayments(Account account)
+   {
+      return paymentRepository.findForAccount(account);
+   }
+
+
 }

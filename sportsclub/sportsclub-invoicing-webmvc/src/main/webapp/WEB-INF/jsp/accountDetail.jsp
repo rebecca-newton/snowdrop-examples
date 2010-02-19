@@ -2,12 +2,17 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
 <html>
 <head><title>Sports Club: Invoicing - account detail</title></head>
 <body>
 
-<div>Account details</div>
+<p>
+    <a href='searchAccount.do'>Go back to search form.</a>
+</p>
+
+<h3>Account details</h3>
 
 <table>
     <tr>
@@ -76,11 +81,67 @@
     </c:if>
 </table>
 
-<form:form action="generateInvoice.do">
-    You can create new invoice for this account:
-    <input type="hidden" name="id" value="<c:out value="${account.id}"/>">
-    <input type="submit" value="Create invoice"/><br/>
-</form:form>
+<p>
+    <form:form action="generateInvoice.do">
+        You can create new invoice for this account:
+        <input type="hidden" name="id" value="<c:out value="${account.id}"/>">
+        <input type="submit" value="Create invoice"/><br/>
+    </form:form>
+</p>
+
+<table cellspacing="10">
+    <tr>
+        <td>
+            <table border="1">
+                <thead>
+                <tr>
+                    <th colspan="5">Invoices</th>
+                </tr>
+                <tr>
+                    <th rowspan="2">Id</th>
+                    <th rowspan="2">IssueDate</th>
+                    <th rowspan="2">Amount</th>
+                    <th colspan="2">BillingPeriod</th>
+                </tr>
+                <tr>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+                </thead>
+                <c:forEach items="${invoices}" var="invoice">
+                    <tr>
+                        <td><c:out value="${invoice.id}"/></td>
+                        <td><c:out value="${invoice.issueDate}"/></td>
+                        <td><c:out value="${invoice.amount}"/></td>
+                        <td><fmt:formatDate value="${invoice.billingPeriod.startDate}" dateStyle="short" timeStyle="short" type="both"/></td>
+                        <td><fmt:formatDate value="${invoice.billingPeriod.endDate}" dateStyle="short" timeStyle="short" type="both"/></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </td>
+        <td>
+            <table border="1">
+                <thead>
+                <tr>
+                    <th colspan="3">Payments</th>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <c:forEach items="${payments}" var="payment">
+                    <tr>
+                        <td><c:out value="${payment.id}"/></td>
+                        <td><c:out value="${payment.amount}"/></td>
+                        <td><fmt:formatDate value="${payment.date}" dateStyle="short" timeStyle="short" type="both"/></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </td>
+    </tr>
+</table>
 
 </body>
 </html>

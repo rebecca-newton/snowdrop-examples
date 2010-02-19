@@ -1,21 +1,18 @@
 package org.jboss.snowdrop.samples.sportsclub.springmvc;
 
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment;
+import org.jboss.snowdrop.samples.sportsclub.ejb.SubscriptionService;
+import org.jboss.spring.samples.sportsclub.invoicing.services.BillingService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.ui.ModelMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.core.JmsTemplate;
-import org.jboss.snowdrop.samples.sportsclub.ejb.SubscriptionService;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.PaymentNotification;
-import org.jboss.spring.samples.sportsclub.invoicing.services.BillingService;
 
 import javax.ejb.EJB;
 import java.util.List;
-import java.math.BigDecimal;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -72,16 +69,19 @@ public class AccountController
    {
       Account account = subscriptionService.findAccountById(Long.parseLong(id));
 
+      List<Invoice> invoices = billingService.getInvoices(account);
+      List<Payment> payments = billingService.getPayments(account);
+
       ModelMap model = new ModelMap();
       model.addAttribute(account);
+      model.addAttribute("invoices", invoices);
+      model.addAttribute("paymetns", payments);
       return model;
    }
 
    @RequestMapping(value = "/generateInvoice.do", method = RequestMethod.POST)
    ModelMap generateInvoice(@RequestParam("id") String id)
    {
-
-      // doublecheck that account does not have current invoice
       Account account = subscriptionService.findAccountById(Long.parseLong(id));
       Invoice invoice = billingService.generateInvoice(account);
 
