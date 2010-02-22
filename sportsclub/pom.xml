@@ -52,6 +52,7 @@
                <groupId>org.jboss.ejb3</groupId>
                <artifactId>jboss-ejb3-ext-api</artifactId>
                <version>1.0.0</version>
+               <scope>provided</scope>
             </dependency>
 
             <dependency>
@@ -204,83 +205,6 @@
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0-alpha-2</version>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <id>setJBossProperties</id>
-                        <goals>
-                            <goal>read-project-properties</goal>
-                        </goals>
-                        <phase>initialize</phase>
-                        <configuration>
-                            <files>
-                                <file>${basedir}/jbossconf/jbossas.properties</file>
-                            </files>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>hibernate3-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <components>
-                        <component>
-                            <name>hbm2ddl</name>
-                            <implementation>annotationconfiguration</implementation>
-                        </component>
-                    </components>
-                    <componentProperties>
-                        <configurationfile>/src/main/resources/hibernate/hibernate.cfg.xml</configurationfile>
-                        <outputfilename>schema.ddl</outputfilename>
-                        <drop>true</drop>
-                        <create>true</create>
-                        <export>false</export>
-                    </componentProperties>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>oracle</groupId>
-                        <artifactId>ojdbc14</artifactId>
-                        <version>10.2.0.2</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.6</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>hsqldb</groupId>
-                        <artifactId>hsqldb</artifactId>
-                        <version>1.8.0.10</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-           
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jboss-maven-plugin</artifactId>
-                <version>1.4</version>
-                <inherited>false</inherited>
-                <configuration>
-                    <jbossHome>${jboss.home}</jbossHome>
-                    <serverName>${jboss.server.name}</serverName>
-                    <timeout>${jboss.timeout}</timeout>
-                    <hostName>localhost</hostName>
-                    <port>${jboss.port}</port>
-                    <fileNames>
-                        <fileName>/sportsclub-ear-1.0-SNAPSHOT.war</fileName>
-                    </fileNames>
                 </configuration>
             </plugin>
 
