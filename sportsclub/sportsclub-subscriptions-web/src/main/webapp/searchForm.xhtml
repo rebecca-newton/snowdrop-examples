@@ -11,8 +11,10 @@
         <rich:panel>
             <f:facet name="header">Search for an account</f:facet>
             <h:form>
-                <h:inputText value="#{accountSearch.name}" label="Search name"/>
-                <a4j:commandButton value="Search" action="#{accountSearch.searchAccounts}"
+                <h:inputText id="searchField" value="#{accountSearch.name}" label="Search name"/>
+                <rich:hotKey selector="##{rich:clientId('searchField')}" key="return"
+                             handler="#{rich:element('searchButton')}.onclick();return false;"/>
+                <a4j:commandButton id="searchButton" value="Search" action="#{accountSearch.searchAccounts}"
                                    reRender="searchResults"/>
             </h:form>
         </rich:panel>

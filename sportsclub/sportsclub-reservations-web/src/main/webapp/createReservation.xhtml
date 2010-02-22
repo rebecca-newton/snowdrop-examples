@@ -16,8 +16,11 @@
                         <f:facet name="header">Filter accounts</f:facet>
                         <h:form>
                             Type subscriber name:
-                            <h:inputText value="#{accountFilter.subscriberNameFragment}" label="Search name"/>
-                            <a4j:commandButton value="Search" action="#{accountFilter.searchAccounts}"
+                            <h:inputText id="searchField" value="#{accountFilter.subscriberNameFragment}"
+                                         label="Search name"/>
+                            <rich:hotKey selector="##{rich:clientId('searchField')}" key="return"
+                                         handler="#{rich:element('searchButton')}.onclick();return false;"/>
+                            <a4j:commandButton id="searchButton" value="Search" action="#{accountFilter.searchAccounts}"
                                                reRender="accountsTable"/>
                         </h:form>
                     </rich:panel>
@@ -132,12 +135,12 @@
 
                     <h:outputLabel value="Equipment"/>
                     <h:outputText rendered="#{reservationCreate.reservation.equipment != null}"
-                            value="#{reservationCreate.reservation.equipment.name} (#{reservationCreate.reservation.equipment.description})"/>
+                                  value="#{reservationCreate.reservation.equipment.name} (#{reservationCreate.reservation.equipment.description})"/>
                     <h:outputText rendered="#{reservationCreate.reservation.equipment == null}" value="Not selected"/>
 
                     <h:outputLabel value="Account"/>
                     <h:outputText rendered="#{reservationCreate.reservation.account != null}"
-                            value="#{reservationCreate.reservation.account.subscriber.name.firstName} #{reservationCreate.reservation.account.subscriber.name.lastName} (#{reservationCreate.reservation.account.subscriber.address.city}, #{reservationCreate.reservation.account.subscriber.address.country})"/>
+                                  value="#{reservationCreate.reservation.account.subscriber.name.firstName} #{reservationCreate.reservation.account.subscriber.name.lastName} (#{reservationCreate.reservation.account.subscriber.address.city}, #{reservationCreate.reservation.account.subscriber.address.country})"/>
                     <h:outputText rendered="#{reservationCreate.reservation.account == null}" value="Not selected"/>
 
                     <h:outputLabel value="From"/>
