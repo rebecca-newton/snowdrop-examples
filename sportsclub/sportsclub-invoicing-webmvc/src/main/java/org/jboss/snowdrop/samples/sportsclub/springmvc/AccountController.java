@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ejb.EJB;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,12 +71,26 @@ public class AccountController
       Account account = subscriptionService.findAccountById(Long.parseLong(id));
 
       List<Invoice> invoices = billingService.getInvoices(account);
+
+      boolean hasCurrentInvoice = false;
+      Date currentDate = new Date();
+
+      for (Invoice invoice: invoices)
+      {
+         if (invoice.getBillingPeriod().contains(currentDate))
+         {
+            hasCurrentInvoice = true;
+            break;
+         }
+      }
+
       List<Payment> payments = billingService.getPayments(account);
 
       ModelMap model = new ModelMap();
       model.addAttribute(account);
       model.addAttribute("invoices", invoices);
-      model.addAttribute("paymetns", payments);
+      model.addAttribute("payments", payments);
+      model.addAttribute("hasCurrentInvoice",hasCurrentInvoice);
       return model;
    }
 

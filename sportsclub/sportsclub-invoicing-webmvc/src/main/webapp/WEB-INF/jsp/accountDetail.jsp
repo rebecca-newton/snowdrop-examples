@@ -84,11 +84,14 @@
     </table>
 
     <p>
-        <form:form action="generateInvoice.do">
-            You can create new invoice for this account:
-            <input type="hidden" name="id" value="<c:out value="${account.id}"/>">
-            <input type="submit" value="Create invoice"/><br/>
-        </form:form>
+        <c:if test="${not hasCurrentInvoice}">
+            <form:form action="generateInvoice.do">
+                This account does not have an invoice for the current billing period.<p/>
+                You can create one now:
+                <input type="hidden" name="id" value="<c:out value="${account.id}"/>">
+                <input type="submit" value="Create invoice"/><br/>
+            </form:form>
+        </c:if>
     </p>
 
     <table cellspacing="10">
