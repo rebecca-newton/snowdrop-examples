@@ -7,14 +7,27 @@
     <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
     <artifactId>database</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Sportsclub: JBoss AS Setup</name>
 
     <packaging>pom</packaging>
+
+    <properties>
+        <snowdrop.version>1.0.1-SNAPSHOT</snowdrop.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <version>1.8.0.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.snowdrop</groupId>
+            <artifactId>snowdrop</artifactId>
+            <version>${snowdrop.version}</version>
+            <type>zip</type>
+            <classifier>deployer</classifier>
         </dependency>
     </dependencies>
 
@@ -27,6 +40,22 @@
             <build>
                 <defaultGoal>package</defaultGoal>
                 <plugins>
+                    <plugin>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>extract-deployer</id>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <phase>process-resources</phase>
+                                <configuration>
+                                    <stripVersion>true</stripVersion>
+                                    <includeArtifactIds>snowdrop</includeArtifactIds>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <version>1.3</version>
@@ -45,17 +74,36 @@
                                         <property name="jboss.deploy.destination"
                                                   value="${jboss.home}/server/${jboss.server.name}/deploy"/>
                                         <delete
-                                                file="${jboss.deploy.destination}/sportsclub-mq-destination.xml"
+                                                file="${jboss.deploy.destination}/messaging/sportsclub-destinations-service.xml"
                                                 failonerror="false"/>
                                         <delete
-                                                file="${jboss.deploy.destination}/sportsclub-datasource.xml"
+                                                file="${jboss.deploy.destination}/sportsclub-ds.xml"
                                                 failonerror="false"/>
+
+                                        <delete
+                                                dir="${jboss.home}/server/${jboss.server.name}/deployers/spring.deployer"
+                                                failonerror="false"/>
+
+                                        <unzip dest="${project.build.directory}/spring.deployer"
+                                               src="${project.build.directory}/dependency/snowdrop-deployer.zip"/>
+
+                                        <copy todir="${jboss.home}/server/${jboss.server.name}/deployers"
+                                              overwrite="true">
+                                            <fileset dir="${project.build.directory}/spring.deployer">
+                                                <include name="**/*"/>
+                                            </fileset>
+                                        </copy>
 
                                         <copy todir="${jboss.deploy.destination}"
                                               overwrite="true">
                                             <fileset dir=".">
-                                                <include name="sportsclub-datasource.xml"/>
-                                                <include name="sportsclub-mq-destination.xml"/>
+                                                <include name="sportsclub-ds.xml"/>
+                                            </fileset>
+                                        </copy>
+                                        <copy todir="${jboss.deploy.destination}/messaging"
+                                              overwrite="true">
+                                            <fileset dir=".">
+                                                <include name="sportsclub-destinations-service.xml"/>
                                             </fileset>
                                         </copy>
                                     </tasks>
