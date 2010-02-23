@@ -26,7 +26,7 @@
                     </rich:panel>
                     <rich:panel>
                         <f:facet name="header">Select Account</f:facet>
-                        <h:form>
+                        <h:form id="AccountSelectForm">
                             <rich:extendedDataTable id="accountsTable" value="#{accountFilter}" var="account"
                                                     selectionMode="single"
                                                     selection="#{accountFilter.selection}"
@@ -84,7 +84,7 @@
                 <td style="width:400px;vertical-align:bottom;">
                     <rich:panel>
                         <f:facet name="header">Select Equipment</f:facet>
-                        <h:form>
+                        <h:form id="EquipmentSelectForm">
                             <rich:extendedDataTable id="equipmentsTable" value="#{equipmentFilter}" var="equipment"
                                                     selectionMode="single"
                                                     selection="#{equipmentFilter.selection}"
@@ -130,18 +130,25 @@
 
         <rich:panel id="reservationDetails">
             <f:facet name="header">Reservation Details</f:facet>
-            <h:form>
+            <h:form id="ReservationDetailForm">
                 <h:panelGrid columns="2">
 
                     <h:outputLabel value="Equipment"/>
-                    <h:outputText rendered="#{reservationCreate.reservation.equipment != null}"
-                                  value="#{reservationCreate.reservation.equipment.name} (#{reservationCreate.reservation.equipment.description})"/>
-                    <h:outputText rendered="#{reservationCreate.reservation.equipment == null}" value="Not selected"/>
+                    <h:panelGroup>
+                        <h:outputText rendered="#{reservationCreate.reservation.equipment != null}"
+                                      value="#{reservationCreate.reservation.equipment.name} (#{reservationCreate.reservation.equipment.description})"/>
+                        <h:outputText rendered="#{reservationCreate.reservation.equipment == null}"
+                                      value="Not selected"/>
+                        <h:message for="EquipmentSelectForm" style="color:RED" showDetail="true" showSummary="true"/>
+                    </h:panelGroup>
 
                     <h:outputLabel value="Account"/>
-                    <h:outputText rendered="#{reservationCreate.reservation.account != null}"
-                                  value="#{reservationCreate.reservation.account.subscriber.name.firstName} #{reservationCreate.reservation.account.subscriber.name.lastName} (#{reservationCreate.reservation.account.subscriber.address.city}, #{reservationCreate.reservation.account.subscriber.address.country})"/>
-                    <h:outputText rendered="#{reservationCreate.reservation.account == null}" value="Not selected"/>
+                    <h:panelGroup>
+                        <h:outputText rendered="#{reservationCreate.reservation.account != null}"
+                                      value="#{reservationCreate.reservation.account.subscriber.name.firstName} #{reservationCreate.reservation.account.subscriber.name.lastName} (#{reservationCreate.reservation.account.subscriber.address.city}, #{reservationCreate.reservation.account.subscriber.address.country})"/>
+                        <h:outputText rendered="#{reservationCreate.reservation.account == null}" value="Not selected"/>
+                        <h:message for="AccountSelectForm" style="color:RED" showDetail="true" showSummary="true"/>
+                    </h:panelGroup>
 
                     <h:outputLabel value="From"/>
                     <h:panelGroup>
@@ -149,9 +156,8 @@
                                        value="#{reservationCreate.reservation.from}"
                                        datePattern="d/M/yy HH:mm"
                                        showApplyButton="true"
-                                       required="true"
                                        locale="#{reservationCreate.locale}"/>
-                        <h:message for="from" style="color:RED"/>
+                        <h:message for="from" style="color:RED" showDetail="true" showSummary="true"/>
                     </h:panelGroup>
 
                     <h:outputLabel value="To"/>
@@ -160,9 +166,8 @@
                                        value="#{reservationCreate.reservation.to}"
                                        datePattern="d/M/yy HH:mm"
                                        showApplyButton="true"
-                                       required="true"
                                        locale="#{reservationCreate.locale}"/>
-                        <h:message for="to" style="color:RED"/>
+                        <h:message for="to" style="color:RED" showDetail="true" showSummary="true"/>
                     </h:panelGroup>
 
                 </h:panelGrid>

@@ -23,8 +23,12 @@
     <navigation-rule>
         <from-view-id>/createReservation.xhtml</from-view-id>
         <navigation-case>
-             <from-action>#{reservationCreate.create}</from-action>
+            <from-outcome>success</from-outcome>
             <to-view-id>/createResult.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/createReservation.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 

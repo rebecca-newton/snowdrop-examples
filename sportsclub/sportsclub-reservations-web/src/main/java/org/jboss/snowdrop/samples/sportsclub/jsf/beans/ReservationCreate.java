@@ -1,16 +1,14 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
-import org.jboss.snowdrop.samples.sportsclub.service.ReservationService;
-import org.jboss.snowdrop.samples.sportsclub.service.AccountService;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.service.AccountService;
+import org.jboss.snowdrop.samples.sportsclub.service.ReservationService;
 
-import javax.faces.model.SelectItem;
-import java.util.Date;
-import java.util.Calendar;
-import java.util.Locale;
-import java.util.Collection;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import java.util.*;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -55,10 +53,76 @@ public class ReservationCreate
 
    public String create()
    {
+      Map<String, FacesMessage> errorMessages = validate(reservation);
+
+      if (!errorMessages.isEmpty())
+      {
+         FacesContext context = FacesContext.getCurrentInstance();
+         for (String key : errorMessages.keySet())
+         {
+            context.addMessage(key, errorMessages.get(key));
+         }
+         return "error";
+      }
+
       reservationService.create(reservation);
       createdReservationId = reservation.getId();
       init();
+      accountFilter.setSelection(null);
+      equipmentFilter.setSelection(null);
+
       return "success";
+   }
+
+   private Map<String, FacesMessage> validate(Reservation reservation)
+   {
+
+      Map<String, FacesMessage> errors = new HashMap<String, FacesMessage>();
+
+      if (reservation.getAccount() == null ||
+            reservation.getEquipment() == null ||
+            reservation.getFrom() == null ||
+            reservation.getTo() == null)
+      {
+
+         if (reservation.getAccount() == null)
+         {
+            FacesMessage message = new FacesMessage();
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            message.setSummary("Account not selected.");
+            message.setDetail("Please select account!");
+            errors.put("AccountSelectForm", message);
+         }
+
+         if (reservation.getEquipment() == null)
+         {
+            FacesMessage message = new FacesMessage();
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            message.setSummary("Equipment not selected.");
+            message.setDetail("Please select equipment!");
+            errors.put("EquipmentSelectForm", message);
+         }
+
+         if (reservation.getFrom() == null)
+         {
+            FacesMessage message = new FacesMessage();
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            message.setSummary("Date not selected.");
+            message.setDetail("Please select date!");
+            errors.put("ReservationDetailForm:from", message);
+         }
+
+         if (reservation.getTo() == null)
+         {
+            FacesMessage message = new FacesMessage();
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            message.setSummary("Date not selected.");
+            message.setDetail("Please select date!");
+            errors.put("ReservationDetailForm:to", message);
+         }
+      }
+
+      return errors;
    }
 
    public void updateSelectedAccount()
@@ -69,7 +133,7 @@ public class ReservationCreate
 
    public void updateSelectedEquipment()
    {
-      Equipment equipment = getEquipmentFilter().getSelectedEquipment();
+      Equipment equipment = equipmentFilter.getSelectedEquipment();
       reservation.setEquipment(equipment);
    }
 
