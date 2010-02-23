@@ -10,7 +10,7 @@
     <import resource="classpath*:reservations-service.xml"/>
 
     <context:annotation-config/>
-
+    <!--
     <bean id="equipmentConverterHelper" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentConverterHelper">
         <property name="equipmentService" ref="equipmentService"/>
     </bean>
@@ -18,5 +18,5 @@
     <bean id="accountConverterHelper" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.AccountConverterHelper">
         <property name="accountService" ref="accountService"/>
     </bean>
-
+        -->
 </beans>

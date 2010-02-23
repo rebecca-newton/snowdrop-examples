@@ -1,0 +1,174 @@
+.insel_view_block_div {
+	position:relative;
+	padding:2px 2px 2px 5px;
+	border:0;
+	margin:0;
+}
+input.rich-inplace-select-arrow {
+	padding:0;
+	border:0;
+	margin:0;
+	width:12px;
+	position:absolute;
+	background-position:center right;
+	background-repeat:no-repeat;
+	font:inherit;
+}
+.rich-inplace-select {
+	position:relative;
+}
+.rich-inplace-select-view {
+	white-space:nowrap;
+	border-bottom-width:1px;
+	border-bottom-style:dashed;
+}
+.rich-inplace-select-changed {
+	background-position:top left;
+	background-repeat:no-repeat;
+}
+.rich-inplace-select-view-hover {
+	color:blue;
+}
+input.rich-inplace-select-field {
+	padding:0;
+	border-width:1px;
+	border-style:inset;
+	margin:0;
+	font:inherit;
+	position:absolute;
+	top:0;
+	left:0;
+}
+.rich-inplace-select-field {
+	padding:0;
+	border-width:1px;
+	border-style:inset;
+	margin:0;
+	font:inherit;
+	position:absolute;
+	top:0;
+	left:0;
+}
+.rich-inplace-select-strut {
+	height:1px;
+}
+.rich-inplace-select-control-set {
+	white-space:nowrap;
+}
+.rich-inplace-select-control {
+	background-position:top;
+	background-repeat:repeat-x;
+	border-width:1px;
+	border-style:outset;
+	padding:0;
+	margin:0;
+}
+.rich-inplace-select-control-press {
+	background-position:top;
+	background-repeat:repeat-x;
+	border-width:1px;
+	border-style:none;
+	padding:0;
+	margin:0;
+}
+.rich-inplace-select-shadow {
+	top:0;
+	left:0;
+	position:absolute;
+	font-size:11px;
+}
+.rich-inplace-select-shadow-size {
+	width:34px;
+	height:16px;
+}
+.rich-inplace-select-list_cord {
+	position:relative;
+	font-size:0;
+}
+.rich-inplace-select-list-scroll {
+	overflow:auto;
+}
+.rich-inplace-select-list-position {
+	position:absolute;
+	top:-1px;
+	left:0;
+}
+.rich-inplace-select-list-decoration {
+	border-width:1px;
+	border-style:outset;
+	padding:0;
+}
+.rich-inplace-select-item {
+	padding:2px;
+	white-space:nowrap;
+	display:block;
+}
+.rich-inplace-select-selected-item {
+	padding:1px;
+	background-color:#4a75b5;
+	border:1px dotted #4a75b5;
+}
+.rich-inplace-select-shadow-tl {
+	background-repeat:repeat-x;
+	background-position:top left;
+	border:0!important;
+}
+.rich-inplace-select-shadow-tr {
+	background-repeat:repeat-x;
+	background-position:top right;
+	border:0!important;
+}
+.rich-inplace-select-shadow-bl {
+	background-repeat:repeat-x;
+	background-position:bottom left;
+	border:0!important;
+}
+.rich-inplace-select-shadow-br {
+	background-repeat:repeat-x;
+	background-position:bottom right;
+	border:0!important;
+}
+.rich-inplace-select-changed {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.EditIcon/DATB/eAFjYPgPAAECAQA_);
+}
+.insel_arrow {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.SpinnerButtonDown/DATB/eAFjYGD4!!8!AAYAAv4_);
+}
+.rich-inplace-select-view {
+	background-color:#F1F1F1;
+}
+input.rich-inplace-select-field {
+	background-color:#FEFFDA;
+	border-color:#B6AD84;
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/spacer.gif);
+}
+.rich-inplace-select-field {
+	background-color:#FEFFDA;
+	border-color:#B6AD84;
+}
+.rich-inplace-select-control {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.SpinnerButtonGradient/DATB/eAGr3TzLuTiWCQANxwLg);
+	background-color:#9AB37D;
+	border-color:#B6AD84;
+}
+.rich-inplace-select-control-press {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.ComboBoxButtonPressGradient/DATB/eAFzLo6t3TyLCQALogLg);
+	background-color:#9AB37D;
+	border-color:#B6AD84;
+}
+.rich-inplace-select-list-decoration {
+	border-color:#B6AD84;
+	background-color:#FEFFDA;
+}
+.rich-inplace-select-selected-item {
+	color:#FFF;
+	background-color:#5D7343;
+	border-color:#5D7343;
+}
+.rich-inplace-select-shadow-tl, .rich-inplace-select-shadow-tr, .rich-inplace-select-shadow-bl, .rich-inplace-select-shadow-br {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/bg_shadow.png);
+}
+input.rich-inplace-select-arrow {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.SpinnerButtonDown/DATB/eAFjYGD4!!8!AAYAAv4_);
+	background-color:#FEFFDA;
+}

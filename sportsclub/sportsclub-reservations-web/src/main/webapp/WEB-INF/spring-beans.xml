@@ -51,6 +51,7 @@
 
     
     <!-- JSF Converters managed by Spring -->
+    <!--
     <bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentTypeConverter"/>
 
     <bean id="equipmentConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentConverter">
@@ -60,6 +61,7 @@
     <bean id="accountConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.AccountConverter">
         <property name="accountConverterHelper" ref="accountConverterHelper"/>
     </bean>
+    -->
     
     <context:annotation-config/>
     

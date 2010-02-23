@@ -1,0 +1,17 @@
+.dr-toolbar-ext {
+	border:1px solid;
+	border-color:#B6AD84;
+	padding:0;
+	background-color:#5D7343;
+	background-position:top left;
+	background-repeat:repeat-x;
+	background-image:url(../images/eAGr3TzLuTiWCQANxwLg.png);
+}
+.dr-toolbar-int {
+	font-size:11px;
+	color:#FFF;
+	font-weight:bold;
+	font-family:Arial, Verdana, sans-serif;
+	padding:2px 10px 2px 10px;
+	white-space:nowrap;
+}

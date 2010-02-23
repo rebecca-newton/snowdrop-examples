@@ -1,0 +1,255 @@
+.rich-container input, .rich-input, .rich-container select, .rich-select, .rich-container textarea, .rich-textarea, .rich-container button, .rich-button, .rich-container keygen, .rich-keygen, .rich-container isindex, .rich-isindex, .rich-container legend, .rich-legend, .rich-container a, .rich-link, .rich-container fieldset, .rich-fieldset, .rich-field, .rich-field-edit, .rich-field-error, .rich-button, .rich-button-disabled, .rich-button-over, .rich-button-press {
+	font-size:11px;
+	font-family:Arial, Verdana, sans-serif;
+	color:#000;
+}
+.rich-container fieldset, .rich-fieldset {
+	border-width:1px;
+	border-style:solid;
+	padding:10px;
+}
+.rich-container hr, .rich-hr {
+	border-width:1px;
+	border-style:solid;
+}
+.rich-container legend, .rich-legend {
+	font-weight:bold;
+}
+.rich-container form, .rich-form {
+	padding:0;
+	margin:0;
+}
+.rich-container fieldset, .rich-fieldset {
+	border-color:#B6AD84;
+}
+.rich-container hr, .rich-hr {
+	border-color:#B6AD84;
+}
+.rich-container a, .rich-link {
+	color:#C29632;
+}
+.rich-container a:hover, .rich-link:hover {
+	color:#F0A700;
+}
+.rich-container a:visited, .rich-link:visited {
+	color:#C29632;
+}
+.rich-field, .rich-field-edit, .rich-field-error {
+	border-width:1px;
+	border-style:inset;
+	border-color:#B6AD84;
+}
+.rich-field {
+	background-color:#fff;
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.ButtonBackgroundImage/DATB/eAFjYGDgrt08y7k4lgkADiMC6w__);
+	background-repeat:no-repeat;
+	background-position:1px 1px;
+}
+.rich-field-edit {
+	background-color:#FEFFDA;
+}
+.rich-field-error {
+	background-color:#F00;
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.InputErrorIcon/DATB/eAF79uw!AAWAAsw_);
+	background-repeat:no-repeat;
+	background-position:center left;
+	padding-left:7px;
+}
+.rich-button, .rich-button-disabled, .rich-button-over, .rich-button-press {
+	border-width:1px;
+	border-style:solid;
+	border-color:#B6AD84;
+	background-color:#E1D2AF;
+	padding:2px 10px 2px 10px;
+	text-align:center;
+	cursor:pointer;
+	background-repeat:repeat-x;
+	background-position:top left;
+}
+.rich-button {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.StandardButtonBgImage/DATB/eAFjYGAQuvjy3fpLD5kAF2QFHw__);
+}
+.rich-button-disabled {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.StandardButtonBgImage/DATB/eAFjYGAQuvjy3fpLD5kAF2QFHw__);
+}
+.rich-button-over {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.StandardButtonBgImage/DATB/eAFjYGAQuvjy3fpLD5kAF2QFHw__);
+}
+.rich-button-press {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.StandardButtonPressedBgImage/DATB/eAFjYGAQWn!p4cWX75gAFpIFHw__);
+	background-position:bottom left;
+}
+.rich-box-border-color-control-select {
+	border-color:#E79A00;
+}
+.rich-box-border-color-subborder {
+	border-color:#EDEADD;
+}
+.rich-box-border-color-header {
+	border-color:#5D7343;
+}
+.rich-box-border-color-general {
+	border-color:#EDEADD;
+}
+.rich-box-border-color-additional {
+	border-color:#EEE9D1;
+}
+.rich-box-border-color-panel {
+	border-color:#B6AD84;
+}
+.rich-box-border-color-tip {
+	border-color:#E5973E;
+}
+.rich-box-border-color-table {
+	border-color:#B6AD84;
+}
+.rich-box-border-control-select, .rich-box-border-subborder, .rich-box-border-header, .rich-box-border-general, .rich-box-border-additional, .rich-box-border-panel, .rich-box-border-tip, .rich-box-border-table {
+	border-style:solid;
+	border-width:1px;
+}
+.rich-box-border-control-select {
+	border-color:#E79A00;
+}
+.rich-box-border-subborder {
+	border-color:#EDEADD;
+}
+.rich-box-border-header {
+	border-color:#5D7343;
+}
+.rich-box-border-general {
+	border-color:#EDEADD;
+}
+.rich-box-border-additional {
+	border-color:#EEE9D1;
+}
+.rich-box-border-panel {
+	border-color:#B6AD84;
+}
+.rich-box-border-tip {
+	border-color:#E5973E;
+}
+.rich-box-border-table {
+	border-color:#B6AD84;
+}
+.rich-box-bgcolor-header {
+	background-color:#5D7343;
+}
+.rich-box-bgcolor-general {
+	background-color:#EDEADD;
+}
+.rich-box-bgcolor-additional {
+	background-color:#EEE9D1;
+}
+.rich-box-bgcolor-tab {
+	background-color:#9AB37D;
+}
+.rich-box-bgcolor-trim {
+	background-color:#E1D2AF;
+}
+.rich-box-bgcolor-tip {
+	background-color:#FAE6B0;
+}
+.rich-box-bgcolor-table {
+	background-color:#FFF;
+}
+.rich-box-bgcolor-table-footer {
+	background-color:#ccc;
+}
+.rich-box-bgcolor-table-subfooter {
+	background-color:#f1f1f1;
+}
+.rich-box-bgcolor-editor {
+	background-color:#F1F1F1;
+}
+.rich-box-bgcolor-edit {
+	background-color:#FEFFDA;
+}
+.rich-text-color-header {
+	color:#FFF;
+}
+.rich-text-color-general {
+	color:#000;
+}
+.rich-text-color-tab-disabled {
+	color:#A49449;
+}
+.rich-text-color-select {
+	color:#E79A00;
+}
+.rich-text-color-link-general {
+	color:#C29632;
+}
+.rich-text-color-link-hover {
+	color:#F0A700;
+}
+.rich-text-color-link-visited {
+	color:#C29632;
+}
+.rich-font-size-general {
+	font-size:11px;
+}
+.rich-font-size-header {
+	font-size:11px;
+}
+.rich-font-family-general {
+	font-family:Arial, Verdana, sans-serif;
+}
+.rich-font-family-header {
+	font-family:Arial, Verdana, sans-serif;
+}
+.rich-text-general {
+	font-size:11px;
+	font-family:Arial, Verdana, sans-serif;
+	color:#000;
+}
+.rich-text-header {
+	font-size:11px;
+	font-family:Arial, Verdana, sans-serif;
+	color:#FFF;
+}
+.rich-text-tab-disabled {
+	font-size:11px;
+	font-family:Arial, Verdana, sans-serif;
+	color:#A49449;
+}
+.rich-text-control-select {
+	font-size:11px;
+	font-family:Arial, Verdana, sans-serif;
+	color:#E79A00;
+}
+.rich-gradient-header-inverse {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.HeaderInverseGradientImage/DATB/eAFjYGDgdi6Ord08iwkAC!4C6w__);
+	background-repeat:repeat-x;
+}
+.rich-gradient-header {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.HeaderGradientImage/DATB/eAFjYGDgrt08y7k4lgkADiMC6w__);
+	background-repeat:repeat-x;
+}
+.rich-gradient-tab {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.TabGradientImage/DATB/eAFjYGDgrt086-6rt0wAExAEjA__);
+	background-repeat:repeat-x;
+}
+.rich-gradient-tab-inverse {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.TabInverseGradientImage/DATB/eAFjYGDgvvvqbe3mWUwAFc4EjA__);
+	background-repeat:repeat-x;
+}
+.rich-gradient-input {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.InputGradientImage/DATB/eAFjYGDgvvjy3f!!!5kAGS8Fsw__);
+	background-repeat:repeat-x;
+}
+.rich-gradient-menu-inverse {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.MenuInverseGradientImage/DATB/eAFjYGDgvvjyXe3mWUwAFXkEgA__);
+	background-repeat:repeat-x;
+}
+.rich-gradient-menu {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.MenuGradientImage/DATB/eAFjYGDgrt086-LLd0wAEt8EgA__);
+	background-repeat:repeat-x;
+}
+.rich-gradient-button-inverse {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.ButtonInverseGradientImage/DATB/eAFjYGDgXn!p4cWX75gAFloFGA__);
+	background-repeat:repeat-x;
+}
+.rich-gradient-button {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.gradientimages.ButtonGradientImage/DATB/eAFjYGDgvvjy3fpLD5kAFywFGA__);
+	background-repeat:repeat-x;
+}

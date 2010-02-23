@@ -1,0 +1,166 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body.main-body {
+		background-color:#fbfaf5;
+		background-image:url(../images/snowdrop-banner_bkg.png);
+		background-repeat:repeat-x;
+		margin:0;
+		padding:0;
+		text-align:center;
+		
+		color:#000000;
+		font-family:Arial,Verdana,sans-serif;
+		font-size:11px;
+}
+
+#container {
+		margin:0 auto;
+		text-align:left;
+		width:969px;
+		}
+
+#snowdropheader {
+		background-color:#406631;
+		background-image:url(../images/sportsclub-banner-demo.png);
+		background-repeat:no-repeat;
+		height:69px;
+		margin:0 auto;
+		width:974px;
+}
+
+#snowdropheader h1 {
+		background:transparent url(../images/sportsclub-logo.png) no-repeat scroll 0 0;
+		float:left;
+		height:69px;
+		margin:0;
+		padding:0;
+		text-indent:-9999px;
+		width:409px;
+}	
+
+#contentcontainer {
+		background-color:transparent;
+		background-image:url(../images/bkgblur_right.png);
+		background-position:right center;
+		background-repeat:repeat-y;
+		clear:both;
+		margin:0 auto;
+		text-align:left;
+		width:980px;
+}
+
+#container_grey {
+		-moz-background-clip:border;
+		-moz-background-inline-policy:continuous;
+		-moz-background-origin:padding;
+		background-color:#B6AD84;
+		margin-right:7px;
+		padding:7px 7px 10px 8px;
+}
+
+#main-contentwrapper {
+		background-color:#FFFFFF;
+		display:block;
+		overflow:hidden;
+		width:957px;
+}
+#one-col-corners {
+		background:transparent url(../images/corners-one-col.png) no-repeat scroll left top;
+		clear:both;
+		display:block;
+		height:14px;
+		margin:0 0 0 0;
+		padding-bottom:5px;
+		width:100%;
+}
+
+.footer {
+		background-color:transparent;
+		background-image:url(../images/bkgblur_bottom.png);
+		background-position:left top;
+		background-repeat:repeat-x;
+		clear:both;
+		color:#A1A1A1;
+		font-size:10px;
+		padding:6px 0;
+		text-align:center;
+		margin: 0 -8px 0 8px;
+}
+
+.footer a {
+		color:#A1A1A1;
+}
+
+.footer p {
+		margin:0;
+		padding:1px;
+}	
+
+a {
+		color:#336f1b;
+		text-decoration:underline;
+}
+
+a:hover {
+		color:#61a049;
+		text-decoration:underline;
+}
+
+.formcontainer {
+		margin:10px;
+		padding:30px;
+		background-color:#EDEADD;
+		border-color:#B6AD84;
+		border-style:solid;
+		border-width:1px;
+}
+
+.formcontainer .displaynumber {
+		display:block;
+		padding: 10px 0px;
+}
+
+.formcontainer #invoicestatus {
+		margin:10px 0px;
+}
+
+.simpletablestyle table {
+		background-color:#E6E7E8;
+}		
+
+.simpletablestyle table img {
+		border:0px;
+}
+	
+.simpletablestyle td {
+		height:3em;
+		padding-left: 6px;
+		font-size:11px;
+		padding:10px 5px;
+		text-align:left;
+		
+}
+	
+.simpletablestyle th {
+		font-size:12px;
+		font-weight:normal;
+		padding:0 10px 0 5px;
+		border-bottom:#999999 dotted 1px;
+		background:url(../images/eAGr3TzLuTiWCQANxwLg.png)  #000000 repeat-x top left;
+		height:31px;
+		color:#FFFFFF;
+		text-align:left;
+}
+
+.simpletablestyle tr td {
+		padding: 0px 10px 0px 5px;
+}
+	
+.simpletablestyle tr { /* this targets all rows in case of old browsers */
+		background-color:#FFFFFF;
+}
+
+.simpletablestyle tr:nth-child(2n) { /* this targets even rows in css3 for newer browsers to zebra-stripe*/
+		background-color:#F4F3F3;
+}

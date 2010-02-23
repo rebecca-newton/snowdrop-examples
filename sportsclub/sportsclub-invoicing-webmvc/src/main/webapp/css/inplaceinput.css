@@ -1,0 +1,118 @@
+.rich-inplace {
+	position:relative;
+}
+.rich-inplace-changed {
+	background-position:left top;
+	background-repeat:no-repeat;
+	border-bottom-width:1px;
+	border-bottom-style:dashed;
+	white-space:nowrap;
+}
+.rich-inplace-view {
+	border-bottom-width:1px;
+	border-bottom-style:dashed;
+	white-space:nowrap;
+}
+input.rich-inplace-field {
+	border-width:1px;
+	border-style:inset;
+	margin:0;
+	padding:0;
+	position:absolute;
+	top:0;
+	left:0;
+	font:inherit;
+}
+.rich-inplace-input-view-hover {
+	color:blue;
+}
+.rich-inplace-input-changed-hover {
+	color:red;
+}
+.rich-inplace-input-strut {
+	height:1px;
+}
+.rich-inplace-control {
+	background-position:top;
+	background-repeat:repeat-x;
+	border-width:1px;
+	border-style:outset;
+	padding:0;
+	margin:0;
+}
+.rich-inplace-controls-press {
+	background-position:top;
+	background-repeat:repeat-x;
+	border-width:1px;
+	border-style:inset;
+	padding:0;
+	margin:0;
+}
+.rich-inplace-input-controls-set {
+	white-space:nowrap;
+	z-index:3;
+}
+.rich-inplace-shadow {
+	position:absolute;
+	font-size:11px;
+}
+.rich-inplace-shadow-size {
+	width:34px;
+	height:16px;
+}
+.rich-inplace-shadow-tl {
+	background-repeat:repeat-x;
+	background-position:top left;
+	border:0!important;
+}
+.rich-inplace-shadow-tr {
+	background-repeat:repeat-x;
+	background-position:top right;
+	border:0!important;
+}
+.rich-inplace-shadow-bl {
+	background-repeat:repeat-x;
+	background-position:bottom left;
+	border:0!important;
+}
+.rich-inplace-shadow-br {
+	background-repeat:repeat-x;
+	background-position:bottom right;
+	border:0!important;
+}
+.rich-inplace-control {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.SpinnerButtonGradient/DATB/eAGr3TzLuTiWCQANxwLg);
+	background-color:#9AB37D;
+	border-color:#B6AD84;
+}
+.rich-inplace-control-press {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.ComboBoxButtonPressGradient/DATB/eAFzLo6t3TyLCQALogLg);
+	background-color:#9AB37D;
+	border-color:#B6AD84;
+}
+.rich-inplace-shadow-tl {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/bg_shadow.png);
+}
+.rich-inplace-shadow-tr {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/bg_shadow.png);
+}
+.rich-inplace-shadow-bl {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/bg_shadow.png);
+}
+.rich-inplace-shadow-br {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/bg_shadow.png);
+}
+.rich-inplace-view {
+	background-color:#F1F1F1;
+	border-bottom-color:#000;
+}
+.rich-inplace-changed {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.images.EditIcon/DATB/eAFjYPgPAAECAQA_);
+	background-color:#F1F1F1;
+	border-bottom-color:#000;
+}
+input.rich-inplace-field {
+	background-color:#FEFFDA;
+	border-color:#B6AD84;
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/spacer.gif);
+}

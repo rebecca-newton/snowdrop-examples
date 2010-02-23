@@ -1,0 +1,374 @@
+.extdt-table-layout {
+	table-layout:fixed;
+	border-spacing:0;
+}
+.extdt-subheadercell {
+	overflow:hidden;
+}
+.extdt-menu-div-out {
+	height:22px;
+	position:absolute;
+	width:20px;
+}
+.extdt-fakeierow {
+	display:none;
+}
+.extdt-noData-cell {
+	text-align:center;
+	font-weight:bold;
+}
+.extdt-menu-div-on {
+	height:22px;
+	position:absolute;
+	width:20px;
+}
+.extdt-group-row {
+	height:15px;
+}
+.extdt-group-text {
+	font-family:Arial, Verdana, sans-serif;
+	font-size:11px;
+	margin-left:10px;
+}
+.extdt-ss-hdn {
+	display:none;
+	position:absolute;
+}
+.extdt-ss-vsbl {
+	position:absolute;
+	display:block;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	background-color:white;
+	background-repeat:no-repeat;
+	background-position:center;
+	z-index:4;
+}
+.extdt-group-cell {
+	height:15px;
+	padding:4px;
+	background-color:#eee;
+	border-bottom:1px #c0c0c0 solid;
+	border-top:1px #c0c0c0 solid;
+	font-family:Arial, Verdana, sans-serif;
+	font-size:11px;
+}
+.extdt-group-image-expanded {
+	height:10px;
+	width:10px;
+	background-repeat:no-repeat;
+	background-position:center;
+}
+.extdt-group-image-folded {
+	height:10px;
+	width:10px;
+	background-repeat:no-repeat;
+	background-position:center;
+}
+.extdt-hsplit {
+	width:1px;
+	border-right:1px dashed;
+	cursor:e-resize;
+	z-index:100;
+}
+.dt-menu {
+	border:1px solid #718bb7;
+	z-index:15000;
+	zoom:1;
+	background-color:#f0f0f0;
+	background-repeat:repeat-y;
+	padding:2px;
+	position:absolute;
+}
+.dt-menu a {
+	text-decoration:none!important;
+}
+.dt-menu-list {
+	background:transparent none repeat scroll 0 50%;
+	border:0 none;
+}
+.dt-menu-list-item {
+	font:normal 11px tahoma, arial, sans-serif;
+	white-space:nowrap;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	display:block;
+	padding:1px;
+}
+.dt-menu a.dt-menu-item {
+	display:block;
+	line-height:16px;
+	padding:3px 21px 3px 3px;
+	white-space:nowrap;
+	text-decoration:none;
+	color:#222;
+	-moz-outline:0 none;
+	outline:0 none;
+	cursor:pointer;
+}
+.dt-menu-item-icon {
+	border:0 none;
+	height:16px;
+	padding:0;
+	vertical-align:top;
+	width:16px;
+	margin:0 8px 0 0;
+	background-position:center;
+}
+.dt-menu-check-item .dt-menu-item-icon {
+	background-color:transparent;
+	background-repeat:no-repeat;
+	background-position:center;
+}
+.extdt-hdrop {
+	cursor:pointer;
+	font-size:1px;
+	width:10px;
+	height:13px;
+	top:0;
+	position:absolute;
+	display:block;
+	white-space:nowrap;
+	z-index:61;
+}
+.extdt-hdrop-top {
+	background-repeat:no-repeat;
+	display:block;
+	width:100%;
+	height:50%;
+	position:relative;
+	top:-9px;
+}
+.extdt-hdrop-top-left {
+	background-position:top left;
+	left:-5px;
+}
+.extdt-hdrop-top-right {
+	background-position:top right;
+	right:-4px;
+}
+.extdt-hdrop-bottom {
+	background-repeat:no-repeat;
+	display:block;
+	width:100%;
+	height:50%;
+	position:relative;
+	top:9px;
+}
+.extdt-caption {
+	padding:4px;
+}
+.extdt-hdrop-bottom-left {
+	background-position:bottom left;
+	left:-5px;
+}
+.extdt-hdrop-bottom-right {
+	background-position:bottom right;
+	right:-4px;
+}
+.extdt-cell-div {
+	cursor:default;
+	font-weight:normal;
+	white-space:nowrap;
+	overflow:hidden;
+	-o-text-overflow:ellipsis;
+	text-overflow:ellipsis;
+	-moz-box-sizing:border-box;
+	-moz-outline:none;
+	width:100%;
+}
+.extdt-innerdiv {
+	top:0;
+	left:0;
+	position:absolute;
+}
+.extdt-outerdiv {
+	position:relative;
+	padding:0;
+	width:100%;
+}
+.extdt-hsep {
+	background-position:center;
+	background-repeat:repeat-y;
+	cursor:e-resize;
+	font-size:1px;
+	width:6px;
+	height:13px;
+	overflow:hidden;
+	top:0;
+	position:absolute;
+	display:block;
+	white-space:nowrap;
+	z-index:60;
+}
+.extdt-content {
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+.rich-filter-input {
+	width:80%;
+}
+.extdt-menu-div-on {
+	background:#EEE9D1 url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/menuHover.gif);
+}
+.extdt-empty-cell {
+	border-bottom:solid 1px #B6AD84;
+}
+.extdt-fakeierow {
+	background-color:#EEE9D1;
+}
+.extdt-hsplit {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/s.gif);
+}
+.extdt-hdrop {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/s.gif);
+}
+.extdt-ss-vsbl {
+	border-right:solid 1px #B6AD84;
+	border-bottom:solid 1px #B6AD84;
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/loading.gif);
+}
+.extdt-table-layout {
+	background-color:#FFF;
+	empty-cells:show;
+	border-collapse:collapse;
+}
+.extdt-maindiv {
+	border:solid 1px #B6AD84;
+}
+.extdt-group-image-expanded {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/minusIcon.gif);
+}
+.extdt-group-image-folded {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/plusIcon.gif);
+}
+.dt-menu {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/menu.gif);
+}
+.dt-menu-check-item .dt-menu-item-icon {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/unchecked.gif);
+}
+.dt-menu-item-checked .dt-menu-item-icon {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/checked.gif);
+}
+.extdt-hdrop-top {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/col-move-top.gif);
+}
+.extdt-hdrop-bottom {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/col-move-bottom.gif);
+}
+.extdt-hsep {
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg/richfaces/renderkit/html/images/s.gif);
+}
+.extdt {
+	border-top:solid 1px #B6AD84;
+	border-left:solid 1px #B6AD84;
+	border-right:solid 1px #B6AD84;
+	background-color:#FFF;
+	empty-cells:show;
+	border-collapse:collapse;
+}
+.extdt-cell {
+	border-right:solid 1px #B6AD84;
+	border-bottom:solid 1px #B6AD84;
+	padding:4px 4px 4px 4px;
+	font-size:11px;
+	color:#000;
+	font-family:Arial, Verdana, sans-serif;
+}
+.extdt-header {
+	background-color:#5D7343;
+	background-image:url(/sportsclub/subscriptions/faces/a4j/g/3_3_1.GAorg.richfaces.renderkit.html.GradientA/DATB/eAGr3TzLuTiWCQANxwLg);
+	background-position:top left;
+	background-repeat:repeat-x;
+}
+.extdt-header-continue {
+	background-color:#5D7343;
+}
+.extdt-headercell {
+	border-right:solid 1px #B6AD84;
+	border-bottom:solid 1px #B6AD84;
+	padding:4px 4px 4px 4px;
+	color:#FFF;
+	text-align:center;
+	font-weight:bold;
+	font-size:11px;
+	font-family:Arial, Verdana, sans-serif;
+}
+.extdt-subheader {
+	background-color:#EEE9D1;
+}
+.extdt-table-filterrow {
+	background-color:#EEE9D1;
+	border-top:solid 1px #B6AD84;
+}
+.extdt-subheadercell {
+	border-right:solid 1px #B6AD84;
+	border-bottom:solid 1px #B6AD84;
+	padding:4px 4px 4px 4px;
+	text-align:center;
+	font-size:11px;
+	color:#000;
+	font-family:Arial, Verdana, sans-serif;
+	white-space:nowrap;
+}
+.extdt-sortable-header {
+	background-position:right center;
+	background-repeat:no-repeat;
+	white-space:nowrap;
+}
+.extdt-cursor-pointer {
+	cursor:pointer;
+}
+.rich-inplace-edit, .rich-inplace-view {
+	cursor:default;
+}
+.extdt-header-sort-img {
+	vertical-align:middle;
+	width:15px;
+	height:15px;
+}
+.extdt-footer {
+	background-color:#ccc;
+}
+.extdt-footer-continue {
+	background-color:#ccc;
+}
+.extdt-caption {
+	border-bottom:solid 1px #B6AD84;
+	color:#000;
+	font-weight:bold;
+	font-size:11px;
+	font-family:Arial, Verdana, sans-serif;
+	background-color:#EEE9D1;
+}
+.extdt-footercell {
+	border-right:solid 1px #B6AD84;
+	border-bottom:solid 1px #B6AD84;
+	padding:4px 4px 4px 4px;
+	color:#000;
+	text-align:left;
+	font-weight:bold;
+	font-size:11px;
+	font-family:Arial, Verdana, sans-serif;
+}
+.extdt-subfooter {
+	background-color:#f1f1f1;
+}
+.extdt-subfootercell {
+	border-right:solid 1px #B6AD84;
+	border-bottom:solid 1px #B6AD84;
+	padding:4px 4px 4px 4px;
+	text-align:left;
+	font-size:11px;
+	color:#000;
+	font-family:Arial, Verdana, sans-serif;
+}
+.extdt-row-selected {
+	background-color:#EEE9D1;
+}
+.extdt-row-active {
+	color:#A49449;
+}

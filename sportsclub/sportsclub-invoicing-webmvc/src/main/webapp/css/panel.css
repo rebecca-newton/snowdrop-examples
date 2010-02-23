@@ -1,0 +1,33 @@
+.dr-pnl {
+	border-width:1px;
+	border-style:solid;
+	padding:1px;
+}
+.dr-pnl-h {
+	padding:2px;
+	border-width:1px;
+	border-style:solid;
+	background-position:top left;
+	background-repeat:repeat-x;
+}
+.dr-pnl-b {
+	padding:10px;
+}
+.dr-pnl {
+	background-color:#EDEADD;
+	border-color:#B6AD84;
+}
+.dr-pnl-h {
+	background-color:#5D7343;
+	border-color:#5D7343;
+	font-size:11px;
+	color:#FFF;
+	font-weight:bold;
+	font-family:Arial, Verdana, sans-serif;
+	background-image:url(../images/eAGr3TzLuTiWCQANxwLg.png);
+}
+.dr-pnl-b {
+	font-size:11px;
+	color:#000;
+	font-family:Arial, Verdana, sans-serif;
+}
