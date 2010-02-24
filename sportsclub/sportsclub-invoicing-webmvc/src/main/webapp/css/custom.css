@@ -147,7 +147,7 @@ a:hover {
 		font-weight:normal;
 		padding:0 10px 0 5px;
 		border-bottom:#999999 dotted 1px;
-		background:url(../images/eAGr3TzLuTiWCQANxwLg.png)  #000000 repeat-x top left;
+		background:url(../images/eAGr3TzLuTiWCQANxwLg_high.png)  #000000 repeat-x top left;
 		height:31px;
 		color:#FFFFFF;
 		text-align:left;
@@ -164,3 +164,14 @@ a:hover {
 .simpletablestyle tr:nth-child(2n) { /* this targets even rows in css3 for newer browsers to zebra-stripe*/
 		background-color:#F4F3F3;
 }
+
+/* =Overwrite thinner default header image */
+
+.dr-toolbar-ext,
+.dr-pnl-h {
+background-image:url(../images/eAGr3TzLuTiWCQANxwLg_high.png);
+
+}
+
+
+
