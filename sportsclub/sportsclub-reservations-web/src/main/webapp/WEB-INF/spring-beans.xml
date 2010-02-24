@@ -10,8 +10,6 @@
     <import resource="classpath*:reservations-service.xml"/>
 
     <import resource="classpath*:infrastructure.xml"/>
-
-    <import resource="classpath*:spring-converterHelpers.xml"/>
     
     <!-- Session scoped beans -->
     <bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="session" init-method="init">
@@ -48,20 +46,6 @@
     <bean id="referenceData" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReferenceData" init-method="init">
         <property name="equipmentService" ref="equipmentService"/>
     </bean>
-
-    
-    <!-- JSF Converters managed by Spring -->
-    <!--
-    <bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentTypeConverter"/>
-
-    <bean id="equipmentConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentConverter">
-        <property name="equipmentConverterHelper" ref="equipmentConverterHelper"/>
-    </bean>
-
-    <bean id="accountConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.AccountConverter">
-        <property name="accountConverterHelper" ref="accountConverterHelper"/>
-    </bean>
-    -->
     
     <context:annotation-config/>
     
