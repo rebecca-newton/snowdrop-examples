@@ -13,24 +13,59 @@
 
     <head>
         <title>Sports Club Reservations Spring Application Demo</title>
+        <link href="images/favicon.png" rel="Shortcut Icon"/>
+
+        <link class="component" href="css/basic_classes.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/extended_classes.css" media="rich-extended-skinning" rel="stylesheet"
+              type="text/css"/>
+        <link class="component" href="css/panel.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/toolBar.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/datascroller.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/dragindicator.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/extendedDataTable.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/inplaceinput.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/inplaceselect.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/menucomponents.css" rel="stylesheet" type="text/css"/>
+        <link class="component" href="css/custom.css" rel="stylesheet" type="text/css"/>
+
     </head>
 
 
     <body class="main-body">
+    <div id="container">
+        <div id="snowdropheader">
+            <h1><a href="http://www.jboss.org/snowdrop.html">Snowdrop</a></h1>
+        </div>
+        <div id="contentcontainer">
+            <div id="container_grey">
+                <div id="main-contentwrapper">
 
-    <div style="width: 100%; height: 82px; left: 0px;">
-        <ui:include src="/includes/header.xhtml"/>
+                    <div style="width: 100%; height: 82px; left: 0px;">
+                        <ui:include src="/includes/header.xhtml"/>
+                    </div>
+
+                    <div style="height: 100%" id="content" class="clearfix" align="center">
+                        <ui:insert name="content"/>
+                    </div>
+
+
+                    <div style="width: 100%; height: 82px; left: 0px;">
+                        <ui:include src="/includes/footer.xhtml"/>
+                    </div>
+
+                </div>
+                <div id="one-col-corners"/>
+            </div>
+        </div>
+        <div class="footer">
+            <p>
+                Powered by
+                <a href="http://www.jboss.org/snowdrop.html">Snowdrop</a><img src="images/favicon.png"/> and
+                <a href="http://www.jboss.com/products/platforms/application">JBoss EAP</a>
+            </p>
+        </div>
+
     </div>
-
-    <div style="height: 100%; width: 900px" id="content" class="clearfix" align="center">
-		<ui:insert name="content"/>
-	</div>
-
-
-    <div style="width: 100%; height: 82px; left: 0px;">
-        <ui:include src="/includes/footer.xhtml"/>
-    </div>
-
     </body>
 </f:view>
 </html>
