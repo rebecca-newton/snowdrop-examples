@@ -99,11 +99,6 @@
             <artifactId>richfaces-ui</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>junit</groupId>-->
-            <!--<artifactId>junit</artifactId>-->
-        <!--</dependency>-->
-
         <dependency>
           <groupId>org.testng</groupId>
           <artifactId>testng</artifactId>
@@ -117,12 +112,10 @@
           <artifactId>commons-dbcp</artifactId>
        </dependency>
 
-
        <dependency>
           <groupId>hsqldb</groupId>
           <artifactId>hsqldb</artifactId>
        </dependency>
-
        
         <dependency>
             <groupId>org.springframework</groupId>
