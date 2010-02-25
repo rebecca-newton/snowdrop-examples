@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Sports Club: Invoicing - account invoice generated</title>
-    <link href="../../images/favicon.png" rel="Shortcut Icon"/>
+    <link href="images/favicon.png" rel="Shortcut Icon"/>
     <%@ include file="../../template/styles.html" %>
 </head>
 
