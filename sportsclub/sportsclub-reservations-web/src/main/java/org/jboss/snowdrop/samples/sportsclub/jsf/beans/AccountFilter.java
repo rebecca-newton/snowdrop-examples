@@ -68,12 +68,11 @@ public class AccountFilter extends AbstractExtendedDataModelHelper
       return accountService.countAccounts(subscriberNameFragment);
    }
 
-   public String searchAccounts()
+   public void searchAccounts()
    {
       resetCurrentRowCount();
       getRowCount();
       setCurrentPage(1);
-      return "success";
    }
 
    public String getSubscriberNameFragment()
