@@ -115,10 +115,19 @@
                     <h:panelGrid columns="2">
 
                         <h:outputLabel value="Equipment"/>
-                        <h:outputText value="#{reservationSearch.currentReservation.equipment}" converter="#{equipmentConverter}"/>
+                        <h:panelGroup>
+                            <h:outputText rendered="#{reservationSearch.currentReservation.equipment != null}"
+                                          value="#{reservationSearch.currentReservation.equipment.name} (#{reservationSearch.currentReservation.equipment.description})"/>
+                            <h:outputText rendered="#{reservationSearch.currentReservation.equipment == null}"
+                                          value="Not selected"/>
+                        </h:panelGroup>
 
                         <h:outputLabel value="Account"/>
-                        <h:outputText value="#{reservationSearch.currentReservation.account}" converter="#{accountConverter}"/>
+                        <h:panelGroup>
+                            <h:outputText rendered="#{reservationSearch.currentReservation.account != null}"
+                                          value="#{reservationSearch.currentReservation.account.subscriber.name.firstName} #{reservationSearch.currentReservation.account.subscriber.name.lastName} (#{reservationSearch.currentReservation.account.subscriber.address.city}, #{reservationSearch.currentReservation.account.subscriber.address.country})"/>
+                            <h:outputText rendered="#{reservationSearch.currentReservation.account == null}" value="Not selected"/>
+                        </h:panelGroup>
 
                         <h:outputLabel value="From"/>
                         <h:outputText value="#{reservationSearch.currentReservation.from}"/>
