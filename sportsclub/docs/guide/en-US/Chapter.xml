@@ -1,25 +1,76 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
 <!ENTITY % BOOK_ENTITIES SYSTEM "guide.ent">
 %BOOK_ENTITIES;
 ]>
 <chapter id="chap-guide-Test_Chapter">
   <title>Introduction</title>
-  <para>
-  This chapter describes the purpose of the example, as well as the general structure of the documentation.</para>
+
+  <para>This chapter describes the purpose of the example, as well as the
+  general structure of the documentation.</para>
+
   <section>
     <title>Prerequisites</title>
+
     <para>Running the example requires the following setup:</para>
+
     <itemizedlist>
       <listitem>
         <para>Java 6 JDK</para>
       </listitem>
+
       <listitem>
-        <para>JBoss AS 5.1.0 GA or higher, </para>
+        <para>JBoss AS 5.1.0 GA or JBoss EAP 5 or higher</para>
       </listitem>
+
       <listitem>
         <para>Maven 2.0.8 or higher</para>
       </listitem>
     </itemizedlist>
+  </section>
+
+  <section>
+    <title>How to run the example</title>
+
+    <para>Running the appliction consists of the following steps:<itemizedlist>
+        <listitem>
+          <para>Building the application</para>
+        </listitem>
+
+        <listitem>
+          <para>Initializing the database</para>
+        </listitem>
+
+        <listitem>
+          <para>Preparing JBoss </para>
+        </listitem>
+
+        <listitem>
+          <para>Deploying the application</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <simplesect>
+      <title>Building the application</title>
+
+      <para>The Sportsclub example uses maven, so it can be built by simply
+      running:</para>
+
+      <informalexample>
+        <para><programlisting>mvn clean package</programlisting>This will
+        produce two EAR files, both named sportsclub.ear, located under
+        sportsclub-ear/target and sportsclub-jpa-ear/target. They have the
+        same functionality, but the underlying implementation of the
+        persistence layer is different (one is using Hibernate, and another
+        one uses JPA).</para>
+      </informalexample>
+    </simplesect>
+
+    <simplesect>
+      <title>Initializing the database</title>
+
+      <para>The database should be initialized by </para>
+    </simplesect>
   </section>
 </chapter>

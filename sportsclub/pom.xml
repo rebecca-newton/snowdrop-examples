@@ -20,11 +20,18 @@
         <module>sportsclub-invoicing-ejb</module>
         <module>sportsclub-invoicing-webmvc</module>
         <module>sportsclub-jpa-ear</module>
-        <module>assembly</module>
         <module>sportsclub-staticwebcontent</module>
+        <module>assembly</module>
     </modules>
     
     <packaging>pom</packaging>
+
+
+    <properties>
+        <spring.version>2.5.6.SEC01</spring.version>
+        <snowdrop.version>1.0.1-CR1</snowdrop.version>
+        <commons-logging.version>1.1.1</commons-logging.version>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -40,6 +47,22 @@
                 <artifactId>sportsclub-test-infrastructure</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.snowdrop</groupId>
+                <artifactId>snowdrop-deployers</artifactId>
+                <version>${snowdrop.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.snowdrop</groupId>
+                <artifactId>snowdrop-vfs</artifactId>
+                <version>${snowdrop.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.snowdrop</groupId>
+                <artifactId>snowdrop-transaction</artifactId>
+                <version>${snowdrop.version}</version>
             </dependency>
 
             <dependency>
@@ -80,33 +103,33 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring</artifactId>
-                <version>2.5.6.SEC01</version>
+                <version>${spring.version}</version>
             </dependency>
 
 
            <dependency>
                <groupId>org.springframework</groupId>
                <artifactId>spring-web</artifactId>
-               <version>2.5.6.SEC01</version>
+               <version>${spring.version}</version>
            </dependency>
 
            <dependency>
                <groupId>org.springframework</groupId>
                <artifactId>spring-webmvc</artifactId>
-               <version>2.5.6.SEC01</version>
+               <version>${spring.version}</version>
            </dependency>
 
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
-                <version>2.5.6.SEC01</version>
+                <version>${spring.version}</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
-                <version>1.1.1</version>
+                <version>${commons-logging.version}</version>
             </dependency>
 
             <dependency>

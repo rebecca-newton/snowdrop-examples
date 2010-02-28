@@ -65,7 +65,11 @@
         <dependency>
             <groupId>org.jboss.snowdrop</groupId>
             <artifactId>snowdrop-vfs</artifactId>
-            <version>1.0.0.GA</version>
+            <scope>provided</scope>
+        </dependency>
+         <dependency>
+            <groupId>org.jboss.snowdrop</groupId>
+            <artifactId>snowdrop-transaction</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>

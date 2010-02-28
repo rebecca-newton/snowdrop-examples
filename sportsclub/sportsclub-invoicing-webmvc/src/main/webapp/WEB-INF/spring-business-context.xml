@@ -28,7 +28,6 @@
                <property name="clientId" value="remote"/>
                <property name="subscriptionName" value="jca-payment-processor"/>
                <property name="maxSession" value="1"/>
-               <property name="maxMessages" value="1"/>
                <property name="useDLQ" value="false"/>
            </bean>
        </property>
@@ -43,7 +42,9 @@
            </bean>
        </property>
        <property name="transactionManager">
-          <bean class="org.jboss.snowdrop.samples.sportsclub.infrastructure.NoopTransactionManager"/>
+          <bean class="org.jboss.spring.transactions.ExistingTransactionAwareTransactionFactory">
+              <property name="wrappedJtaTransactionManager" ref="transactionManager"/>
+          </bean>
        </property>
     </bean>
 
