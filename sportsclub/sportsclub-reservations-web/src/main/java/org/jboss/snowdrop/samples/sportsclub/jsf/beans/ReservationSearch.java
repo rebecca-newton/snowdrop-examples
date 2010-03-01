@@ -128,6 +128,8 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
    public void saveCurrent()
    {
       reservationService.updateReservation(getCurrentReservation());
+      setSelection(new SimpleSelection());
+      editing = false;
    }
 
    public void setEditing(boolean editing)
