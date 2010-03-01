@@ -4,6 +4,8 @@ import org.ajax4jsf.model.DataVisitor;
 import org.ajax4jsf.model.Range;
 import org.ajax4jsf.model.SequenceRange;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
 import org.jboss.snowdrop.samples.sportsclub.service.ReservationService;
 import org.richfaces.model.selection.Selection;
 import org.richfaces.model.selection.SimpleSelection;
@@ -13,19 +15,24 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
  */
 public class ReservationSearch extends AbstractExtendedDataModelHelper
 {
-
    private ReservationService reservationService;
    private ReservationSearchOptions reservationSearchOptions;
 
    private Map<Long, Reservation> reservationsMap = new HashMap<Long, Reservation>();
 
    private ReservationTableState tableState;
+
+   private AccountFilter accountFilter;
+   private EquipmentFilter equipmentFilter;
+   private Locale locale = Locale.getDefault();
+
    private boolean editing;
 
    public ReservationSearch()
@@ -132,6 +139,18 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
       editing = false;
    }
 
+   public void updateSelectedAccount()
+   {
+      Account account = accountFilter.getSelectedAccount();
+      //reservation.setAccount(account);
+   }
+
+   public void updateSelectedEquipment()
+   {
+      Equipment equipment = equipmentFilter.getSelectedEquipment();
+      //reservation.setEquipment(equipment);
+   }
+
    public void setEditing(boolean editing)
    {
       this.editing = editing;
@@ -140,5 +159,35 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
    public boolean isEditing()
    {
       return editing;
+   }
+
+   public AccountFilter getAccountFilter()
+   {
+      return accountFilter;
+   }
+
+   public void setAccountFilter(AccountFilter accountFilter)
+   {
+      this.accountFilter = accountFilter;
+   }
+
+   public EquipmentFilter getEquipmentFilter()
+   {
+      return equipmentFilter;
+   }
+
+   public void setEquipmentFilter(EquipmentFilter equipmentFilter)
+   {
+      this.equipmentFilter = equipmentFilter;
+   }
+
+   public Locale getLocale()
+   {
+      return locale;
+   }
+
+   public void setLocale(Locale locale)
+   {
+      this.locale = locale;
    }
 }
