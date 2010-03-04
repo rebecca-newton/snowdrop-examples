@@ -78,9 +78,6 @@ public abstract class AbstractExtendedDataModelHelper extends ExtendedDataModel
       return currentRowCount.intValue();
    }
 
-   /**
-    * Implementing // TODO
-    */
    public void resetCurrentRowCount()
    {
       currentRowCount = null;
