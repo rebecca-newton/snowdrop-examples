@@ -16,20 +16,20 @@
                         <f:facet name="header">Filter accounts</f:facet>
                         <h:form>
                             Type subscriber name:
-                            <h:inputText id="searchField" value="#{accountFilter.subscriberNameFragment}"
+                            <h:inputText id="searchField" value="#{accountFilterCreate.subscriberNameFragment}"
                                          label="Search name"/>
                             <rich:hotKey selector="##{rich:clientId('searchField')}" key="return"
                                          handler="#{rich:element('searchButton')}.onclick();return false;"/>
-                            <a4j:commandButton id="searchButton" value="Search" action="#{accountFilter.searchAccounts}"
+                            <a4j:commandButton id="searchButton" value="Search" action="#{accountFilterCreate.searchAccounts}"
                                                reRender="accountsTable"/>
                         </h:form>
                     </rich:panel>
                     <rich:panel>
                         <f:facet name="header">Select Account</f:facet>
                         <h:form id="AccountSelectForm">
-                            <rich:extendedDataTable id="accountsTable" value="#{accountFilter}" var="account"
+                            <rich:extendedDataTable id="accountsTable" value="#{accountFilterCreate}" var="account"
                                                     selectionMode="single"
-                                                    selection="#{accountFilter.selection}"
+                                                    selection="#{accountFilterCreate.selection}"
                                                     enableContextMenu="true"
                                                     height="250px"
                                                     rows="5">
@@ -74,7 +74,7 @@
 
                                 <f:facet name="footer">
                                     <rich:datascroller id="scrollerAccount" for="accountsTable" maxPages="5"
-                                                       page="#{accountFilter.currentPage}"/>
+                                                       page="#{accountFilterCreate.currentPage}"/>
                                 </f:facet>
                             </rich:extendedDataTable>
                         </h:form>
@@ -85,9 +85,9 @@
                     <rich:panel>
                         <f:facet name="header">Select Equipment</f:facet>
                         <h:form id="EquipmentSelectForm">
-                            <rich:extendedDataTable id="equipmentsTable" value="#{equipmentFilter}" var="equipment"
+                            <rich:extendedDataTable id="equipmentsTable" value="#{equipmentFilterCreate}" var="equipment"
                                                     selectionMode="single"
-                                                    selection="#{equipmentFilter.selection}"
+                                                    selection="#{equipmentFilterCreate.selection}"
                                                     enableContextMenu="true"
                                                     height="250px"
                                                     rows="5">
@@ -118,7 +118,7 @@
 
                                 <f:facet name="footer">
                                     <rich:datascroller id="scrollerEquipment" for="equipmentsTable" maxPages="5"
-                                                       page="#{equipmentFilter.currentPage}"/>
+                                                       page="#{equipmentFilterCreate.currentPage}"/>
                                 </f:facet>
 
                             </rich:extendedDataTable>

@@ -13,8 +13,6 @@ import java.util.Collection;
 public class ReferenceData
 {
    private SelectItem[] equipmentTypes;
-   private SelectItem[] equipments;
-
    private EquipmentService equipmentService;
 
    public void init()
@@ -27,27 +25,12 @@ public class ReferenceData
          equipmentTypes[i++] = new SelectItem(type);
       }
 
-      Collection<Equipment> eqps =  equipmentService.getAllEquipments();
-      equipments = new SelectItem[eqps.size()];
-      i = 0;
-      for (Equipment e : eqps)
-      {
-         String label = e.getEquipmentType().name() + ", " + e.getDescription();
-         equipments[i++] = new SelectItem(e, label);
-      }
-
    }
 
    public SelectItem[] getEquipmentTypes()
    {
       return equipmentTypes;
    }
-
-   public SelectItem[] getAllEquipments()
-   {
-      return equipments;
-   }
-
 
    public EquipmentService getEquipmentService()
    {
