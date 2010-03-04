@@ -50,7 +50,6 @@
         <a4j:outputPanel id="searchResults">
             <h:form>
                 <rich:panel header="Search results">
-
                     <rich:extendedDataTable id="searchResultsTable" value="#{reservationSearch}" var="reservation"
                                             selectionMode="single"
                                             selection="#{reservationSearch.selection}"
@@ -58,7 +57,7 @@
                                             height="250px"
                                             rows="5"
                                             tableState="#{reservationSearch.tableState.tableState}">
-                        <a4j:support event="onselectionchange" reRender="reservationData,reservationFilters"/>
+                        <a4j:support event="onselectionchange" action="#{reservationSearch.reservationSelected}" reRender="reservationData,reservationFilters"/>
                         <rich:column label="Reservation #">
                             <f:facet name="header">
                                 <h:outputText value="Reservation #"/>
@@ -110,9 +109,9 @@
         </a4j:outputPanel>
 
         <!--*********************************** -->
-
+        
         <a4j:outputPanel id="reservationFilters">
-            <rich:panel rendered="#{reservationSearch.editing and reservationSearch.currentReservation != null}">
+            <rich:panel rendered="#{reservationSearch.editing and reservationSearch.reservation != null}">
                 <f:facet name="header">Edit Reservation</f:facet>
                 <table>
                     <tr>
@@ -140,8 +139,8 @@
                                                             height="250px"
                                                             rows="5">
                                         <a4j:support event="onselectionchange"
-                                                     action="#{reservationCreate.updateSelectedAccount}"
-                                                     reRender="reservationDetails"/>
+                                                     action="#{reservationSearch.updateSelectedAccount}"
+                                                     reRender="reservationData"/>
 
                                         <rich:column label="Id" width="7%">
                                             <f:facet name="header">
@@ -198,8 +197,8 @@
                                                                 height="250px"
                                                                 rows="5">
                                             <a4j:support event="onselectionchange"
-                                                         action="#{reservationCreate.updateSelectedEquipment}"
-                                                         reRender="reservationDetails"/>
+                                                         action="#{reservationSearch.updateSelectedEquipment}"
+                                                         reRender="reservationData"/>
 
                                             <rich:column label="Id" width="10%">
                                                 <f:facet name="header">
@@ -240,59 +239,57 @@
         <!-- ******************************************** -->
 
         <a4j:outputPanel id="reservationData">
-            <rich:panel rendered="#{reservationSearch.currentReservation != null}" >
+            <rich:panel rendered="#{reservationSearch.reservation != null}" >
                 <h:form>
-                    <a4j:region id="controlRegion">
-                        <h:panelGrid columns="2">
-                            <h:outputLabel value="Equipment"/>
-                            <h:panelGroup>
-                                <h:outputText rendered="#{reservationSearch.currentReservation.equipment != null}"
-                                              value="#{reservationSearch.currentReservation.equipment.name} (#{reservationSearch.currentReservation.equipment.description})"/>
-                                <h:outputText rendered="#{reservationSearch.currentReservation.equipment == null}"
-                                              value="Not selected"/>
-                            </h:panelGroup>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Equipment:"/>
+                        <h:panelGroup>
+                            <h:outputText rendered="#{reservationSearch.reservation.equipment != null}"
+                                          value="#{reservationSearch.reservation.equipment.name} (#{reservationSearch.reservation.equipment.description})"/>
+                            <h:outputText rendered="#{reservationSearch.reservation.equipment == null}"
+                                          value="Not selected"/>
+                        </h:panelGroup>
 
-                            <h:outputLabel value="Account"/>
-                            <h:panelGroup>
-                                <h:outputText rendered="#{reservationSearch.currentReservation.account != null}"
-                                              value="#{reservationSearch.currentReservation.account.subscriber.name.firstName} #{reservationSearch.currentReservation.account.subscriber.name.lastName} (#{reservationSearch.currentReservation.account.subscriber.address.city}, #{reservationSearch.currentReservation.account.subscriber.address.country})"/>
-                                <h:outputText rendered="#{reservationSearch.currentReservation.account == null}" value="Not selected"/>
-                            </h:panelGroup>
-    
-                            <h:outputLabel value="From"/>
-                            <h:panelGroup>
-                                <h:outputText value="#{reservationSearch.currentReservation.from}" rendered="#{!reservationSearch.editing}"/>
-                                <rich:calendar id="from"
-                                           value="#{reservationSearch.currentReservation.from}"
-                                           datePattern="d/M/yy HH:mm"
-                                           showApplyButton="true"
-                                           locale="#{reservationSearch.locale}"
-                                           rendered="#{reservationSearch.editing}"/>
-                            </h:panelGroup>
+                        <h:outputLabel value="Account:"/>
+                        <h:panelGroup>
+                            <h:outputText rendered="#{reservationSearch.reservation.account != null}"
+                                          value="#{reservationSearch.reservation.account.subscriber.name.firstName} #{reservationSearch.reservation.account.subscriber.name.lastName} (#{reservationSearch.reservation.account.subscriber.address.city}, #{reservationSearch.reservation.account.subscriber.address.country})"/>
+                            <h:outputText rendered="#{reservationSearch.reservation.account == null}" value="Not selected"/>
+                        </h:panelGroup>
 
-                            <h:outputLabel value="To"/>
-                            <h:panelGroup>
-                                <h:outputText value="#{reservationSearch.currentReservation.to}" rendered="#{!reservationSearch.editing}"/>
-                                <rich:calendar id="to"
-                                           value="#{reservationSearch.currentReservation.to}"
-                                           datePattern="d/M/yy HH:mm"
-                                           showApplyButton="true"
-                                           locale="#{reservationSearch.locale}"
-                                           rendered="#{reservationSearch.editing}"/>
-                            </h:panelGroup>
+                        <h:outputLabel value="From:"/>
+                        <h:panelGroup>
+                            <h:outputText value="#{reservationSearch.reservation.from}" rendered="#{!reservationSearch.editing}"/>
+                            <rich:calendar id="from"
+                                       value="#{reservationSearch.reservation.from}"
+                                       datePattern="d/M/yy HH:mm"
+                                       showApplyButton="true"
+                                       locale="#{reservationSearch.locale}"
+                                       rendered="#{reservationSearch.editing}"/>
+                        </h:panelGroup>
 
-                            <a4j:commandButton id="deleteRsrvBtn" value="Delete" action="#{reservationSearch.deleteReservation}" reRender="searchResults,reservationData" rendered="#{!reservationSearch.editing}"/>
-                            <a4j:commandButton id="editRsrvBtn" value="Edit" reRender="reservationData,reservationFilters" rendered="#{!reservationSearch.editing}">
-                                <f:setPropertyActionListener value="#{true}" target="#{reservationSearch.editing}"/>
-                            </a4j:commandButton>
+                        <h:outputLabel value="To:"/>
+                        <h:panelGroup>
+                            <h:outputText value="#{reservationSearch.reservation.to}" rendered="#{!reservationSearch.editing}"/>
+                            <rich:calendar id="to"
+                                       value="#{reservationSearch.reservation.to}"
+                                       datePattern="d/M/yy HH:mm"
+                                       showApplyButton="true"
+                                       locale="#{reservationSearch.locale}"
+                                       rendered="#{reservationSearch.editing}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    
+                    <a4j:commandButton id="deleteRsrvBtn" value="Delete Reservation" action="#{reservationSearch.deleteReservation}" reRender="searchResults,reservationFilters,reservationData" rendered="#{!reservationSearch.editing}" status="actionStatus" />
+                    <a4j:commandButton id="editRsrvBtn" value="Edit Reservation" reRender="reservationData,reservationFilters" rendered="#{!reservationSearch.editing}" status="actionStatus">
+                        <f:setPropertyActionListener value="#{true}" target="#{reservationSearch.editing}"/>
+                    </a4j:commandButton>
+                    <br/>
+                    <a4j:commandButton id="cancelRsrvBtn" value="Cancel Editing" rendered="#{reservationSearch.editing}" reRender="reservationData,reservationFilters">
+                        <f:setPropertyActionListener value="#{false}" target="#{reservationSearch.editing}"/>
+                    </a4j:commandButton>
+                    <a4j:commandButton id="saveRsrvBtn" value="Save Reservation" action="#{reservationSearch.saveCurrent}" reRender="reservationData,reservationFilters,searchResults" rendered="#{reservationSearch.editing}" status="actionStatus" />
 
-                            <a4j:commandButton id="cancelRsrvBtn" value="Cancel" rendered="#{reservationSearch.editing}" reRender="reservationData,reservationFilters">
-                                <f:setPropertyActionListener value="#{false}" target="#{reservationSearch.editing}"/>
-                            </a4j:commandButton>
-                            <a4j:commandButton id="saveRsrvBtn" value="Save" action="#{reservationSearch.saveCurrent}" reRender="reservationData" rendered="#{reservationSearch.editing}"/>
-
-                        </h:panelGrid>
-                    </a4j:region>
                 </h:form>
             </rich:panel>
         </a4j:outputPanel>
@@ -305,9 +302,11 @@
              <h:outputText value="Your request is being processed, please wait."></h:outputText>
         </rich:modalPanel>
 
-        <a4j:status for="controlRegion"
-                    onstart="Richfaces.showModalPanel('ajaxLoadingModalBox',{width:450, top:200})"
-                    onstop="Richfaces.hideModalPanel('ajaxLoadingModalBox')"></a4j:status>
+        <a4j:region>
+            <a4j:status id="actionStatus"
+                        onstart="Richfaces.showModalPanel('ajaxLoadingModalBox',{width:450, top:200})"
+                        onstop="Richfaces.hideModalPanel('ajaxLoadingModalBox')"></a4j:status>
+        </a4j:region>
     
     </ui:define>
 

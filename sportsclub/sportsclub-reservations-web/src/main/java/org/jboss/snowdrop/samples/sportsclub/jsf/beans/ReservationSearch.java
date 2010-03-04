@@ -7,15 +7,11 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
 import org.jboss.snowdrop.samples.sportsclub.service.ReservationService;
-import org.richfaces.model.selection.Selection;
 import org.richfaces.model.selection.SimpleSelection;
 
 import javax.faces.context.FacesContext;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Locale;
+import java.util.*;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -32,6 +28,7 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
    private AccountFilter accountFilter;
    private EquipmentFilter equipmentFilter;
    private Locale locale = Locale.getDefault();
+   private Reservation reservation;
 
    private boolean editing;
 
@@ -51,7 +48,7 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
    }
 
    @Override
-   public Map<Long,? extends Object> getDomainObjectMap()
+   public Map<Long, ? extends Object> getDomainObjectMap()
    {
       return reservationsMap;
    }
@@ -60,9 +57,9 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
    public Long getCurrentRowCount()
    {
       return reservationService.countReservationsForRange(
-               reservationSearchOptions.getFromDate(),
-               reservationSearchOptions.getToDate(),
-               reservationSearchOptions.getSelectedEquipmentTypes());
+            reservationSearchOptions.getFromDate(),
+            reservationSearchOptions.getToDate(),
+            reservationSearchOptions.getSelectedEquipmentTypes());
    }
 
    @Override
@@ -83,9 +80,23 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
       }
    }
 
-   public String equipmentTypeCheckboxChanged()
+   public void reservationSelected()
    {
-      return null; // TODO ?
+      if (getSelection() != null && getSelection().size() > 0)
+      {
+         reservation = reservationsMap.get(getSelectedKey());
+      } else
+      {
+         reservation = null;
+         editing = false;
+      }
+      cleanFilters();
+   }
+
+   private void cleanFilters()
+   {
+      accountFilter.setSelection(new SimpleSelection());
+      equipmentFilter.setSelection(new SimpleSelection());
    }
 
    public ReservationTableState getTableState()
@@ -116,39 +127,53 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
          return ((Long) getSelection().getKeys().next());
    }
 
-   public Reservation getCurrentReservation()
+   public void deleteReservation()
    {
-      if (getSelection() != null && getSelection().size() > 0)
-         return reservationsMap.get(getSelectedKey());
-      else
-         return null;
-   }
-
-   public String deleteReservation()
-   {
-      reservationService.delete(getCurrentReservation());
+      if (reservation != null)
+      {
+         reservationService.delete(reservation);
+         reservation = null;
+      }
       setSelection(new SimpleSelection());
+      cleanFilters();
       resetCurrentRowCount();
-      return "closed";
+      editing = false;
    }
 
    public void saveCurrent()
    {
-      reservationService.updateReservation(getCurrentReservation());
+      if (reservation != null)
+      {
+         reservationService.updateReservation(reservation);
+         reservation = null;
+      }
       setSelection(new SimpleSelection());
+      cleanFilters();
       editing = false;
    }
 
    public void updateSelectedAccount()
    {
-      Account account = accountFilter.getSelectedAccount();
-      //reservation.setAccount(account);
+      if (accountFilter.getSelection() != null && accountFilter.getSelection().size() > 0)
+      {
+         Account account = accountFilter.getSelectedAccount();
+         reservation.setAccount(account);
+      } else
+      {
+         reservation.setAccount(reservationsMap.get(getSelectedKey()).getAccount());
+      }
    }
 
    public void updateSelectedEquipment()
    {
-      Equipment equipment = equipmentFilter.getSelectedEquipment();
-      //reservation.setEquipment(equipment);
+      if (equipmentFilter.getSelection() != null && equipmentFilter.getSelection().size() > 0)
+      {
+         Equipment equipment = equipmentFilter.getSelectedEquipment();
+         reservation.setEquipment(equipment);
+      } else
+      {
+         reservation.setEquipment(reservationsMap.get(getSelectedKey()).getEquipment());
+      }
    }
 
    public void setEditing(boolean editing)
@@ -189,5 +214,10 @@ public class ReservationSearch extends AbstractExtendedDataModelHelper
    public void setLocale(Locale locale)
    {
       this.locale = locale;
+   }
+
+   public Reservation getReservation()
+   {
+      return reservation;
    }
 }

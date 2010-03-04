@@ -19,19 +19,12 @@
         <property name="equipmentFilter" ref="equipmentFilter"/>
     </bean>
 
-    <bean id="accountFilter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.AccountFilter" scope="session">
-        <property name="accountService" ref="accountService"/>
-    </bean>
-
-    <bean id="equipmentFilter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentFilter" scope="session">
-        <property name="equipmentService" ref="equipmentService"/>
-    </bean>
-
-
     <bean id="reservationSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearch" scope="session">
         <property name="reservationService" ref="reservationService"/>
         <property name="tableState" ref="reservationSearchTableState"/>
         <property name="reservationSearchOptions" ref="reservationSearchOptions"/>
+        <property name="accountFilter" ref="accountFilter"/>
+        <property name="equipmentFilter" ref="equipmentFilter"/>
     </bean>
     
     <bean id="reservationSearchTableState" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationTableState" scope="session"/>
@@ -40,7 +33,14 @@
         <property name="equipmentService" ref="equipmentService"/>
     </bean>
 
+    <bean id="accountFilter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.AccountFilter" scope="session">
+        <property name="accountService" ref="accountService"/>
+    </bean>
 
+    <bean id="equipmentFilter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentFilter" scope="session">
+        <property name="equipmentService" ref="equipmentService"/>
+    </bean>
+    
     <bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentTypeConverter"/>
     
     <!-- Application scoped service -->
