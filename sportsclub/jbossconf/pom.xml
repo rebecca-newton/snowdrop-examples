@@ -24,10 +24,9 @@
 
         <dependency>
             <groupId>org.jboss.snowdrop</groupId>
-            <artifactId>snowdrop</artifactId>
+            <artifactId>jboss-spring-deployer</artifactId>
             <version>${snowdrop.version}</version>
             <type>zip</type>
-            <classifier>deployer</classifier>
         </dependency>
     </dependencies>
 
@@ -51,7 +50,7 @@
                                 <phase>process-resources</phase>
                                 <configuration>
                                     <stripVersion>true</stripVersion>
-                                    <includeArtifactIds>snowdrop</includeArtifactIds>
+                                    <includeArtifactIds>jboss-spring-deployer</includeArtifactIds>
                                 </configuration>
                             </execution>
                         </executions>
@@ -85,7 +84,7 @@
                                                 failonerror="false"/>
 
                                         <unzip dest="${project.build.directory}/spring.deployer"
-                                               src="${project.build.directory}/dependency/snowdrop-deployer.zip"/>
+                                               src="${project.build.directory}/dependency/jboss-spring-deployer.zip"/>
 
                                         <copy todir="${jboss.home}/server/${jboss.server.name}/deployers"
                                               overwrite="true">
