@@ -3,7 +3,6 @@ package org.jboss.snowdrop.samples.sportsclub.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.hamcrest.Description;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.BillingType;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Membership;
@@ -12,8 +11,6 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Person;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.TimeInterval;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.matchers.TypeSafeMatcher;
-
 /**
  * @author Marius Bogoevici
  */
@@ -63,7 +60,7 @@ public class TestAccount
 
       Date currentDate = new Date();
       final TimeInterval timeInterval = account.getBillingPeriodFor(currentDate);
-      Assert.assertThat(currentDate, new IsWithinTimeInterval(timeInterval));
+       Assert.assertTrue(timeInterval.contains(currentDate));
    }
 
    @Test
@@ -73,7 +70,8 @@ public class TestAccount
 
       Date currentDate = new Date();
       final TimeInterval timeInterval = account.getBillingPeriodFor(currentDate);
-      Assert.assertThat(currentDate, new IsWithinTimeInterval(timeInterval));
+       Assert.assertTrue(timeInterval.contains(currentDate));
+
    }
 
    @Test
@@ -83,7 +81,7 @@ public class TestAccount
 
       Date currentDate = new Date();
       final TimeInterval timeInterval = account.getBillingPeriodFor(currentDate);
-      Assert.assertThat(currentDate, new IsWithinTimeInterval(timeInterval));
+      Assert.assertTrue(timeInterval.contains(currentDate));
    }
 
    private Account createAccount(BillingType billingType, BigDecimal amount)
@@ -103,24 +101,4 @@ public class TestAccount
       return account;
    }
 
-   private static class IsWithinTimeInterval extends TypeSafeMatcher<Date>
-   {
-      private final TimeInterval timeInterval;
-
-      public IsWithinTimeInterval(TimeInterval timeInterval)
-      {
-         this.timeInterval = timeInterval;
-      }
-
-      public void describeTo(Description description)
-      {
-         description.appendText("TimeInterval from: " + timeInterval.getStartDate() + " to " + timeInterval.getEndDate());
-      }
-
-      @Override
-      public boolean matchesSafely(Date item)
-      {
-         return timeInterval.contains(item);
-      }
-   }
 }
