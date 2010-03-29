@@ -129,6 +129,7 @@ public class DatabaseInitializer implements InitializingBean
       });
    }
 
+   @SuppressWarnings("unchecked")
    private void saveMap(EntityManager entityManager, Map data)
    {
       for (String key : (Set<String>)data.keySet())

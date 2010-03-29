@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "guide.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-guide-usecases">
+  <title>Description of the example application</title>
+
+  <para>This chapter describes the business use cases covered by the
+  application, and how is the functionality distributed across the
+  modules.</para>
+
+  <section>
+    <title>The Business Domain of the example application</title>
+
+    <para>The goal of the Sportsclub application is to provide a few examples
+    of real-world applications based on the Spring Framework that integrate
+    with Java EE 5 and JBoss. It consists of not one, but three different
+    applications sharing the same domain model, packaged and deployed
+    together. The latter is done for simplicity reasons, but also for
+    demonstrating a few different technologies working side by side. In the
+    following sections, we will discuss the technologies used in the
+    applications.</para>
+
+    <para>The business domain of the application is a Sports Club. The
+    employees of the club need to be able to perform the following
+    scenarios:</para>
+
+    <para><itemizedlist>
+        <listitem>
+          <para>maintaining informations about the subscribers, creating new
+          subcriptions and closing existing accounts</para>
+        </listitem>
+
+        <listitem>
+          <para>creating, modifying and removing equipment reservations for
+          subscribers</para>
+        </listitem>
+
+        <listitem>
+          <para>viewing the current balance of an account, issuing invoices
+          for accounts that do not have a current invoice and updating the
+          account whenever a payment has been received</para>
+        </listitem>
+      </itemizedlist>As the concerns are different, we have three different
+    applications, each covering one piece of functionality.</para>
+  </section>
+
+  <section>
+    <title>The Technologies</title>
+
+    <para>The Reservations application is using the following
+    stack:<itemizedlist>
+        <listitem>
+          <para>UI layer implemented using Richfaces</para>
+        </listitem>
+
+        <listitem>
+          <para>Business layer implemented using EJB</para>
+        </listitem>
+
+        <listitem>
+          <para>Persistence layer using Spring-based DAOs
+          (Hibernate/JPA)</para>
+        </listitem>
+      </itemizedlist>The Subscriptions application is using the following
+    stack:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>UI layer implemented using Richfaces</para>
+      </listitem>
+
+      <listitem>
+        <para>Business layer implemented using Spring</para>
+      </listitem>
+
+      <listitem>
+        <para>Persistence layer implemented using Spring-based DAOs
+        (Hibernate/JPA)</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>The Invoicing application is using the following stack:<itemizedlist>
+        <listitem>
+          <para>UI layer implemented using Spring MVC and JSP</para>
+        </listitem>
+
+        <listitem>
+          <para>Business layer implemented using EJB</para>
+        </listitem>
+
+        <listitem>
+          <para>Persistence layer implemented using Spring-based DAOs
+          (Hibernate/JPA)</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <para>In all three cases, the persistence layer is implemented using
+    Spring. In fact there are two alternative implementations: one using
+    Hibernate directly and one using JPA (and Hibernate as the provider).
+    Building the application creates two different EAR files, one using the
+    JPA-based DAOs and one using the Hibernate-based DAOs.</para>
+  </section>
+
+  <section>
+    <title>The project modules</title>
+
+    <para>The modules of the project are outlined in the following
+    table:<table>
+        <title>Modules of the Sportsclub project</title>
+
+        <tgroup cols="3">
+          <colspec colname="module-name" />
+
+          <colspec colname="module-description" />
+
+          <colspec align="center" colname="module-type" />
+
+          <thead>
+            <row>
+              <entry align="center">Maven Module</entry>
+
+              <entry align="center">Functionality</entry>
+
+              <entry>Module Type</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>snowdrop-domain</entry>
+
+              <entry>Domain classes and interfaces for repositories.</entry>
+
+              <entry>jar</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-hibernate-dao</entry>
+
+              <entry>Hibernate implementations for repositories and Spring
+              bean definitions using them.</entry>
+
+              <entry>jar</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-jpa-dao</entry>
+
+              <entry>JPA implementations for repositories and Spring bean
+              definitions using them.</entry>
+
+              <entry>jar</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-invoicing-ejb</entry>
+
+              <entry>Business logic for the Invoicing application</entry>
+
+              <entrytbl cols="1">
+                <tbody>
+                  <row>
+                    <entry>ejb</entry>
+                  </row>
+                </tbody>
+              </entrytbl>
+            </row>
+
+            <row>
+              <entry>sportsclub-reservations-spring</entry>
+
+              <entry>Business logic for the Reservations application</entry>
+
+              <entry>jar</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-subscriptions-ejb</entry>
+
+              <entry>Business logic for the Subscriptions application</entry>
+
+              <entry>ejb</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-invoicing-webmvc</entry>
+
+              <entry>UI layer for the Invoicing application. Includes
+              processing of JMS messages via Spring (for payment
+              notifications)</entry>
+
+              <entry>war</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-reservations-web</entry>
+
+              <entry>UI layer for the Reservations application.</entry>
+
+              <entry>war</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-subscriptions-web</entry>
+
+              <entry>UI layer for the Subscriptions application</entry>
+
+              <entry>war</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-ear</entry>
+
+              <entry>EAR aggregator module using the Hibernate-based
+              implementation</entry>
+
+              <entry>ear</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-jpa-ear</entry>
+
+              <entry>EAR aggregator module using the JPA-based
+              implementation</entry>
+
+              <entry>ear</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-staticwebcontent</entry>
+
+              <entry>Static web content for the application (not deployed
+              separately, but included at build-time in the web
+              layers)</entry>
+
+              <entry>war</entry>
+            </row>
+
+            <row>
+              <entry>sportsclub-test-infrastructure</entry>
+
+              <entry>Infrastructure module for unit testing</entry>
+
+              <entry>jar</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table></para>
+  </section>
+</chapter>

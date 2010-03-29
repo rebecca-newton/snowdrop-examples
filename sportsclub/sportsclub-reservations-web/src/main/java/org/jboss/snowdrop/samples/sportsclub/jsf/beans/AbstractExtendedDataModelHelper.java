@@ -1,13 +1,9 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
-import org.ajax4jsf.model.ExtendedDataModel;
-import org.ajax4jsf.model.Range;
-import org.ajax4jsf.model.DataVisitor;
-import org.richfaces.model.selection.Selection;
-
-import javax.faces.context.FacesContext;
-import java.io.IOException;
 import java.util.Map;
+
+import org.ajax4jsf.model.ExtendedDataModel;
+import org.richfaces.model.selection.Selection;
 
 /**
  * Abstract helper class for JSF backing beans serving {#link ExtendedDataModel} implementations. 

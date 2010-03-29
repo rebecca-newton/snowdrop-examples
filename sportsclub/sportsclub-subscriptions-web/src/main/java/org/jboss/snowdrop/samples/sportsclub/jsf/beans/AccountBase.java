@@ -5,9 +5,6 @@ import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Address;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Name;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Person;
 import org.jboss.snowdrop.samples.sportsclub.ejb.SubscriptionService;
 
 /**

@@ -130,6 +130,7 @@ public class DatabaseInitializer implements InitializingBean
       });
    }
 
+   @SuppressWarnings("unchecked")
    private void saveMap(Session session, Map data)
    {
       for (String key : (Set<String>)data.keySet())

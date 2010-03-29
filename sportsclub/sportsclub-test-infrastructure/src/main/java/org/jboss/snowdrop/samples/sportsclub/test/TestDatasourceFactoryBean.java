@@ -1,14 +1,15 @@
 package org.jboss.snowdrop.samples.sportsclub.test;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.sql.DataSource;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.SQLException;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.sql.DataSource;
+
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.Resource;
@@ -20,9 +21,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import org.apache.commons.dbcp.BasicDataSource;
-
 /**
+ * 
  * @author Marius Bogoevici
  */
 public class TestDatasourceFactoryBean implements FactoryBean, ResourceLoaderAware

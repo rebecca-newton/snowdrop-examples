@@ -4,7 +4,7 @@
 <!ENTITY % BOOK_ENTITIES SYSTEM "guide.ent">
 %BOOK_ENTITIES;
 ]>
-<chapter id="chap-guide-Test_Chapter">
+<chapter id="chap-guide-introduction">
   <title>Introduction</title>
 
   <para>This chapter describes the purpose of the example, as well as the

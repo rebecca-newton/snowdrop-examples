@@ -68,6 +68,7 @@ public class HibernateAccountRepository extends HibernateRepository<Account, Lon
       return criteria;
    }
 
+   @SuppressWarnings("unchecked")
    public List<Account> findByCriteria(AccountSearchCriteria accountSearchCriteria)
    {
       Criteria criteria = convert(accountSearchCriteria);

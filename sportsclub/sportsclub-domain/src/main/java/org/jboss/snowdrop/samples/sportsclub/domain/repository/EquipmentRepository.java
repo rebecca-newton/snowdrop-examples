@@ -1,12 +1,10 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.repository;
 
+import java.util.Collection;
+
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.RangeCriteria;
-
-import java.util.List;
-import java.util.Date;
-import java.util.Collection;
 
 /**
  *

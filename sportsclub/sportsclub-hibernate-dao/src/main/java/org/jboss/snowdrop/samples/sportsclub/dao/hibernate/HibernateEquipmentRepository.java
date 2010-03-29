@@ -21,6 +21,7 @@ public class HibernateEquipmentRepository extends HibernateRepository<Equipment,
       return EquipmentType.values();
    }
 
+   @SuppressWarnings("unchecked")
    public Collection<Equipment> findByCriteria(RangeCriteria rangeCriteria)
    {
       Criteria criteria = convert(rangeCriteria);
