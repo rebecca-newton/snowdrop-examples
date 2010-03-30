@@ -17,7 +17,7 @@
   them. This strategy has multiple benefits: for one, it allows to separate
   concerns between components - the Spring wiring of certain components is
   left at the level where the components are defined, so that it can be
-  changed easily if the implementations change. </para>
+  changed easily if the implementations change.</para>
 
   <section>
     <title>A list of the Spring integration use cases</title>
@@ -25,7 +25,7 @@
     <para>The Sportsclub application covers a number of JBoss and Spring
     integration use cases. The scenarios selected for this example are
     focusing on using the Java EE 5 services provided by JBoss AS in Spring
-    applications. </para>
+    applications.</para>
 
     <para></para>
   </section>
@@ -229,7 +229,80 @@
       that can be injected into the LocalSessionFactoryBean and
       LocalContainerEntityManagerFactoryBean, respectively). The localized
       SessionFactory and EntityManager definitions are located in the
-      spring-hibernate-dao and spring-jpa-dao, respectively. </para>
+      spring-hibernate-dao and spring-jpa-dao modules, respectively.</para>
+
+      <para>The unit tests that are located in the respective modules will use
+      the local infrastructure files and the dao-context.xml files, as in the
+      following example:</para>
+
+      <informalexample>
+        <para><programlisting lang="JAVA">@ContextConfiguration(locations = {"classpath:test-db-infrastructure.xml",
+                                   "classpath:TEST-jpa-infrastructure.xml",
+                                   "classpath:dao-context.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
+public class TestJpaAccountRepository
+{
+   /* */
+}
+</programlisting>This configuration reuses the 'application-specific' context
+        configuration fragment, as well as two specific context configuration
+        fragments to create an Spring context in isolation. Thus, the
+        functionality provided by the repositories can be tested outside the
+        running application.</para>
+      </informalexample>
+    </section>
+  </section>
+
+  <section>
+    <title>Service Layer</title>
+
+    <para>On top of the domain and persistence layer sits the service layer of
+    the application. Its role is to co-ordinate the domain objects and
+    repositories in order to perform higher level operations. This is also the
+    layer which provides transaction demarcation.</para>
+
+    <para>In the Sportsclub application, there are two variants of
+    implementing the service layer:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>using Spring (Reservations, parts of Invoicing)</para>
+      </listitem>
+
+      <listitem>
+        <para>using EJB (Subscriptions, Invoicing)</para>
+      </listitem>
+    </itemizedlist>
+
+    <para><note>
+        <para>It is possible to define transactions at the repository level,
+        thus avoiding another indirection to the persistence layer for simple
+        persistence operations (finding an object, persisting an
+        object).</para>
+      </note></para>
+
+    <section>
+      <title>The Spring-based service layer</title>
+
+      <para>The Spring-based service layer exposes a number of service beans
+      that can be consumed by the UI. The service beans are injected with the
+      beans defined in the persistence layer. </para>
+    </section>
+
+    <section>
+      <title>The EJB service layer</title>
+
+      <para>A common scenario in Spring/EJB integration is the wrapping of
+      Spring Beans in EJBs. This is very often done in order to get advantage
+      of the services provided by the EJB container (security, declarative
+      transaction management), while keeping some of the objects they
+      collaborate with as simple POJOs. In this scenario, the EJBs form the
+      outermost layer of the business logic, the one that is exposed to the
+      rest of the application (UI). In this scenario, the EJB services are
+      injected with the Spring0-based repositories.</para>
+
+      <para>JBoss has its own native support for this, in the form of the
+      Spring Deployer and special annotations for injection</para>
     </section>
   </section>
 </chapter>
