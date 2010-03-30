@@ -5,9 +5,11 @@
 ]>
 <book>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="Book_Info.xml"/>
+
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="Preface.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="Introduction.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="UseCases.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="Modules.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="Revision_History.xml"/>
   <index/>
 </book>

@@ -5,7 +5,7 @@
 %BOOK_ENTITIES;
 ]>
 <chapter id="chap-guide-usecases">
-  <title>Description of the example application</title>
+  <title>A general overview of the application</title>
 
   <para>This chapter describes the business use cases covered by the
   application, and how is the functionality distributed across the
@@ -30,18 +30,18 @@
     <para><itemizedlist>
         <listitem>
           <para>maintaining informations about the subscribers, creating new
-          subcriptions and closing existing accounts</para>
+          subcriptions and closing existing accounts;</para>
         </listitem>
 
         <listitem>
           <para>creating, modifying and removing equipment reservations for
-          subscribers</para>
+          subscribers;</para>
         </listitem>
 
         <listitem>
           <para>viewing the current balance of an account, issuing invoices
           for accounts that do not have a current invoice and updating the
-          account whenever a payment has been received</para>
+          account whenever a payment has been received.</para>
         </listitem>
       </itemizedlist>As the concerns are different, we have three different
     applications, each covering one piece of functionality.</para>
@@ -107,8 +107,8 @@
   <section>
     <title>The project modules</title>
 
-    <para>The modules of the project are outlined in the following
-    table:<table>
+    <para>The modules (Maven artifacts) of the project are outlined in the
+    following table:<table>
         <title>Modules of the Sportsclub project</title>
 
         <tgroup cols="3">
@@ -249,5 +249,9 @@
           </tbody>
         </tgroup>
       </table></para>
+
+    <section>
+      <para />
+    </section>
   </section>
 </chapter>

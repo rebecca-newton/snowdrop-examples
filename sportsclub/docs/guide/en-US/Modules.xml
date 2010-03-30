@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "guide.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="chap-guide-usecases">
+  <title>Using JBoss and Spring together</title>
+
+  <para>This chapter will describe the various Spring and JBoss integration
+  use cases covered by the application and will describe how are they
+  implemented in the various application modules.</para>
+
+  <para>As a Spring application that consists of multiple modules, our
+  strategy is to provide fragments of Spring configuration in each artifact
+  produced by a module, leaving to the upper layer components to aggregate
+  them. This strategy has multiple benefits: for one, it allows to separate
+  concerns between components - the Spring wiring of certain components is
+  left at the level where the components are defined, so that it can be
+  changed easily if the implementations change. </para>
+
+  <section>
+    <title>A list of the Spring integration use cases</title>
+
+    <para>The Sportsclub application covers a number of JBoss and Spring
+    integration use cases. The scenarios selected for this example are
+    focusing on using the Java EE 5 services provided by JBoss AS in Spring
+    applications. </para>
+
+    <para></para>
+  </section>
+
+  <section>
+    <title>The domain model</title>
+
+    <para>The sportsclub-domain module is the only module of the application
+    that does not integrate with Spring directly. However, it is used further
+    in the application as it provides:</para>
+
+    <para><itemizedlist>
+        <listitem>
+          <para>the entities that the application will interact with;</para>
+        </listitem>
+
+        <listitem>
+          <para>the repository interfaces that provide persistence services
+          for the application</para>
+        </listitem>
+      </itemizedlist>A relevant note regarding the domain module is the use of
+    the term "repository" for the components that are used for retrieving
+    objects from persistence and saving them. The intent behind that is to
+    indicate that the design of the application is emulating the concepts
+    behind Domain-Driven Design, where the objects that are used for providing
+    the persistence and entity lookup functions are part of the domain, rather
+    than simple persistence implementation strategies (as it is the case with
+    the fairly similar Data Access Objects).</para>
+  </section>
+
+  <section>
+    <title>Persistence implementation: JPA and Hibernate</title>
+
+    <para>The persistence modules: sportsclub-hibernate-dao and
+    sportsclub-jpa-dao are alternative implementations of the application's
+    persistence strategy. This means that each module will provide:</para>
+
+    <para><itemizedlist>
+        <listitem>
+          <para>implementations for the repository interfaces defined in the
+          sportsclub-domain module;</para>
+        </listitem>
+
+        <listitem>
+          <para>Spring context definition fragments that can be reused
+          elsewhere in the application</para>
+        </listitem>
+      </itemizedlist>Effectively, the Spring configuration fragments will
+    expose a bean implementation for each repository interface defined in the
+    model. This means that the implementations can be swapped at build-time
+    without any change in the business layer. This is the basis for the build
+    process creating two different builds, each based on a different
+    persistence implementation - including a different repository
+    implementation jar and leaving everyting else in the component stack
+    unchanged.</para>
+
+    <para>Each module produces a set of beans that can be injected further
+    into the business services of the application.</para>
+
+    <section>
+      <title>The Hibernate implementation</title>
+
+      <para>The Hibernate-based repository implementation defines a generic
+      superclass defining all the common repository operations that that
+      repository implementations will parametrize by specifying the entity
+      type and primary key type.<informalexample>
+          <para><programlisting lang="JAVA" language="JAVA">public abstract class HibernateRepository&lt;T, I extends Serializable&gt; implements Repository&lt;T, I&gt;
+{
+   protected SessionFactory sessionFactory;
+
+   Class&lt;T&gt; clazz;
+
+   public HibernateRepository(Class&lt;T&gt; clazz)
+   {
+      this.clazz = clazz;
+   }
+
+   public void setSessionFactory(SessionFactory sessionFactory)
+   {
+      this.sessionFactory = sessionFactory;
+   }
+
+   protected Session getCurrentSession()
+   {
+      return this.sessionFactory.getCurrentSession();
+   }
+   
+   public T findById(I id)
+   {
+      return (T)getCurrentSession().get(clazz, id);
+   }
+
+   public void save(T object)
+   {
+      getCurrentSession().saveOrUpdate(object);
+   }
+
+   public void delete(T object)
+   {
+      getCurrentSession().delete(object);
+   }
+
+   public List&lt;T&gt; findAll()
+   {
+      return getCurrentSession().createCriteria(clazz).list();
+   }
+
+
+   public long countAll()
+   {
+      return (Integer)getCurrentSession().createCriteria(clazz).setProjection(Projections.count("id")).uniqueResult();
+   }
+
+   public Criteria applyRange(Criteria criteria, Range range)
+   {
+      return criteria.setFirstResult(range.getMinIndex()).setMaxResults(range.length());
+   }
+}</programlisting>It is important to notice that this implementation and its
+          subclasses are not Spring-based.</para>
+        </informalexample></para>
+
+      <para><informalexample>
+          <para>The only Spring-related component of this module is the
+          configuration which consists of two files:</para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para>spring-hibernate-dao/src/main/resources/dao-context.xml
+                - which contains the Spring bean definitions for the
+                repository implementations, the Spring-based SessionFactory
+                definition (a LocalSessionFactoryBean) and the wiring of
+                SessionFactories into Spring beans</para>
+              </listitem>
+
+              <listitem>
+                <para>spring-hibernate-dao/src/main/resources/infrastructure.xml
+                - which contains the definitions for the
+                infrastructure-related Spring beans, namely: the data source
+                to be used for the Hibernate SessionFactory and the
+                transaction manager</para>
+              </listitem>
+            </itemizedlist>Separating the infrastructure context definition
+          file from the rest of the bean definitions allows to swap the
+          infrastructure definition for unit testing. For example, the
+          Hibernate SessionFactory is configured to use JTA transactions, and
+          allows the Session to shared with a layer of EJBs that delegate to
+          it.</para>
+        </informalexample></para>
+    </section>
+
+    <section>
+      <title>The JPA implementation</title>
+
+      <para>The JPA implementation is, in many respects, very similar to the
+      Hibernate implementation, in that it provides a parametrized superclass
+      that is Spring-agnostic. Besides the fact that it is using the JPA API -
+      for example an EntityManager instead of the SessionFactory, the JPA
+      Persistence Unit (and subsequent EntityManager) are created by the
+      application server and not created by Spring (the EntityManager is
+      injected by Spring, but acquired from JNDI). In fact, the JPA
+      PersistenceUnit is deployed separately, at the EAR level - as you will
+      see next.</para>
+
+      <para>The Spring application context configuration fragments are very
+      similar to the ones encountered in the Hibernate module:</para>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>spring-jpa-dao/src/main/resources/dao-context.xml - contains
+            the Spring bean definitions for the repository implementations,
+            assuming an EntityManager bean to be defined in the global
+            application context definition</para>
+          </listitem>
+
+          <listitem>
+            <para>spring-jpa-dao/src/main/resources/infrastructure.xml - which
+            contains the definitions for the infrastructure-related Spring
+            beans, namely: the data source to be used for the Hibernate
+            SessionFactory and the transaction manager</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <section>
+      <title>Unit testing the repositories</title>
+
+      <para>With the infrastructure so tied to the Application Server, how can
+      we test the repositories in isolation, making sure that they work
+      properly, before we even consider integrating them with the rest of the
+      application?</para>
+
+      <para>If at deployment time we will use the JBoss Application Server
+      provided services, for testing we are going to use an embedded database,
+      and Spring's ability to create LocalSessionFactories,
+      LocalEntityManagerFactories and its local transaction management
+      abilities.</para>
+
+      <para>For this, we are going to use the spring-test-infrastructure
+      module, which is a test-scoped dependency. This module contains the
+      modules used for setting up an embedded database (producing a DataSource
+      that can be injected into the LocalSessionFactoryBean and
+      LocalContainerEntityManagerFactoryBean, respectively). The localized
+      SessionFactory and EntityManager definitions are located in the
+      spring-hibernate-dao and spring-jpa-dao, respectively. </para>
+    </section>
+  </section>
+</chapter>
