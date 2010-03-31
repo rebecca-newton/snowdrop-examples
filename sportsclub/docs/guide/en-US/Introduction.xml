@@ -4,14 +4,14 @@
 <!ENTITY % BOOK_ENTITIES SYSTEM "guide.ent">
 %BOOK_ENTITIES;
 ]>
-<chapter id="chap-guide-introduction">
+<chapter id="chap-guide-Test_Chapter">
   <title>Introduction</title>
 
   <para>This chapter describes the purpose of the example, as well as the
   general structure of the documentation.</para>
 
   <section>
-    <title>Prerequisites</title>
+    <title>Making sure you have all you need</title>
 
     <para>Running the example requires the following setup:</para>
 
@@ -31,9 +31,16 @@
   </section>
 
   <section>
-    <title>How to run the example</title>
+    <title>Taking a first glance at the sources</title>
 
-    <para>Running the appliction consists of the following steps:<itemizedlist>
+    <para></para>
+  </section>
+
+  <section>
+    <title>How to run the examples </title>
+
+    <para>Running the application consists of the following
+    steps:<itemizedlist>
         <listitem>
           <para>Building the application</para>
         </listitem>
@@ -43,7 +50,7 @@
         </listitem>
 
         <listitem>
-          <para>Preparing JBoss </para>
+          <para>Preparing JBoss</para>
         </listitem>
 
         <listitem>
@@ -54,8 +61,8 @@
     <simplesect>
       <title>Building the application</title>
 
-      <para>The Sportsclub example uses maven, so it can be built by simply
-      running:</para>
+      <para>In this step we are building the application. The Sportsclub
+      example uses maven, so it can be built by simply running:</para>
 
       <informalexample>
         <para><programlisting>mvn clean package</programlisting>This will
@@ -64,13 +71,84 @@
         same functionality, but the underlying implementation of the
         persistence layer is different (one is using Hibernate, and another
         one uses JPA).</para>
+
+        <para>The application has two main profiles:</para>
+
+        <para><itemizedlist>
+            <listitem>
+              <para>spring-2.5 which builds a Spring 2.5 variant of the
+              application</para>
+            </listitem>
+
+            <listitem>
+              <para>spring-3 which build a Spring 3.0 variant of the
+              application</para>
+            </listitem>
+          </itemizedlist></para>
       </informalexample>
     </simplesect>
 
     <simplesect>
       <title>Initializing the database</title>
 
-      <para>The database should be initialized by </para>
+      <para>The application uses a standalone HSQLDB database, which needs to
+      be initialized and started before the application is deployed. In what
+      follows, we will show you how to initialize (or reset) the database, and
+      we will show how to start when we discuss deployment.</para>
+
+      <para>The database is initialised by using maven:</para>
+
+      <informalexample>
+        <programlisting>cd database
+mvn -Pdb-setup</programlisting>
+      </informalexample>
+
+      <para>Once this step has been completed, it does not need to be repeated
+      again before running the application, but it can be repeated if the
+      database needs to be reset. </para>
+    </simplesect>
+
+    <simplesect>
+      <title>Preparing JBoss</title>
+
+      <para>Besides building the application and initializing the database,
+      you need to set up JBoss for running your application. This step
+      involves:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>setting up the Spring Deployer</para>
+        </listitem>
+
+        <listitem>
+          <para>creating a managed DataSource for accessing the
+          database</para>
+        </listitem>
+
+        <listitem>
+          <para>creating a Destination for JMS-related features</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>The Spring Deployer will be setup by extracting it into the
+      &lt;JBoss-Home&gt;/servers/&lt;server-instance&gt;/deployers folder.
+      Please refer to the Spring Deployer documentation for details.</para>
+
+      <para>For creating the DataSource and the Destination, you need to use
+      the facilities provided in the jbossconf folder. Just execute;</para>
+
+      <para><informalexample>
+          <programlisting>cd jbossconf
+mvn -Pinstall</programlisting>
+        </informalexample>This will copy the datasource and JMS destination
+      definitions into the JBoss server. Like the previous one, this step
+      needs to be executed only once. </para>
+    </simplesect>
+
+    <simplesect>
+      <title>Deploying</title>
+
+      <para></para>
     </simplesect>
   </section>
 </chapter>
