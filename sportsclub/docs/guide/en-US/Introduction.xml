@@ -37,7 +37,7 @@
   </section>
 
   <section>
-    <title>How to run the examples </title>
+    <title>How to run the examples</title>
 
     <para>Running the application consists of the following
     steps:<itemizedlist>
@@ -105,7 +105,7 @@ mvn -Pdb-setup</programlisting>
 
       <para>Once this step has been completed, it does not need to be repeated
       again before running the application, but it can be repeated if the
-      database needs to be reset. </para>
+      database needs to be reset.</para>
     </simplesect>
 
     <simplesect>
@@ -142,13 +142,14 @@ mvn -Pdb-setup</programlisting>
 mvn -Pinstall</programlisting>
         </informalexample>This will copy the datasource and JMS destination
       definitions into the JBoss server. Like the previous one, this step
-      needs to be executed only once. </para>
+      needs to be executed only once.</para>
     </simplesect>
 
     <simplesect>
       <title>Deploying</title>
 
-      <para></para>
+      <para>Deploying the application is as easy as copying one of the jars
+      produced by the application</para>
     </simplesect>
   </section>
 </chapter>
