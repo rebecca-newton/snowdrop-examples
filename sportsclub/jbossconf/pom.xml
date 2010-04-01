@@ -79,20 +79,6 @@
                                                 file="${jboss.deploy.destination}/sportsclub-ds.xml"
                                                 failonerror="false"/>
 
-                                        <delete
-                                                dir="${jboss.home}/server/${jboss.server.name}/deployers/spring.deployer"
-                                                failonerror="false"/>
-
-                                        <unzip dest="${project.build.directory}/spring.deployer"
-                                               src="${project.build.directory}/dependency/jboss-spring-deployer.zip"/>
-
-                                        <copy todir="${jboss.home}/server/${jboss.server.name}/deployers"
-                                              overwrite="true">
-                                            <fileset dir="${project.build.directory}/spring.deployer">
-                                                <include name="**/*"/>
-                                            </fileset>
-                                        </copy>
-
                                         <copy todir="${jboss.deploy.destination}"
                                               overwrite="true">
                                             <fileset dir=".">
