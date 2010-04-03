@@ -15,7 +15,18 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="stayFitDS"/>
-        <property name="configLocation" value="classpath:/hibernate/hibernate.cfg.xml"/>
+        <property name="annotatedClasses">
+        	<list>
+        		<value>org.jboss.snowdrop.samples.sportsclub.domain.entity.Account</value>
+        		<value>org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment</value>
+        		<value>org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice</value>
+        		<value>org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance</value>
+        		<value>org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment</value>
+        		<value>org.jboss.snowdrop.samples.sportsclub.domain.entity.Membership</value>
+        		<value>org.jboss.snowdrop.samples.sportsclub.domain.entity.Person</value>
+        		<value>org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation</value>
+        	</list>
+        </property>
         <property name="hibernateProperties">
             <util:properties location="${hibernate.properties.location}"/>
         </property>

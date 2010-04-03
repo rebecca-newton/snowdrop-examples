@@ -1,5 +1,11 @@
 package org.jboss.spring.samples.sportsclub.invoicing.services;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
+
 import org.jboss.annotation.spring.Spring;
 import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
@@ -10,11 +16,6 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.PaymentRepository;
 import org.jboss.spring.callback.SpringLifecycleInterceptor;
-
-import javax.ejb.Stateless;
-import javax.interceptor.Interceptors;
-import java.util.Date;
-import java.util.List;
 
 @Stateless
 @Interceptors(SpringLifecycleInterceptor.class)

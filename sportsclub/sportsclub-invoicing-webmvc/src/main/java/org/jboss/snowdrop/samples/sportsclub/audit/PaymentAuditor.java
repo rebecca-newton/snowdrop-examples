@@ -33,5 +33,9 @@ public class PaymentAuditor
       {
          System.out.println("AUDIT ENABLED! A payment has been made to account " + accountId + " for the amount of " + amount);
       }
+      else
+      { 
+    	  System.out.println("AUDIT DISABLED!");   	  
+      }
    }
 }
