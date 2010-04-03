@@ -2,10 +2,9 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
    <persistence-unit name="sportsclubPU" transaction-type="JTA">
        <jta-data-source>java:/SportsClubDS</jta-data-source>
-       <jar-file>lib/sportsclub-domain.jar</jar-file>
+       <jar-file>sportsclub-domain.jar</jar-file>
        <properties>
             <property name="jboss.entity.manager.jndi.name" value="java:/sportsclub/em"/>
-            <property name="hibernate.hbm2ddl.auto" value="create" />
        </properties>
    </persistence-unit>
 </persistence>

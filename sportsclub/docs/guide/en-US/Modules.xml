@@ -185,9 +185,8 @@
       for example an EntityManager instead of the SessionFactory, the JPA
       Persistence Unit (and subsequent EntityManager) are created by the
       application server and not created by Spring (the EntityManager is
-      injected by Spring, but acquired from JNDI). In fact, the JPA
-      PersistenceUnit is deployed separately, at the EAR level - as you will
-      see next.</para>
+      injected by Spring, but acquired from JNDI). The persistence unit is
+      deployed from within </para>
 
       <para>The Spring application context configuration fragments are very
       similar to the ones encountered in the Hibernate module:</para>
@@ -286,7 +285,7 @@ public class TestJpaAccountRepository
 
       <para>The Spring-based service layer exposes a number of service beans
       that can be consumed by the UI. The service beans are injected with the
-      beans defined in the persistence layer. </para>
+      beans defined in the persistence layer.</para>
     </section>
 
     <section>

@@ -24,5 +24,4 @@
 
     <bean id="invoiceRepository" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.JpaInvoiceRepository"/>
 
-    <bean id="databaseInitializer" class="org.jboss.snowdrop.samples.sportsclub.dao.jpa.initializer.DatabaseInitializer"/>
 </beans>
