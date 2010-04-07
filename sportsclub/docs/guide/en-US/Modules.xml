@@ -186,7 +186,9 @@
       Persistence Unit (and subsequent EntityManager) are created by the
       application server and not created by Spring (the EntityManager is
       injected by Spring, but acquired from JNDI). The persistence unit is
-      deployed from within </para>
+      deployed from within the JPA repository jar, in order to allow the
+      spring-domain jar to be deployed in non-JPA scenarios (e.g. Hibernate)
+      without triggering a persistence unit deployment.</para>
 
       <para>The Spring application context configuration fragments are very
       similar to the ones encountered in the Hibernate module:</para>
@@ -203,7 +205,7 @@
             <para>spring-jpa-dao/src/main/resources/infrastructure.xml - which
             contains the definitions for the infrastructure-related Spring
             beans, namely: the data source to be used for the Hibernate
-            SessionFactory and the transaction manager</para>
+            SessionFactory, and the transaction manager</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -298,10 +300,95 @@ public class TestJpaAccountRepository
       collaborate with as simple POJOs. In this scenario, the EJBs form the
       outermost layer of the business logic, the one that is exposed to the
       rest of the application (UI). In this scenario, the EJB services are
-      injected with the Spring0-based repositories.</para>
+      injected with the Spring-based repositories.</para>
 
-      <para>JBoss has its own native support for this, in the form of the
-      Spring Deployer and special annotations for injection</para>
+      <para>JBoss has its own native support for Spring/EJB integration, in
+      the form of the Spring Deployer and special annotations for injection of
+      Spring beans into EJBs.</para>
+
+      <simplesect>
+        <title>The Spring Deployer</title>
+
+        <para>The Spring Deployer is a JBoss-specific deployer that can be
+        used to bootstrap a Spring ApplicationContext and register it into
+        JNDI. The configuration files for bootstrapping the application
+        context are defined at the EAR level, and the Spring
+        ApplicationContext is shared to all the components. The definition
+        file is simple, and just imports the contexts defined in the JPA
+        jars.</para>
+
+        <informalexample>
+          <para><programlisting>&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+
+    &lt;description&gt;BeanFactory=(SpringDao)&lt;/description&gt;
+
+    &lt;import resource="classpath*:dao-context.xml"/&gt;
+    &lt;import resource="classpath*:infrastructure.xml"/&gt;
+
+
+&lt;/beans&gt;</programlisting></para>
+        </informalexample>
+      </simplesect>
+
+      <simplesect>
+        <title>Injection into EJBs</title>
+
+        <para>Once the ApplicationContext is created, the beans defined there
+        can be injected into EJBs. So, in this case, the Spring repositories
+        will be injected into EJBs as follows:</para>
+
+        <para><informalexample>
+            <para><programlisting>@Stateless
+@Interceptors(SpringLifecycleInterceptor.class)
+@LocalBinding(jndiBinding="sportsclub/BillingService")
+public class BillingServiceImpl implements BillingService
+{
+   @Spring(bean = "invoiceRepository", jndiName = "SpringDao")
+   private InvoiceRepository invoiceRepository;
+
+   /* rest of the class definition ommitted */
+}</programlisting></para>
+          </informalexample>The injection task is undertaken by the
+        SpringLifecycleInterceptor. Once it encounters a field or setter
+        annotated with @Spring, it will look for the JNDI-bound application
+        context and inject the corresponding Spring bean.</para>
+      </simplesect>
     </section>
+  </section>
+
+  <section>
+    <title>Presentation Layer</title>
+
+    <para>The three web applications which compose the Sportsclub package
+    illustrate different ways of integrating Spring and Java EE technologies
+    in the presentation layer:</para>
+
+    <para><itemizedlist>
+        <listitem>
+          <para>JSF/EJB with an underlying Spring layer (Subscriptions)</para>
+        </listitem>
+
+        <listitem>
+          <para>JSF/Spring (Reservations)</para>
+        </listitem>
+
+        <listitem>
+          <para>Spring MVC/EJB (Invoicing)</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <section>
+      <title>Subscriptions: JSF/EJB over a Spring layer</title>
+
+      <para>In the case of the Subscriptions application</para>
+    </section>
+  </section>
+
+  <section>
+    <title>Other Enterprise Integration features</title>
+
+    <para></para>
   </section>
 </chapter>
