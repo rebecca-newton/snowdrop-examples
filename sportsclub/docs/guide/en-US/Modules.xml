@@ -382,7 +382,71 @@ public class BillingServiceImpl implements BillingService
     <section>
       <title>Subscriptions: JSF/EJB over a Spring layer</title>
 
-      <para>In the case of the Subscriptions application</para>
+      <para>The Subscriptions application uses Richfaces and JSF for the
+      presentation layer and EJB for the business layer, so this part of the
+      application is not Spring-related. The only Spring-related feature at
+      this level is the fact that the repositories used by the EJBs are Spring
+      beans.</para>
+
+      <para>Although this is somewhat out of the Spring topic, it is worth
+      mentioning for the benefit of the reader that we recommend using Seam
+      for building applications that integrate JSF and EJB in Java EE 5. This
+      type of integration is, however, beyond the scope of the current demo
+      application, so we are mentioning it here, although this example is not
+      demonstrating it.</para>
+    </section>
+
+    <section>
+      <title>Reservations</title>
+
+      <para>The Reservations application is an example of using Spring in an
+      application that uses Richfaces and JSF. Here, Spring beans are used as
+      business services for the application, as well as backing beans for the
+      JSF pages. In the latter case, Spring beans replace the managed beans
+      and other web artifacts used by JSF.</para>
+
+      <para>The Spring application context is bootstrapped by the
+      ContextLoaderListener defined in /WEB-INF/web.xml. The Spring
+      configuration file in use is /WEB-INF/spring-beans.xml, which:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>imports the context definition fragments included in the other
+          JARs of the application (i.e. the JARs that contain the business
+          logic, defined at 4.1)</para>
+        </listitem>
+
+        <listitem>
+          <para>defines a number of Spring beans that are used directly in the
+          web tier by the JSF pages or by the Richfaces components;</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>The Spring configuration file imports the Spring business beans
+      and infrastructure definitions as follows:</para>
+
+      <informalexample>
+        <para><programlisting>&lt;import resource="classpath*:reservations-service.xml"/&gt;
+
+&lt;import resource="classpath*:infrastructure.xml"/&gt;</programlisting></para>
+
+        <para>The following bean is used for backing JSF pages. Please note
+        that Spring beans defined in the web layer may use scopes, and a
+        significant number of the Spring beans used in Reservations
+        application are session-scoped. Spring provides a request scope as
+        well.</para>
+
+        <programlisting>&lt;bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="session" init-method="init"&gt;
+        &lt;property name="reservationService" ref="reservationService"/&gt;
+        &lt;property name="accountService" ref="accountService"/&gt;
+        &lt;property name="accountFilter" ref="accountFilterCreate"/&gt;
+        &lt;property name="equipmentFilter" ref="equipmentFilterCreate"/&gt;
+&lt;/bean&gt;</programlisting>
+
+        <informalexample>
+          <para>P</para>
+        </informalexample>
+      </informalexample>
     </section>
   </section>
 
