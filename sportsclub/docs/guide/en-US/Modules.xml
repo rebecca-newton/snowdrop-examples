@@ -433,8 +433,9 @@ public class BillingServiceImpl implements BillingService
         <para>The following bean is used for backing JSF pages. Please note
         that Spring beans defined in the web layer may use scopes, and a
         significant number of the Spring beans used in Reservations
-        application are session-scoped. Spring provides a request scope as
-        well.</para>
+        application are session-scoped (like the one in the following
+        example). Spring provides a request scope as well, but it is not used
+        in this example.</para>
 
         <programlisting>&lt;bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="session" init-method="init"&gt;
         &lt;property name="reservationService" ref="reservationService"/&gt;
@@ -444,15 +445,314 @@ public class BillingServiceImpl implements BillingService
 &lt;/bean&gt;</programlisting>
 
         <informalexample>
-          <para>P</para>
+          <para>In order to be make the Spring beans visible to JSF pages, a
+          special VariableResolver has to be defined in
+          /WEB-INF/faces-config.xml.</para>
+
+          <informalexample>
+            <para><programlisting>&lt;application&gt;
+  &lt;!-- other definitions --&gt;
+  &lt;el-resolver&gt;org.springframework.web.jsf.el.SpringBeanFacesELResolver&lt;/el-resolver&gt;
+&lt;/application&gt;</programlisting>Now, we can use the Spring bean defined
+            above directly in a JSF page, as in the following excerpt from
+            createReservation.xhtml:</para>
+
+            <informalexample>
+              <para><programlisting>&lt;rich:panel&gt;
+                        &lt;f:facet name="header"&gt;Select Account&lt;/f:facet&gt;
+                        &lt;h:form id="AccountSelectForm"&gt;
+                            &lt;rich:extendedDataTable id="accountsTable" value="#{accountFilterCreate}" var="account"
+                                                    selectionMode="single"
+                                                    selection="#{accountFilterCreate.selection}"
+                                                    enableContextMenu="true"
+                                                    height="250px"
+                                                    rows="5"&gt;
+                                &lt;a4j:support event="onselectionchange"
+                                             action="#{reservationCreate.updateSelectedAccount}"
+                                             reRender="reservationDetails"/&gt;
+
+                                &lt;rich:column label="Id" width="7%"&gt;
+                                    &lt;f:facet name="header"&gt;
+                                        &lt;h:outputText value="Id"/&gt;
+                                    &lt;/f:facet&gt;
+                                    &lt;h:outputText value="#{account.id}"/&gt;
+                                &lt;/rich:column&gt;
+
+                                &lt;rich:column label="First Name"&gt;
+                                    &lt;f:facet name="header"&gt;
+                                        &lt;h:outputText value="First Name"/&gt;
+                                    &lt;/f:facet&gt;
+                                    &lt;h:outputText value="#{account.subscriber.name.firstName}"/&gt;
+                                &lt;/rich:column&gt;
+
+                                &lt;rich:column label="Last Name"&gt;
+                                    &lt;f:facet name="header"&gt;
+                                        &lt;h:outputText value="Last Name"/&gt;
+                                    &lt;/f:facet&gt;
+                                    &lt;h:outputText value="#{account.subscriber.name.lastName}"/&gt;
+                                &lt;/rich:column&gt;
+
+                                &lt;rich:column label="City"&gt;
+                                    &lt;f:facet name="header"&gt;
+                                        &lt;h:outputText value="City"/&gt;
+                                    &lt;/f:facet&gt;
+                                    &lt;h:outputText value="#{account.subscriber.address.city}"/&gt;
+                                &lt;/rich:column&gt;
+
+                                &lt;rich:column label="Country"&gt;
+                                    &lt;f:facet name="header"&gt;
+                                        &lt;h:outputText value="Country"/&gt;
+                                    &lt;/f:facet&gt;
+                                    &lt;h:outputText value="#{account.subscriber.address.country}"/&gt;
+                                &lt;/rich:column&gt;
+
+                                &lt;f:facet name="footer"&gt;
+                                    &lt;rich:datascroller id="scrollerAccount" for="accountsTable" maxPages="5"
+                                                       page="#{accountFilterCreate.currentPage}"/&gt;
+                                &lt;/f:facet&gt;
+                            &lt;/rich:extendedDataTable&gt;
+                        &lt;/h:form&gt;
+                    &lt;/rich:panel&gt;</programlisting>All the EL variables
+              that are used in the previous example, including the ones
+              referenced in the Richfaces elements are, in fact, Spring beans.
+              They can be used either as backing beans for retrieving and
+              setting values, as well as for invoking methods corresponding to
+              JSF events.</para>
+            </informalexample>
+          </informalexample>
         </informalexample>
       </informalexample>
+    </section>
+
+    <section>
+      <title>Invoicing: Spring MVC and EJB</title>
+
+      <para>The Invoicing application provides another example of
+      interoperability between Spring and the Java EE services provided by
+      JBoss. If in the previous example, the business tier was implemented
+      using Spring and the web tier was using JSF, in this example the roles
+      are reversed: the business tier is using EJB and the web tier is using
+      Spring.</para>
+
+      <para>The Spring MVC beans are defined in the
+      /WEB-INF/spring-servlet-context.xml file, referenced by the Spring MVC
+      DispatcherServlet definition that is described WEB-INF/web.xml. For this
+      implementation, we have chosen the Spring 2.5 annotation-based
+      configuration, and the AccountController class that implements the
+      controller part of the configuration is injected with EJBs defined in
+      section 3.2:</para>
+
+      <para><informalexample>
+          <para><programlisting>@Controller
+public class AccountController
+{
+
+   @EJB(mappedName = "sportsclub/BillingService")
+   BillingService billingService;
+
+   @EJB(mappedName = "sportsclub/SubscriptionService")
+   SubscriptionService subscriptionService;
+
+   /* some code ommitted */
+
+   @RequestMapping(value = "/accountDetail.do", method = RequestMethod.GET)
+   ModelMap getAccountDetail(@RequestParam("id") String id)
+   {
+      Account account = subscriptionService.findAccountById(Long.parseLong(id));
+
+      List&lt;Invoice&gt; invoices = billingService.getInvoices(account);
+
+      boolean hasCurrentInvoice = false;
+      Date currentDate = new Date();
+
+      for (Invoice invoice: invoices)
+      {
+         if (invoice.getBillingPeriod().contains(currentDate))
+         {
+            hasCurrentInvoice = true;
+            break;
+         }
+      }
+
+      List&lt;Payment&gt; payments = billingService.getPayments(account);
+
+      ModelMap model = new ModelMap();
+      model.addAttribute(account);
+      model.addAttribute("invoices", invoices);
+      model.addAttribute("payments", payments);
+      model.addAttribute("hasCurrentInvoice",hasCurrentInvoice);
+      return model;
+   }
+
+
+   @RequestMapping(value = "/generateInvoice.do", method = RequestMethod.POST)
+   ModelMap generateInvoice(@RequestParam("id") String id)
+   {
+      Account account = subscriptionService.findAccountById(Long.parseLong(id));
+      Invoice invoice = billingService.generateInvoice(account);
+
+      ModelMap model = new ModelMap();
+      model.addAttribute("id",id);
+      model.addAttribute(invoice);
+      return model;
+   }
+
+}
+</programlisting>The @Controller annotation will be detected by Spring, as it
+          does a scanning of the classpath which is prompted by including the
+          following line into /WEB-INF/spring-servlet-context.xml.</para>
+
+          <informalexample>
+            <para><programlisting>&lt;context:component-scan base-package="org.jboss.snowdrop.samples.sportsclub.springmvc"/&gt;
+</programlisting></para>
+          </informalexample>
+        </informalexample></para>
+
+      <para>As a Spring-managed object, the bean is injected with the EJBs
+      BillingService and SubscriptionService, as required by annotated the
+      respective fields with the @EJB annotation.</para>
+
+      <para>The @RequestMapping-annotated methods will be executed when the
+      user is accessing the specified URL and HTTP method. The request
+      parameters will be bound to method arguments. In the example above,
+      invoking the URL
+      http://localhost:8080/sportsclub/invoicing/accountDetail.do?id=1 will
+      cause the invocation accountController.getAccountDetail(1). The method
+      will invoke the appropriate business services (in this case, exposed as
+      EJBs) and will return a map of business object collections, indexed by
+      their names. Spring MVC will take care of setting them on the request,
+      so that they can be used for rendering the response.</para>
+
+      <para>By default, Spring MVC will try to find a view whose name is
+      'accountDetail', and based on the view resolver definition from
+      /WEB-INF/spring-servlet-context.xml, it will use the JSP file at
+      /WEB-INF/jsp/accountDetail.jsp. This JSP uses the Spring tag libraries
+      for form processing, so that the collections previously returned will be
+      accessible using JSTL expressions, and furthermore, we will find the
+      following declaration:</para>
+
+      <informalexample>
+        <programlisting>&lt;form:form action="generateInvoice.do"&gt;
+                This account does not have an invoice for the current billing period.&lt;p/&gt;
+                You can create one now:
+                &lt;input type="hidden" name="id" value="&lt;c:out value="${account.id}"/&gt;"&gt;
+                &lt;input type="submit" value="Create invoice"/&gt;&lt;br/&gt;
+            &lt;/form:form&gt;</programlisting>
+      </informalexample>
+
+      <para>Clicking the 'Create Invoice' button will result in a POST
+      submission to
+      http://localhost:8080/sportsclub/invoicing/generateInvoice.do?id=1 and
+      the subsequent invocation of the generateInvoice method.</para>
+
+      <para>A small note here: in order to be able to demonstrate a few
+      Spring/JBoss integration features, the Invoicing application also
+      contains a number of business services that are using Spring. They do
+      not play any role in the Spring MVC/EJB integration, and we will discuss
+      more about them in section 6.</para>
+    </section>
+
+    <section>
+      <title>An problem of reusing content</title>
+
+      <para>Having three different web applications to be included in the same
+      package raises the problem of reusing some content. Surely, the images
+      and stylesheets that are part of the application design can be copied in
+      each individual project, but this raises the problem of maintainability.
+      Therefore, most of the static content used by the Sportsclub application
+      is defined in a separate web module, sportsclub-staticwebcontent, which
+      is then included by Maven at build time as follows:</para>
+
+      <para><informalexample>
+          <para><programlisting>&lt;dependency&gt;
+  &lt;groupId&gt;org.jboss.snowdrop.samples.sportsclub&lt;/groupId&gt;
+  &lt;artifactId&gt;sportsclub-staticwebcontent&lt;/artifactId&gt;
+  &lt;version&gt;${project.version}&lt;/version&gt;
+  &lt;type&gt;war&lt;/type&gt;
+  &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</programlisting><note>
+              <para>When working in an IDE this might produce an undesirable
+              side-effect. If the IDE does not know how to apply Maven
+              overlays correctly, the static content may not be available when
+              building and deploying the application through the IDE, without
+              Maven. This does not affect the general functionality of the
+              application but may affect the look and feel in that particular
+              situation. However, if the application is build using Maven this
+              will not be a problem.</para>
+            </note></para>
+        </informalexample></para>
     </section>
   </section>
 
   <section>
-    <title>Other Enterprise Integration features</title>
+    <title>Enterprise Integration Features</title>
 
-    <para></para>
+    <para>Apart from the Spring/JSF/EJB integration, which you have seen in
+    the previous sections, the Sportsclub application suite provides a few
+    other examples of integrating Spring and JBoss. Since all the features are
+    Spring-based, they have been included as business services of the
+    Invoicing web application. </para>
+
+    <section>
+      <title>Payment processing: JMS integration through JCA</title>
+
+      <para>Besides displaying the current status of invoices and payments for
+      a given account and generating invoices through the web interface, the
+      Sportsclub application can also process payments for various accounts.
+      The assumption of this scenario is that the system can receive payment
+      notifications asynchronously, through a JMS queue. Once such a payment
+      has been received, it can be processed by a message-driven component,
+      which in our case is a Spring bean. In order to take full advantage of
+      the managed environment provided by the application server, the Spring
+      bean will be invoked in a JCA context.</para>
+    </section>
+
+    <section>
+      <title>Aspects and auditing</title>
+
+      <para>Payments must be audited. Besides keeping a record of payments
+      associated with an account, we may want to set up an auditing service
+      that will audit every attempt of making a payment. In the simplest case
+      we can just log that information, although in a real life scenario
+      things may be more sophisticated. In order to do so, we set up a
+      PaymentAuditor aspect that intercepts every call made to the
+      PaymentProcessor.</para>
+
+      <para>The solution applied in this application is to use the 'aop'
+      namespace provided by Spring and XML configuration, defining pointcuts
+      via AspectJ syntax.</para>
+    </section>
+
+    <section>
+      <title>Configuring Spring beans through JMX</title>
+
+      <para>JMX is a very important tool for monitoring and configuring Java
+      applications. Collecting information about the system and the ability of
+      making configuration at runtime are important administration tools. For
+      this example, the requirement is to be able to turn auditing on and off,
+      at runtime, as required. Removing an aspect once it has been applied by
+      Spring is not possible, so the solution in this case is to define a flag
+      property on the aspect, which controls whether the auditing
+      functionality will be invoked or not. </para>
+
+      <para>In order to be able to make changes at runtime, the Spring bean
+      which implements the aspect will be configured as a JMX bean and
+      registered in the MBean server of JBoss. As a result, you can turn this
+      functionality on and off directly from the JBoss AS JMX administration
+      console. </para>
+    </section>
+
+    <section>
+      <title>Payment processing: exposing a JAX-WS web service</title>
+
+      <para>Another way of interacting with external applications, is by
+      exposing a web service. In this scenario, payment notifications may not
+      arrive only as asynchronous events on a message queue, but also as
+      synchronous web service invocations. For this purpose, the application
+      will expose a Spring bean with JAX-WS annotations as a web
+      service.</para>
+
+      <para></para>
+    </section>
   </section>
 </chapter>
