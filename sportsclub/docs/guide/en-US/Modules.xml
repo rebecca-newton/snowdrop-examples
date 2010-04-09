@@ -20,14 +20,148 @@
   changed easily if the implementations change.</para>
 
   <section>
-    <title>A list of the Spring integration use cases</title>
+    <title>A look at the JBoss/Spring integration use cases</title>
 
     <para>The Sportsclub application covers a number of JBoss and Spring
     integration use cases. The scenarios selected for this example are
     focusing on using the Java EE 5 services provided by JBoss AS in Spring
     applications.</para>
 
-    <para></para>
+    <para>The use cases can be grouped in categories as follows:<table>
+        <title>Use case list overview</title>
+
+        <tgroup cols="3">
+          <thead>
+            <row>
+              <entry align="center">Category</entry>
+
+              <entry align="center">Use case</entry>
+
+              <entry align="center">How does this involve JBoss AS</entry>
+            </row>
+          </thead>
+
+          <tbody>
+            <row>
+              <entry>Persistence</entry>
+
+              <entry>Spring/Hibernate integration</entry>
+
+              <entry>The application is using a Spring-configured Hibernate
+              SessionFactory using JTA transaction management and bound to
+              JTA. The Hibernate library being used is the one provided by
+              JBoss AS.</entry>
+            </row>
+
+            <row>
+              <entry></entry>
+
+              <entry>Spring/JPA integration</entry>
+
+              <entry>The Persistence Unit is deployed by JBoss and retrieved
+              from JNDI to be injected into Spring beans. PersistenceContext
+              is shared with surrounding EJBs (if any)</entry>
+            </row>
+
+            <row>
+              <entry>Testing</entry>
+
+              <entry>Unit-testing components that have managed infrastructure
+              dependencies</entry>
+
+              <entry>The DataSource and EntityManager are managed by JBoss and
+              acquired from JNDI by Spring when the application is running. In
+              the case of JBoss, developers can test their code in isolation
+              using Spring-specific replacements that 'simulate' the JBoss
+              environment.</entry>
+            </row>
+
+            <row>
+              <entry>Business Logic</entry>
+
+              <entry>Spring-based service beans</entry>
+
+              <entry>The business services are Spring-managed and wrapped into
+              transactions managed by Spring's interceptors. The
+              TransactionManager in use is the JTATransactionManager using
+              JBoss Transactions provided in JBoss AS.</entry>
+            </row>
+
+            <row>
+              <entry></entry>
+
+              <entry>EJBs injected with Spring Beans</entry>
+
+              <entry>The application uses JBoss-deployed EJBs which are
+              injected with Spring beans acquired from an application context
+              bootstrapped by the Spring Deployer. Transactions are managed by
+              EJBs. </entry>
+            </row>
+
+            <row>
+              <entry>User Interface</entry>
+
+              <entry>JSF/Richfaces and Spring integration </entry>
+
+              <entry>The application uses the JBoss AS-provided JSF support,
+              and Richfaces components. The business services and UI-backing
+              instances are Spring beans.</entry>
+            </row>
+
+            <row>
+              <entry></entry>
+
+              <entry>Spring MVC and EJB integration</entry>
+
+              <entry>The application uses Spring MVC and the business logic is
+              implemented using JBoss-deployed EJBs, which are injected into
+              the Spring controllers.</entry>
+            </row>
+
+            <row>
+              <entry>JMS/JCA integration</entry>
+
+              <entry>JMS/Spring integration using JCA</entry>
+
+              <entry>Spring-configured message listeners are used for
+              processing JMS messages from JBoss AS-managed destinations. The
+              application uses the Spring /JCA integration for receiving
+              messages.</entry>
+            </row>
+
+            <row>
+              <entry>Aspect-oriented programming</entry>
+
+              <entry>Spring-based weaving of POJO aspects</entry>
+
+              <entry>This use case does not have any JBoss AS-specific
+              functionality.</entry>
+            </row>
+
+            <row>
+              <entry>JMX</entry>
+
+              <entry>Spring beans are exposed as JMX beans</entry>
+
+              <entry>The JBoss AS MBean Server is used for registering the
+              Spring-exported JMX beans. Consequently, the Spring beans can be
+              managed from the JBoss AS Administration Console.</entry>
+            </row>
+
+            <row>
+              <entry>Web Services</entry>
+
+              <entry>JAX-WS defined web-services are injected with Spring
+              beans</entry>
+
+              <entry>The application uses JBoss AS' support for JAX-WS through
+              JBoss WS, but also Spring to define the underlying business
+              logic, which is injected into the JBoss WS-deployed
+              services.</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table></para>
   </section>
 
   <section>
@@ -691,7 +825,9 @@ public class AccountController
     the previous sections, the Sportsclub application suite provides a few
     other examples of integrating Spring and JBoss. Since all the features are
     Spring-based, they have been included as business services of the
-    Invoicing web application. </para>
+    Invoicing web application. All the definitions for the following examples
+    can be found in the /WEB-INF/spring-business-context.xml file defined in
+    the spring-invoicing-webmvc module.</para>
 
     <section>
       <title>Payment processing: JMS integration through JCA</title>
@@ -718,9 +854,37 @@ public class AccountController
       PaymentAuditor aspect that intercepts every call made to the
       PaymentProcessor.</para>
 
-      <para>The solution applied in this application is to use the 'aop'
-      namespace provided by Spring and XML configuration, defining pointcuts
-      via AspectJ syntax.</para>
+      <para>The aspect is a simple POJO:</para>
+
+      <para><informalexample>
+          <para><programlisting>public class PaymentAuditor
+{
+   /* code ommitted */
+
+   public void auditPayment(Long accountId, BigDecimal amount)
+   {
+     System.out.println("AUDIT ENABLED! A payment has been made to account "
+                          + accountId + " for the amount of " + amount);
+   }
+}</programlisting></para>
+        </informalexample>The aspect is applied through the following
+      definitions:</para>
+
+      <informalexample>
+        <para><programlisting>   &lt;aop:config&gt;
+       &lt;aop:aspect ref="paymentAuditor"&gt;
+           &lt;aop:pointcut id="processingPayment" 
+               expression="execution(* *..PaymentProcessor+.*(..)) &amp;amp;&amp;amp; args(accountId, amount)"/&gt;
+           &lt;aop:before arg-names="accountId, amount" pointcut-ref="processingPayment" method="auditPayment"/&gt; 
+       &lt;/aop:aspect&gt;
+   &lt;/aop:config&gt;
+
+   &lt;bean id="paymentAuditor" class="org.jboss.snowdrop.samples.sportsclub.audit.PaymentAuditor"/&gt; 
+
+</programlisting>As you can see, the aspect is defined as a bean and applied
+        as an aspect through the Spring aop namespace. The pointcut definition
+        is an AspectJ expression.</para>
+      </informalexample>
     </section>
 
     <section>
@@ -728,18 +892,74 @@ public class AccountController
 
       <para>JMX is a very important tool for monitoring and configuring Java
       applications. Collecting information about the system and the ability of
-      making configuration at runtime are important administration tools. For
-      this example, the requirement is to be able to turn auditing on and off,
-      at runtime, as required. Removing an aspect once it has been applied by
-      Spring is not possible, so the solution in this case is to define a flag
-      property on the aspect, which controls whether the auditing
-      functionality will be invoked or not. </para>
+      making configuration at runtime are important administration features.
+      For this example, the requirement is to be able to turn auditing on and
+      off, at runtime, whenever required. Removing an aspect once it has been
+      applied by Spring is not possible, so the solution in this case is to
+      define a flag property on the aspect, which controls whether the
+      auditing functionality will be invoked or not.</para>
 
       <para>In order to be able to make changes at runtime, the Spring bean
       which implements the aspect will be configured as a JMX bean and
-      registered in the MBean server of JBoss. As a result, you can turn this
-      functionality on and off directly from the JBoss AS JMX administration
-      console. </para>
+      registered in the MBean server of JBoss. In this example, we are using
+      annotations to define Spring-specific JMX metadata. The complete
+      definition for the PaymentAuditor is:</para>
+
+      <para><informalexample>
+          <para><programlisting>@ManagedResource(objectName = "sportsclub:name=paymentAuditor", description = "Payment Auditor", logFile = "log-sportsclub-auditor-jmx.log")
+@Component
+public class PaymentAuditor
+{
+   private boolean enabled = true;
+
+   @ManagedAttribute
+   public void setEnabled(boolean enabled)
+   {
+      this.enabled = enabled;
+   }
+
+   @ManagedAttribute
+   public boolean getEnabled()
+   {
+      return this.enabled;
+   }
+
+   public void auditPayment(Long accountId, BigDecimal amount)
+   {
+      if (this.enabled)
+      {
+         System.out.println("AUDIT ENABLED! A payment has been made to account " + accountId + " for the amount of " + amount);
+      }
+      else
+      { 
+         System.out.println("AUDIT DISABLED!"); 
+      }
+   }
+}</programlisting>The annotations ManagedResource and ManagedAttribute are
+          using to indicate what classes and properties are JMX-managed. In
+          order to expose the bean through JMX, it must be exported using
+          Spring's MBean Exporter.</para>
+
+          <para><programlisting>&lt;bean id="attributeSource" class="org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource"/&gt;
+
+   &lt;bean class="org.springframework.jmx.export.MBeanExporter"&gt;
+       &lt;property name="autodetectModeName" value="AUTODETECT_ASSEMBLER"/&gt;
+       &lt;property name="ensureUniqueRuntimeObjectNames" value="true"/&gt;
+       &lt;property name="namingStrategy"&gt;
+           &lt;bean class="org.springframework.jmx.export.naming.MetadataNamingStrategy"&gt;
+               &lt;property name="attributeSource" ref="attributeSource"/&gt;
+           &lt;/bean&gt;
+       &lt;/property&gt;
+       &lt;property name="assembler"&gt;
+           &lt;bean class="org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler"&gt;
+               &lt;property name="attributeSource" ref="attributeSource"/&gt;
+           &lt;/bean&gt;
+       &lt;/property&gt;
+   &lt;/bean&gt;</programlisting></para>
+        </informalexample></para>
+
+      <para>As a result, you can turn this functionality on and off directly
+      from the JBoss AS JMX administration console.</para>
     </section>
 
     <section>
@@ -752,7 +972,43 @@ public class AccountController
       will expose a Spring bean with JAX-WS annotations as a web
       service.</para>
 
-      <para></para>
+      <para>To that end, a JAX-WS annotated class is provided by the
+      application:</para>
+
+      <informalexample>
+        <para><programlisting>@WebService
+public class PaymentNotificationService extends SpringBeanAutowiringSupport
+{
+
+   @Autowired
+   private PaymentProcessor paymentProcessor;
+
+   @WebMethod
+   public Long notifyPayment(Long accountNumber, BigDecimal amount)
+   {
+      return paymentProcessor.processPayment(accountNumber, amount);
+   }
+
+}</programlisting>By extending SpringBeanAutowiringSupport, the class
+        PaymentNotificationService will be injected automatically with the
+        same PaymentProcessor instance that is used by the JMS notification
+        processor, and defined in the application context created from
+        WEB-INF/spring-business-context.xml. This is necessary, because no
+        bean of the type PaymentNotificationService is defined in the
+        application context. Instead, the web service is defined and mapped as
+        a servlet in /WEB-INF/web.xml:</para>
+
+        <para><programlisting>&lt;servlet&gt;
+       &lt;servlet-name&gt;PaymentNotificationService&lt;/servlet-name&gt;
+       &lt;servlet-class&gt;org.jboss.snowdrop.samples.sportsclub.ws.PaymentNotificationService&lt;/servlet-class&gt;
+   &lt;/servlet&gt;
+
+   &lt;servlet-mapping&gt;
+       &lt;servlet-name&gt;PaymentNotificationService&lt;/servlet-name&gt;
+       &lt;url-pattern&gt;/ws/payment&lt;/url-pattern&gt;
+   &lt;/servlet-mapping&gt;</programlisting>As a result, the a JAX-WS web
+        service can be accessed at http://localhost:8080/ws/payment.</para>
+      </informalexample>
     </section>
   </section>
 </chapter>
