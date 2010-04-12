@@ -4,7 +4,7 @@
 <!ENTITY % BOOK_ENTITIES SYSTEM "guide.ent">
 %BOOK_ENTITIES;
 ]>
-<chapter id="chap-guide-usecases">
+<chapter id="chap-guide-modules">
   <title>Using JBoss and Spring together</title>
 
   <para>This chapter will describe the various Spring and JBoss integration
@@ -514,7 +514,7 @@ public class BillingServiceImpl implements BillingService
       </itemizedlist></para>
 
     <section>
-      <title>Subscriptions: JSF/EJB over a Spring layer</title>
+      <title>Subscriptions: JSF and Spring</title>
 
       <para>The Subscriptions application uses Richfaces and JSF for the
       presentation layer and EJB for the business layer, so this part of the
@@ -531,7 +531,7 @@ public class BillingServiceImpl implements BillingService
     </section>
 
     <section>
-      <title>Reservations</title>
+      <title>Reservations: JSF/Spring integration</title>
 
       <para>The Reservations application is an example of using Spring in an
       application that uses Richfaces and JSF. Here, Spring beans are used as
