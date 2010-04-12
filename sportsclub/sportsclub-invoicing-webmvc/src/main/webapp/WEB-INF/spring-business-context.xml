@@ -5,8 +5,10 @@
        xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jms="http://www.springframework.org/schema/jms"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
@@ -18,37 +20,31 @@
 
     <context:component-scan base-package="org.jboss.snowdrop.samples.sportsclub.service.payment"/>
 
-    <bean id="jmsContainer" class="org.springframework.jms.listener.endpoint.JmsMessageEndpointManager">
-       <property name="messageListener" ref="messageListener"/>
-       <property name="activationSpec">
-           <bean class="org.jboss.resource.adapter.jms.inflow.JmsActivationSpec">
-               <property name="destination" value="queue/sportsclub"/>
-               <property name="destinationType" value="javax.jms.Queue"/>
-               <property name="acknowledgeMode" value="AUTO_ACKNOWLEDGE"/>
-               <property name="clientId" value="remote"/>
-               <property name="subscriptionName" value="jca-payment-processor"/>
-               <property name="maxSession" value="1"/>
-               <property name="useDLQ" value="false"/>
-           </bean>
-       </property>
-       <property name="resourceAdapter">
-           <bean factory-bean="mBeanServer" factory-method="getAttribute">
-               <constructor-arg>
-                   <bean class="org.springframework.jmx.support.ObjectNameManager" factory-method="getInstance">
-                       <constructor-arg value="jboss.jca:name='jms-ra.rar',service=RARDeployment"/>
-                   </bean>
-               </constructor-arg>
-               <constructor-arg value="ResourceAdapter"/>
-           </bean>
-       </property>
-       <property name="transactionManager">
-          <bean class="org.jboss.spring.transactions.ExistingTransactionAwareTransactionFactory">
-              <property name="wrappedJtaTransactionManager" ref="transactionManager"/>
-          </bean>
-       </property>
+    <jms:jca-listener-container resource-adapter="resourceAdapter" acknowledge="auto" activation-spec-factory="activationSpecFactory">
+        <jms:listener destination="/queue/sportsclub" ref="paymentNotificationProcessor" method="processPaymentNotification"/>
+    </jms:jca-listener-container>
+
+    <bean id="activationSpecFactory" class="org.springframework.jms.listener.endpoint.DefaultJmsActivationSpecFactory">
+        <property name="activationSpecClass" value="org.jboss.resource.adapter.jms.inflow.JmsActivationSpec"/>
+        <property name="defaultProperties">
+            <value>
+                clientId=remote
+                subscriptionName=jca-paymentProcessor
+                useDLQ=false
+            </value>
+        </property>
     </bean>
 
-    <bean id="mBeanServer" class="org.jboss.mx.util.MBeanServerLocator" factory-method="locateJBoss"/>
+    <bean id="resourceAdapter" factory-bean="mBeanServer" factory-method="getAttribute">
+        <constructor-arg>
+            <bean class="org.springframework.jmx.support.ObjectNameManager" factory-method="getInstance">
+                <constructor-arg value="jboss.jca:name='jms-ra.rar',service=RARDeployment"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg value="ResourceAdapter"/>
+    </bean>
+
+   <bean id="mBeanServer" class="org.jboss.mx.util.MBeanServerLocator" factory-method="locateJBoss"/>
 
     <bean id="messageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
         <property name="delegate" ref="paymentNotificationProcessor"/>
@@ -91,6 +87,7 @@
                <property name="attributeSource" ref="attributeSource"/>
            </bean>
        </property>
+       <property name="server" ref="mBeanServer"/>
    </bean>
     
 </beans>

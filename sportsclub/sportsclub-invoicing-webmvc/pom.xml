@@ -89,6 +89,13 @@
             <groupId>org.jboss.javaee</groupId>
             <artifactId>jboss-ejb-api</artifactId>
         </dependency>
+        <!-- included to help the IDE validate the configuration -->
+        <dependency>
+            <groupId>org.jboss.jbossas</groupId>
+            <artifactId>jboss-as-connector</artifactId>
+            <version>5.1.0.GA</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
             <artifactId>sportsclub-invoicing-ejb</artifactId>
