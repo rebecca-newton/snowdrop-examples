@@ -8,7 +8,7 @@
 </head>
 <body class="main-body">
 <%@ include file="../../template/header.html" %>
-    Payment amount: <c:out value="${amount}"/>
+    A payment has been sent to be processed for account <c:out value="${accountId}"/>  . Amount: <c:out value="${amount}"/>
 <%@ include file="../../template/footer.html" %>
 </body>
 </html>

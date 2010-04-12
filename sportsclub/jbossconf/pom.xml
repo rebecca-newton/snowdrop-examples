@@ -21,13 +21,6 @@
             <artifactId>hsqldb</artifactId>
             <version>1.8.0.10</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.jboss.snowdrop</groupId>
-            <artifactId>jboss-spring-deployer</artifactId>
-            <version>${snowdrop.version}</version>
-            <type>zip</type>
-        </dependency>
     </dependencies>
 
     <profiles>
@@ -39,22 +32,6 @@
             <build>
                 <defaultGoal>package</defaultGoal>
                 <plugins>
-                    <plugin>
-                        <artifactId>maven-dependency-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>extract-deployer</id>
-                                <goals>
-                                    <goal>copy-dependencies</goal>
-                                </goals>
-                                <phase>process-resources</phase>
-                                <configuration>
-                                    <stripVersion>true</stripVersion>
-                                    <includeArtifactIds>jboss-spring-deployer</includeArtifactIds>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <version>1.3</version>
@@ -68,8 +45,7 @@
                                 <configuration>
                                     <tasks>
                                         <property file="${basedir}/local.jbossas.properties"/>
-                                        <property file="${basedir}/jbossas.properties"/>
-                                        <property name="jboss.home" value="${env.JBOSS_HOME}"/>
+                                        <property file="${basedir}/jbossas.properties"/>                                      <property name="jboss.home" value="${env.JBOSS_HOME}"/>
                                         <property name="jboss.deploy.destination"
                                                   value="${jboss.home}/server/${jboss.server.name}/deploy"/>
                                         <delete

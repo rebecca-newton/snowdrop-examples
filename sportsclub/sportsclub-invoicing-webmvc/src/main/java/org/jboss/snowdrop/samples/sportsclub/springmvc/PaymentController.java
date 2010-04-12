@@ -36,6 +36,9 @@ public class PaymentController
       paymentNotification.setAccountNumber(accountId);
       paymentNotification.setAmount(BigDecimal.valueOf(amount));
       jmsTemplate.convertAndSend(paymentNotification);
-      return new ModelAndView("paymentNotification", "amount", amount);
+      ModelAndView modelAndView = new ModelAndView("paymentNotification");
+      modelAndView.addObject("amount", amount);
+      modelAndView.addObject("accountId", accountId);
+      return modelAndView;
    }
 }
