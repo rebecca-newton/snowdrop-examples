@@ -46,11 +46,6 @@
 
    <bean id="mBeanServer" class="org.jboss.mx.util.MBeanServerLocator" factory-method="locateJBoss"/>
 
-    <bean id="messageListener" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
-        <property name="delegate" ref="paymentNotificationProcessor"/>
-       <property name="defaultListenerMethod" value="processPaymentNotification"/>
-    </bean>
-
    <jee:jndi-lookup id="jcaConnectionFactory"  jndi-name="java:/JmsXA"/>
 
    <bean class="org.springframework.jms.core.JmsTemplate">

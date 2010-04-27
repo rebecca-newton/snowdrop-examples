@@ -31,12 +31,6 @@
   </section>
 
   <section>
-    <title>Taking a first glance at the sources</title>
-
-    <para></para>
-  </section>
-
-  <section>
     <title>How to run the examples</title>
 
     <para>Running the application consists of the following
@@ -148,8 +142,10 @@ mvn -Pinstall</programlisting>
     <simplesect>
       <title>Deploying</title>
 
-      <para>Deploying the application is as easy as copying one of the jars
-      produced by the application</para>
+      <para>Deploying the application is as easy as copying one of the EARs
+      produced by the application into the $JBOSS_HOME/servers/default/deploy
+      folder. You can do that either before starting the application server,
+      or after it has started. Before you deploy the application</para>
     </simplesect>
   </section>
 </chapter>

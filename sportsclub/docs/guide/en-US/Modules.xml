@@ -95,13 +95,13 @@
               <entry>The application uses JBoss-deployed EJBs which are
               injected with Spring beans acquired from an application context
               bootstrapped by the Spring Deployer. Transactions are managed by
-              EJBs. </entry>
+              EJBs.</entry>
             </row>
 
             <row>
               <entry>User Interface</entry>
 
-              <entry>JSF/Richfaces and Spring integration </entry>
+              <entry>JSF/Richfaces and Spring integration</entry>
 
               <entry>The application uses the JBoss AS-provided JSF support,
               and Richfaces components. The business services and UI-backing
@@ -787,7 +787,7 @@ public class AccountController
     </section>
 
     <section>
-      <title>An problem of reusing content</title>
+      <title>A problem of reusing content</title>
 
       <para>Having three different web applications to be included in the same
       package raises the problem of reusing some content. Surely, the images
@@ -811,8 +811,8 @@ public class AccountController
               building and deploying the application through the IDE, without
               Maven. This does not affect the general functionality of the
               application but may affect the look and feel in that particular
-              situation. However, if the application is build using Maven this
-              will not be a problem.</para>
+              situation. However, if the application is build using Maven,
+              this will not be a problem.</para>
             </note></para>
         </informalexample></para>
     </section>
@@ -841,6 +841,39 @@ public class AccountController
       which in our case is a Spring bean. In order to take full advantage of
       the managed environment provided by the application server, the Spring
       bean will be invoked in a JCA context.</para>
+
+      <para>The component that processes JMS messages is a POJO:</para>
+
+      <para><informalexample>
+          <para><programlisting>@Component
+public class PaymentNotificationProcessor
+{
+
+   @Autowired
+   private PaymentProcessor paymentProcessor;
+
+   public void processPaymentNotification(PaymentNotification paymentNotification)
+   {
+      paymentProcessor.processPayment(paymentNotification.getAccountNumber(), paymentNotification.getAmount());
+   }
+
+}</programlisting></para>
+        </informalexample></para>
+
+      <para>It delegates the actual processing of a PaymentNotification to a
+      different component, the PaymentProcessor, which is injected in the
+      PaymentNotificationProcessor. This is done in order to maintain a degree
+      of separation between the way data may be represented when exchanged
+      over the messaging system (i.e. encapsulated in a PaymentNotification
+      object), and the contract of the internal component which actually does
+      the processing. The PaymentProcessor instance injected into the
+      PaymentNotificationProcessor is, in fact, reused by the
+      PaymentNotificationService web service implementation (whose contract
+      does not depend on the PaymentNotification entity). </para>
+
+      <para>Spring will instantiate a bean named
+      "paymentNotificationProcessor" which will be registered as a processor
+      for JMS message as follows:</para>
     </section>
 
     <section>
