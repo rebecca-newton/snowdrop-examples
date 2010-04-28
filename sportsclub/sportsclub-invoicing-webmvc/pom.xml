@@ -80,11 +80,6 @@
             <artifactId>snowdrop-vfs</artifactId>
             <scope>provided</scope>
         </dependency>
-         <dependency>
-            <groupId>org.jboss.snowdrop</groupId>
-            <artifactId>snowdrop-transaction</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>org.jboss.javaee</groupId>
             <artifactId>jboss-ejb-api</artifactId>

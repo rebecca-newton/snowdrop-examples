@@ -59,12 +59,6 @@
                 <version>${snowdrop.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jboss.snowdrop</groupId>
-                <artifactId>snowdrop-transaction</artifactId>
-                <version>${snowdrop.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.jboss.javaee</groupId>
                 <artifactId>jboss-ejb-api</artifactId>
                 <version>3.0.0.GA</version>
