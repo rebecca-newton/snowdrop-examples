@@ -9,7 +9,6 @@
       <outputDirectory>/</outputDirectory>
       <excludes>
         <exclude>**/target/**</exclude>
-        <exclude>sportsclub-ear</exclude>
       </excludes>
     </fileSet>
   </fileSets>

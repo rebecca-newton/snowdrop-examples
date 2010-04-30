@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
     <name>Sports Club Source Assembly</name>
 
-
     <build>
         <plugins>
             <plugin>

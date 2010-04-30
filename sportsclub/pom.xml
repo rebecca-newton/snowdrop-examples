@@ -21,7 +21,6 @@
         <module>sportsclub-invoicing-webmvc</module>
         <module>sportsclub-jpa-ear</module>
         <module>sportsclub-staticwebcontent</module>
-        <module>assembly</module>
     </modules>
     
     <packaging>pom</packaging>
