@@ -1,10 +1,10 @@
 package org.jboss.snowdrop.samples.sportsclub.service;
 
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
-
-import java.util.List;
 import java.util.Date;
+import java.util.List;
+
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 
 /**
  *
@@ -15,7 +15,7 @@ public interface ReservationService
 
    Long countReservationsForRange(Date fromDate, Date toDate, List<EquipmentType> types);
 
-   void create(Reservation reservation);
+   Reservation create(Reservation reservation);
 
    public void delete(Reservation reservation);
 

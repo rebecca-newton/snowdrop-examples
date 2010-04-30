@@ -1,14 +1,14 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
+import java.io.Serializable;
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.Repository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * Abstract repository using Hibernate SessionFactory.
@@ -42,9 +42,9 @@ public abstract class HibernateRepository<T, I extends Serializable> implements 
       return (T)getCurrentSession().get(clazz, id);
    }
 
-   public void save(T object)
+   public T save(T object)
    {
-      getCurrentSession().saveOrUpdate(object);
+      return (T) getCurrentSession().merge(object);
    }
 
    public void delete(T object)

@@ -5,6 +5,7 @@
        <jar-file>sportsclub-domain.jar</jar-file>
        <properties>
             <property name="jboss.entity.manager.jndi.name" value="java:/sportsclub/em"/>
+            <property name="hibernate.show_sql" value="true"/>
        </properties>
    </persistence-unit>
 </persistence>

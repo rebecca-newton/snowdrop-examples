@@ -51,7 +51,7 @@ public class Account
       this.balance.setAmount(BigDecimal.ZERO);
    }
 
-   public long getId()
+   public Long getId()
    {
       return id;
    }

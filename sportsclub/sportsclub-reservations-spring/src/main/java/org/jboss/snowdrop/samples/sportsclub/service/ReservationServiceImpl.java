@@ -1,14 +1,14 @@
 package org.jboss.snowdrop.samples.sportsclub.service;
 
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 import java.util.Date;
+import java.util.List;
+
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
+import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.ReservationRepository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.ReservationSearchCriteria;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -49,9 +49,9 @@ public class ReservationServiceImpl implements ReservationService
    }
 
    @Transactional(readOnly = false)
-   public void create(Reservation reservation)
+   public Reservation create(Reservation reservation)
    {
-      reservationRepository.save(reservation);
+      return reservationRepository.save(reservation);
    }
 
    @Transactional(readOnly = false)
@@ -64,8 +64,7 @@ public class ReservationServiceImpl implements ReservationService
    @Transactional(readOnly = false)
    public Reservation updateReservation(Reservation reservation)
    {
-      reservationRepository.save(reservation);
-      return null;
+      return reservationRepository.save(reservation);
    }
 
    public ReservationRepository getReservationRepository()

@@ -1,5 +1,10 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 
+import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.InvoiceRepository;
@@ -13,11 +18,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -69,7 +69,7 @@ public class TestJpaAccountRepository
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Assert.assertEquals(1, accountList.size());
       Account account = accountList.get(0);
-      Assert.assertEquals(2l, account.getId());
+      Assert.assertEquals(new Long(2L), account.getId());
       Assert.assertNotNull(account.getBalance());
    }
 

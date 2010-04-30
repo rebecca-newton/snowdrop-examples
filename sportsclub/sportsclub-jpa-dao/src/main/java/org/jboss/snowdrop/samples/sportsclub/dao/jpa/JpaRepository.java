@@ -1,13 +1,14 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.Repository;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.io.Serializable;
-import java.util.List;
+
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.Repository;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Abstract repository using JPA EntityManager.
@@ -31,9 +32,9 @@ public abstract class JpaRepository<T, I extends Serializable> implements Reposi
       return this.entityManager.find(clazz, id);
    }
 
-   public void save(T object)
+   public T save(T object)
    {
-      this.entityManager.merge(object);
+      return this.entityManager.merge(object);
    }
 
    public void delete(T object)

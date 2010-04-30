@@ -1,5 +1,8 @@
 package org.jboss.snowdrop.samples.sportsclub.service.payment;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Balance;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment;
@@ -8,9 +11,6 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.PaymentRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.util.Date;
 
 @Component
 public class PaymentProcessorImpl implements PaymentProcessor
@@ -30,7 +30,7 @@ public class PaymentProcessorImpl implements PaymentProcessor
 
       payment.setAmount(amount);
       payment.setDate(new Date());
-      paymentRepository.save(payment);
+      payment = paymentRepository.save(payment);
       Balance balance = account.getBalance();
       balance.credit(amount);
       accountRepository.save(account);

@@ -1,14 +1,19 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Reservation;
 import org.jboss.snowdrop.samples.sportsclub.service.AccountService;
 import org.jboss.snowdrop.samples.sportsclub.service.ReservationService;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import java.util.*;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>
@@ -22,7 +27,7 @@ public class ReservationCreate
    private AccountService accountService;
 
    private Reservation reservation;
-   private long createdReservationId;
+   private Long createdReservationId;
    private Locale locale;
 
    public void init()
@@ -65,7 +70,7 @@ public class ReservationCreate
          return "error";
       }
 
-      reservationService.create(reservation);
+      reservation = reservationService.create(reservation);
       createdReservationId = reservation.getId();
       init();
       accountFilter.setSelection(null);

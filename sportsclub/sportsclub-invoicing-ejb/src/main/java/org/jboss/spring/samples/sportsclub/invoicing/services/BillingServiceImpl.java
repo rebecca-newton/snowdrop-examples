@@ -54,7 +54,7 @@ public class BillingServiceImpl implements BillingService
       Date date = new Date();       
       invoice.setIssueDate(date);
       invoice.setBillingPeriod(account.getBillingPeriodFor(date));
-      invoiceRepository.save(invoice);
+      invoice = invoiceRepository.save(invoice);
       Balance balance = account.getBalance();
       balance.debit(invoice.getAmount());
       accountRepository.save(account);

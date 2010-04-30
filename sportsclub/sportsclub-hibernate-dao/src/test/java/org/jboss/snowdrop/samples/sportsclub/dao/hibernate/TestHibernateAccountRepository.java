@@ -65,7 +65,7 @@ public class TestHibernateAccountRepository
       List<Account> accountList = accountRepository.findByCriteria(criteria);
       Assert.assertEquals(1, accountList.size());
       Account account = accountList.get(0);
-      Assert.assertEquals(2l, account.getId());
+      Assert.assertEquals(new Long(2L), account.getId());
       Assert.assertNotNull(account.getBalance());
    }
 

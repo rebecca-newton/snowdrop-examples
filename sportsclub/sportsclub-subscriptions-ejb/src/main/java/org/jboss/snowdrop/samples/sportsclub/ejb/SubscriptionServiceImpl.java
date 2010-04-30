@@ -1,5 +1,11 @@
 package org.jboss.snowdrop.samples.sportsclub.ejb;
 
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
+
 import org.jboss.annotation.spring.Spring;
 import org.jboss.ejb3.annotation.LocalBinding;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
@@ -9,15 +15,10 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.MembershipRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.PersonRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
+import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.Range;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
 import org.jboss.spring.callback.SpringLifecycleInterceptor;
-
-import javax.ejb.Stateless;
-import javax.interceptor.Interceptors;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author <a href="mailto:mariusb@redhat.com">Marius Bogoevici</a>
@@ -81,7 +82,7 @@ public class SubscriptionServiceImpl implements SubscriptionService
       account.setMembership(membershipRepository.findById(membershipCode));
       account.setBillingType(billingType);
       account.setCreationDate(new Date());
-      accountRepository.save(account);
+      account = accountRepository.save(account);
       return account;
    }
 

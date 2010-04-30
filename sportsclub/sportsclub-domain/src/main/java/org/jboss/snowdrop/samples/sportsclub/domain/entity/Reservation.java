@@ -32,7 +32,7 @@ public class Reservation
    private Account account;
 
 
-   public long getId()
+   public Long getId()
    {
       return id;
    }
