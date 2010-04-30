@@ -1,12 +1,19 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.jboss.snowdrop.samples.sportsclub.utils.DateUtils;
 
@@ -36,8 +43,6 @@ public class Account
    private boolean closed;
 
    private Date closeDate;
-   private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("EST");
-   private static final long TWO_WEEKS = (14 * 24 * 3600 * 1000);
 
 
    public Account()
@@ -79,13 +84,13 @@ public class Account
 
    public void setCreationDate(Date creationDate)
    {
-      this.creationDate = DateUtils.normalizeDate(creationDate, TIME_ZONE);
+      this.creationDate = DateUtils.normalizeDate(creationDate, TimeInterval.TIME_ZONE);
    }
 
    public TimeInterval getBillingPeriodFor(Date date)
    {
-      Date normalizedDate = DateUtils.normalizeDate(date, TIME_ZONE);
-      Calendar calendar = new GregorianCalendar(TIME_ZONE);
+      Date normalizedDate = DateUtils.normalizeDate(date, TimeInterval.TIME_ZONE);
+      Calendar calendar = new GregorianCalendar(TimeInterval.TIME_ZONE);
       calendar.setTime(normalizedDate);
       TimeInterval timeInterval = new TimeInterval();
       switch (billingType)
@@ -104,7 +109,7 @@ public class Account
             break;
          case BIWEEKLY:
             long duration = normalizedDate.getTime() - getCreationDate().getTime();
-            long intervals = duration / TWO_WEEKS;
+            long intervals = duration / TimeInterval.TWO_WEEKS;
             calendar.setTime(getCreationDate());
             calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             calendar.add(Calendar.DAY_OF_MONTH, (int)intervals * 14);
@@ -145,7 +150,7 @@ public class Account
 
    public void setCloseDate(Date closeDate)
    {
-      this.closeDate = DateUtils.normalizeDate(closeDate, TIME_ZONE);
+      this.closeDate = DateUtils.normalizeDate(closeDate, TimeInterval.TIME_ZONE);
    }
 
    public BigDecimal getFeePerBillingPeriod()

@@ -1,7 +1,11 @@
 package org.jboss.snowdrop.samples.sportsclub.domain.entity;
 
-import javax.persistence.Embeddable;
 import java.util.Date;
+import java.util.TimeZone;
+
+import javax.persistence.Embeddable;
+
+import org.jboss.snowdrop.samples.sportsclub.utils.DateUtils;
 
 /**
  * @author Marius Bogoevici
@@ -9,9 +13,14 @@ import java.util.Date;
 @Embeddable
 public class TimeInterval
 {
+   public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("EST");
+
+   public static final long TWO_WEEKS = (14 * 24 * 3600 * 1000);
+
    private Date startDate;
 
    private Date endDate;
+
 
    public Date getEndDate()
    {
@@ -20,7 +29,7 @@ public class TimeInterval
 
    public void setEndDate(Date endDate)
    {
-      this.endDate = endDate;
+      this.endDate = DateUtils.normalizeDate(endDate,TIME_ZONE);
    }
 
    public Date getStartDate()
@@ -30,11 +39,12 @@ public class TimeInterval
 
    public void setStartDate(Date startDate)
    {
-      this.startDate = startDate;
+      this.startDate = DateUtils.normalizeDate(startDate,TIME_ZONE);
    }
 
    public boolean contains(Date someDate)
    {
-      return someDate.compareTo(startDate) >= 0 && someDate.compareTo(endDate)<=0;
+      Date normalizeDate = DateUtils.normalizeDate(someDate,TIME_ZONE);
+      return normalizeDate.compareTo(startDate) >= 0 && normalizeDate.compareTo(endDate)<=0;
    }
 }
