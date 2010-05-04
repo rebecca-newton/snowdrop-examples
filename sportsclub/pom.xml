@@ -271,6 +271,13 @@
         </repository>
 
         <repository>
+            <id>repository.jboss.org/nexus</id>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+
+        <repository>
             <id>snapshots.jboss.org</id>
             <url>http://snapshots.jboss.org/maven2</url>
 
