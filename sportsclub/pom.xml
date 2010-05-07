@@ -56,6 +56,7 @@
                 <artifactId>snowdrop-vfs</artifactId>
                 <version>${snowdrop.version}</version>
             </dependency>
+            
             <dependency>
                 <groupId>org.jboss.javaee</groupId>
                 <artifactId>jboss-ejb-api</artifactId>
@@ -255,99 +256,6 @@
 
         </plugins>
     </build>
-
-
-    <repositories>
-
-        <repository>
-            <id>repository.jboss.org</id>
-            <url>http://repository.jboss.org/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
-        <repository>
-            <id>repository.jboss.org/nexus</id>
-            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
-        </repository>
-
-        <repository>
-            <id>snapshots.jboss.org</id>
-            <url>http://snapshots.jboss.org/maven2</url>
-
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-
-        <repository>
-            <id>repo1.maven.org</id>
-            <url>http://repo1.maven.org/maven2/</url>
-
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
-
-        <repository>
-            <id>ibiblio</id>
-            <url>http://www.ibiblio.org/maven/mule/dependencies/maven2</url>
-
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-
-
-    </repositories>
-
-    <pluginRepositories>
-
-        <pluginRepository>
-            <id>repository.jboss.org</id>
-            <url>http://repository.jboss.org/maven2</url>
-
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-
-        <pluginRepository>
-            <id>snapshots.jboss.org</id>
-            <url>http://snapshots.jboss.org/maven2</url>
-
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
     <profiles>
         <profile>
