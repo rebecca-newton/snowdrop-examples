@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.jboss.snowdrop</groupId>
             <artifactId>snowdrop-deployers</artifactId>
-            <version>1.0.0.GA</version>
+            <version>${snowdrop.version}</version>
         </dependency>
 
     </dependencies>

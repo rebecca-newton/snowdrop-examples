@@ -27,11 +27,11 @@
     <bean id="activationSpecFactory" class="org.springframework.jms.listener.endpoint.DefaultJmsActivationSpecFactory">
         <property name="activationSpecClass" value="org.jboss.resource.adapter.jms.inflow.JmsActivationSpec"/>
         <property name="defaultProperties">
-            <value>
-                clientId=remote
-                subscriptionName=jca-paymentProcessor
-                useDLQ=false
-            </value>
+            <props>
+              <prop key="clientId">remote</prop>
+              <prop key="subscriptionName">jca-paymentProcessor</prop>
+              <prop key="useDLQ">false</prop>
+            </props>
         </property>
     </bean>
 
