@@ -23,7 +23,7 @@ repository in which the artifacts have different version numbers).
 B. Spring Deployer installed in JBoss AS
 
 For running the application, the Spring Deployer must be installed in JBoss AS.
-Please refer to the appropriate documentation for details.
+Please refer to the Snowdrop documentation for details.
 
 For building & running the application:
 
@@ -68,7 +68,7 @@ mvn clean package -Pspring-3
 
 5. Deploy the application
 
-   Copy one of the two ears produced by the build to the deloy folder of JBoss AS.
+   Copy one of the two ears produced by the build to the deploy folder of JBoss AS.
 
    The deployment folder is: JBOSS_HOME/server/default/deploy
 
