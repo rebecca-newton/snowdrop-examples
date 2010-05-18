@@ -12,7 +12,6 @@
     <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
     <artifactId>sportsclub-jpa-dao</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
     <name>Sports Club JPA DAO</name>
 
     <dependencies>

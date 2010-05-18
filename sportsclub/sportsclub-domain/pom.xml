@@ -10,7 +10,6 @@
     <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
     <artifactId>sportsclub-domain</artifactId>
     <name>Sports Club Domain</name>
-    <version>1.0-SNAPSHOT</version>
 
     <dependencies>
         <dependency>

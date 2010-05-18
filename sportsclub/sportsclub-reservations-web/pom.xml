@@ -9,7 +9,6 @@
     <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
     <artifactId>sportsclub-reservations-web</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
     <name>Sports Club Reservations JSF Front-End</name>
     <dependencies>
 

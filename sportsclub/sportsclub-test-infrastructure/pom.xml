@@ -11,7 +11,6 @@
 
    <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
    <artifactId>sportsclub-test-infrastructure</artifactId>
-   <version>1.0-SNAPSHOT</version>
    <name>Sports Club Unit Test Infrastructure</name>
 
 

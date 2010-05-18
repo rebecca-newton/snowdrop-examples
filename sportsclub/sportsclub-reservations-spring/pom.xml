@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-    <version>1.0-SNAPSHOT</version>
     <artifactId>sportsclub-reservations-spring</artifactId>
     <name>Sports Club Reservations Spring Business Layer</name>
 
