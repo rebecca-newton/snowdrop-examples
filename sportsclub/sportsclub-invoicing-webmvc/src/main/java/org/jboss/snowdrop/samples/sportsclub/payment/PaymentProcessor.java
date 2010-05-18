@@ -1,4 +1,4 @@
-package org.jboss.snowdrop.samples.sportsclub.service.payment;
+package org.jboss.snowdrop.samples.sportsclub.payment;
 
 import java.math.BigDecimal;
 

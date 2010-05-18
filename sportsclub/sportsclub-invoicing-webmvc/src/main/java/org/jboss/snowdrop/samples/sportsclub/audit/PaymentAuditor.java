@@ -2,6 +2,8 @@ package org.jboss.snowdrop.samples.sportsclub.audit;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Component;
@@ -9,19 +11,23 @@ import org.springframework.stereotype.Component;
 /**
  * @author Marius Bogoevici
  */
-@ManagedResource(objectName = "sportsclub:name=paymentAuditor", description = "Payment Auditor", logFile = "log-sportsclub-auditor-jmx.log")
+@ManagedResource(objectName = "sportsclub:name=paymentAuditor", description = "Payment Auditor")
 @Component
 public class PaymentAuditor
 {
+
+   private static final Log LOG = LogFactory.getLog(PaymentAuditor.class);
+
    private boolean enabled = true;
 
-   @ManagedAttribute
+   @ManagedAttribute(description = "Audit enabled")
    public void setEnabled(boolean enabled)
    {
+      LOG.info("Audit " +  (enabled ? "enabled":"disabled"));
       this.enabled = enabled;
    }
 
-   @ManagedAttribute
+   @ManagedAttribute(description = "Audit enabled")
    public boolean getEnabled()
    {
       return this.enabled;
@@ -31,11 +37,7 @@ public class PaymentAuditor
    {
       if (this.enabled)
       {
-         System.out.println("AUDIT ENABLED! A payment has been made to account " + accountId + " for the amount of " + amount);
-      }
-      else
-      { 
-    	  System.out.println("AUDIT DISABLED!");   	  
+         LOG.info("A payment has been made to account " + accountId + " for the amount of " + amount);
       }
    }
 }

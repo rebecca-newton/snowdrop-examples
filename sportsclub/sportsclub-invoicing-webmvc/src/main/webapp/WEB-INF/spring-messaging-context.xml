@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:component-scan base-package="org.jboss.snowdrop.samples.sportsclub.messaging"/>
+
+    <jms:jca-listener-container resource-adapter="resourceAdapter" acknowledge="auto"
+                                activation-spec-factory="activationSpecFactory">
+        <jms:listener destination="/queue/sportsclub" ref="paymentNotificationProcessor"
+                      method="processPaymentNotification"/>
+    </jms:jca-listener-container>
+
+    <bean id="activationSpecFactory" class="org.springframework.jms.listener.endpoint.DefaultJmsActivationSpecFactory">
+        <property name="activationSpecClass" value="org.jboss.resource.adapter.jms.inflow.JmsActivationSpec"/>
+        <property name="defaultProperties">
+            <props>
+                <prop key="clientId">remote</prop>
+                <prop key="subscriptionName">jca-paymentProcessor</prop>
+                <prop key="useDLQ">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="resourceAdapter" factory-bean="mBeanServer" factory-method="getAttribute">
+        <constructor-arg>
+            <bean class="org.springframework.jmx.support.ObjectNameManager" factory-method="getInstance">
+                <constructor-arg value="jboss.jca:name='jms-ra.rar',service=RARDeployment"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg value="ResourceAdapter"/>
+    </bean>
+
+    <jee:jndi-lookup id="jcaConnectionFactory" jndi-name="java:/JmsXA"/>
+
+    <bean class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="jcaConnectionFactory"/>
+        <property name="defaultDestinationName" value="queue/sportsclub"/>
+        <property name="destinationResolver">
+            <bean class="org.springframework.jms.support.destination.JndiDestinationResolver"/>
+        </property>
+    </bean>
+
+</beans>

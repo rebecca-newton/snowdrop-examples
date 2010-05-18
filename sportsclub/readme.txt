@@ -94,6 +94,15 @@ Step 3 can be repeated any time in order to reset the database (with the applica
 Steps 5,6 do not need to be executed in a particular order, but the database must be started
 before the application is deployed.
 
+8. Special note: JMS integration can be enabled and disabled by commenting and respectively uncommenting
+the following line from sportsclub-invoicing-webmvc/src/main/webapp/WEB-INF/spring-business-context.xml :
+
+<import resource="spring-messaging-context.xml"/>
+
+If the line is commented, then JMS integration will not be enabled. This feature allows to run Sportsclub using
+the JBoss AS Web Profile.
+
+
 
 
       

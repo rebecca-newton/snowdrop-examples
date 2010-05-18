@@ -29,4 +29,10 @@ public class PaymentNotification implements Serializable
    {
       this.amount = amount;
    }
+
+   @Override
+   public String toString()
+   {
+      return "PaymentNotification[accountId=" + accountNumber + ", amount=" + amount + "]";
+   }
 }
