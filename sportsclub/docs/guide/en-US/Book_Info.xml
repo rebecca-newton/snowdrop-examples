@@ -4,15 +4,16 @@
 %BOOK_ENTITIES;
 ]>
 <bookinfo id="book-guide-guide">
-  <edition>0</edition>
-  <title>Sports Club</title>
-  <subtitle>An introduction to the JBoss and Spring integration example </subtitle>
-  <productname>Documentation</productname>
-  <productnumber>0.1</productnumber>
+  <title>Snowdrop Sports Club Example</title>
+  <subtitle>Integrating Spring with the JBoss Enterprise Platforms</subtitle>
+  <productname>JBoss Web Framework Kit</productname>
+  <productnumber>1.1</productnumber>
+  <edition>1.0</edition>
   <pubsnumber>0</pubsnumber>
   <abstract>
     <para>
-A description of the Sports Club example, that illustrates a few JBoss and Spring integration use cases.</para>
+      This book provides a walkthrough of the JBoss Snowdrop Sports Club example. It illustrates several use cases for integrating the JBoss Enterprise Platforms with the Spring Framework.
+    </para>
   </abstract>
   <corpauthor>
     <inlinemediaobject>

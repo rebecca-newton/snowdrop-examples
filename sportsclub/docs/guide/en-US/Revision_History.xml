@@ -8,16 +8,16 @@
   <simpara>
     <revhistory>
       <revision>
-        <revnumber>1</revnumber>
-        <date>Wed Feb 10 2010</date>
+        <revnumber>1.1</revnumber>
+        <date>Wed May 19 2010</date>
         <author>
-          <firstname>Marius</firstname>
-          <surname>Bogoevici</surname>
-          <email>mariusb@redhat.com</email>
+          <firstname>Laura</firstname>
+          <surname>Bailey</surname>
+          <email>lbailey@redhat.com</email>
         </author>
         <revdescription>
           <simplelist>
-            <member>Initial creation of book by publican</member>
+            <member>Edited book for stylistic consistency.</member>
           </simplelist>
         </revdescription>
       </revision>

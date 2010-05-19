@@ -6,26 +6,33 @@
 ]>
 <chapter id="chap-guide-Test_Chapter">
   <title>Introduction</title>
+  
+  <para>
+    The Sports Club application provides a real world-inspired example of
+    integrating Spring with the JBoss Entprise Platforms. It consists of
+    three web applications, which illustrate several use cases through
+    various combinations of components and technologies. It also illustrates
+    how to use the Snowdrop libraries to provide JBoss-specific features,
+    such as creating a standalone deployment of an <classname>ApplicationContext</classname>
+    and injecting beans from that application context into non-Spring
+    components like Enterprise Java Beans (EJB).
+  </para>
 
-  <para>The Sportsclub application provides a real-world inspired example on
-  integrating Spring with Java EE 5 and JBoss. It consists of three web
-  applications packaged together which illustrate various use cases and
-  combinations of components and technologies. It also illustrates how to use
-  the Snowdrop library in order to provide JBoss-specific integration
-  features, such as standalone deployment of an ApplicationContext, and
-  injection of beans provided from that application context in non-Spring
-  components such as EJBs.</para>
+  <para>
+    This book aims to illustrate the mechanics of using Spring with different
+    Java EE 5 components in the specific context of the JBoss Enterprise Platforms,
+    and to recommend methods of achieving certain integration goals.
+  </para>
 
-  <para>The main goal is to illustrate the mechanics of using Spring with
-  different Java EE 5 components, in the specific context of JBoss, explaining
-  why a certain approach is preferable to another, when the Spring Framework
-  provides two or more options to achieving the same goal. For example, it
-  will explain why we gave preference to JCA-based JMS integration over the
-  DefaultMessageListenerContainer, or why we prefer to use an
-  application-server deployed persistence context versus having Spring create
-  one.</para>
+  <para>
+    The Sports Club example is not intended as a guide to creating a domain model.
+    Detailing the various layers of application and UI design is outside the scope
+    of this document. As such, the example application has been designed to
+    illustrate integration use cases, rather than to demonstrate a domain model 
+    that strictly follows principles of object-oriented and domain-driven design.
+  </para>
 
-  <para>The example is not intended to be a guide on creating a domain model,
+  <!--<para>The example is not intended to be a guide on creating a domain model,
   breaking down the various layers of the application or on UI design. While
   the domain model has attempted to follow the general priciples of
   object-oriented and domain-driven design, which are commonly associated with
@@ -34,11 +41,13 @@
   uses DAOs (or Repositories in DDD terms), but this shouldn't be viewed as
   advocacy for using them in absolute terms. A significant number of Spring
   applications use this particular design, and we have employed it to
-  illustrate the technical integration use cases.</para>
+  illustrate the technical integration use cases.</para>-->
 
-  <para>Also, the application uses RichFaces as a component library for JSF.
-  We strongly encourage you to consult the Richfaces documentation and
-  examples for Richfaces-specific information.</para>
+  <para>
+    The Sports Club example uses RichFaces as a component library for 
+    JavaServer Faces (JSF). Consult the RichFaces documentation for RichFaces-specific
+    information.
+  </para>
 
   <section>
     <title>Prerequisites: making sure you have all you need</title>
