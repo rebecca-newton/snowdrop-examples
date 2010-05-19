@@ -5,29 +5,21 @@
 %BOOK_ENTITIES;
 ]>
 <chapter id="chap-guide-usecases">
-  <title>A general overview of the application</title>
+  <title>Understanding the application structure</title>
 
   <para>This chapter describes the business use cases covered by the
   application, and how is the functionality distributed across the
   modules.</para>
 
   <section>
-    <title>The Business Domain of the example application</title>
+    <title>The application structure and its use cases</title>
 
-    <para>The goal of the Sportsclub application is to provide a few examples
-    of real-world applications based on the Spring Framework that integrate
-    with Java EE 5 and JBoss. It consists of not one, but three different
-    applications sharing the same domain model, packaged and deployed
-    together. The latter is done for simplicity reasons, but also for
-    demonstrating a few different technologies working side by side. In the
-    following sections, we will discuss the technologies used in the
-    applications.</para>
+    <para>The Sportsclub example consists of three different applications
+    sharing the same domain model, packaged and deployed together. This is
+    done for simplicity reasons, but also for demonstrating a few different
+    technologies and configuration options working side by side. </para>
 
-    <para>The business domain of the application is a Sports Club. The
-    employees of the club need to be able to perform the following
-    scenarios:</para>
-
-    <para><itemizedlist>
+    <para>The application supports the following scenarios:<itemizedlist>
         <listitem>
           <para>maintaining informations about the subscribers, creating new
           subcriptions and closing existing accounts;</para>
@@ -43,72 +35,51 @@
           for accounts that do not have a current invoice and updating the
           account whenever a payment has been received.</para>
         </listitem>
-      </itemizedlist>As the concerns are different, we have three different
-    applications, each covering one piece of functionality.</para>
-  </section>
-
-  <section>
-    <title>The Technologies</title>
-
-    <para>The Reservations application is using the following
-    stack:<itemizedlist>
-        <listitem>
-          <para>UI layer implemented using Richfaces</para>
-        </listitem>
-
-        <listitem>
-          <para>Business layer implemented using EJB</para>
-        </listitem>
-
-        <listitem>
-          <para>Persistence layer using Spring-based DAOs
-          (Hibernate/JPA)</para>
-        </listitem>
-      </itemizedlist>The Subscriptions application is using the following
-    stack:</para>
-
-    <itemizedlist>
-      <listitem>
-        <para>UI layer implemented using Richfaces</para>
-      </listitem>
-
-      <listitem>
-        <para>Business layer implemented using Spring</para>
-      </listitem>
-
-      <listitem>
-        <para>Persistence layer implemented using Spring-based DAOs
-        (Hibernate/JPA)</para>
-      </listitem>
-    </itemizedlist>
-
-    <para>The Invoicing application is using the following stack:<itemizedlist>
-        <listitem>
-          <para>UI layer implemented using Spring MVC and JSP</para>
-        </listitem>
-
-        <listitem>
-          <para>Business layer implemented using EJB</para>
-        </listitem>
-
-        <listitem>
-          <para>Persistence layer implemented using Spring-based DAOs
-          (Hibernate/JPA)</para>
-        </listitem>
       </itemizedlist></para>
 
-    <para>In all three cases, the persistence layer is implemented using
-    Spring. In fact there are two alternative implementations: one using
-    Hibernate directly and one using JPA (and Hibernate as the provider).
-    Building the application creates two different EAR files, one using the
-    JPA-based DAOs and one using the Hibernate-based DAOs.</para>
+    <para>Each of these scenarios is covered by a separate web application,
+    and all three applications are packaged in a single EAR file.</para>
+
+    <para>Figure 2.1 shows how the application is structured:</para>
+
+    <figure>
+      <title>Structure of the Sportsclub application</title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/application-modules.png" scale="80%" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>All three applications share a common domain model and a common
+    DAO/repository layer, implemented using Spring. The application includes
+    both Hibernate and JPA implementations for the repository layer (using the
+    Hibernate and JPA support provided by JBoss AS, respectively). The
+    application is built in two different variants, each using one of the two
+    DAO implementation alternatives. </para>
+
+    <para>Apart from that, each web application uses a different combination
+    of technologies, illustrating one or more integration use cases.</para>
+
+    <para>The Subscriptions application uses an EJB-based service layer and a
+    JSF-based front-end, using Richfaces components. </para>
+
+    <para>The Reservations application uses a Spring-based business layer and
+    a JSF-based front-end, also using Richfaces components.</para>
+
+    <para>The Invoicing application uses an EJB service layer and a Spring
+    MVC-based front-end (using JSP and Spring form tags). Apart from that, it
+    demonstrates the creation of JAX-WS based web services injected with
+    Spring beans, JCA-based Spring JMS integration, auditing by using the
+    Spring AOP configuration and Spring JMX integration.</para>
   </section>
 
   <section>
-    <title>The project modules</title>
+    <title>A comparative look of the project modules</title>
 
-    <para>The modules (Maven artifacts) of the project are outlined in the
-    following table:<table>
+    <para>All the modules (Maven artifacts) of the project, as well as the
+    functionality that they cover are outlined in the following table:<table>
         <title>Modules of the Sportsclub project</title>
 
         <tgroup cols="3">
@@ -132,7 +103,7 @@
             <row>
               <entry>snowdrop-domain</entry>
 
-              <entry>Domain classes and interfaces for repositories.</entry>
+              <entry>Domain classes and repository interfaces.</entry>
 
               <entry>jar</entry>
             </row>

@@ -7,31 +7,99 @@
 <chapter id="chap-guide-Test_Chapter">
   <title>Introduction</title>
 
-  <para>This chapter describes the purpose of the example, as well as the
-  general structure of the documentation.</para>
+  <para>The Sportsclub application provides a real-world inspired example on
+  integrating Spring with Java EE 5 and JBoss. It consists of three web
+  applications packaged together which illustrate various use cases and
+  combinations of components and technologies. It also illustrates how to use
+  the Snowdrop library in order to provide JBoss-specific integration
+  features, such as standalone deployment of an ApplicationContext, and
+  injection of beans provided from that application context in non-Spring
+  components such as EJBs.</para>
+
+  <para>The main goal is to illustrate the mechanics of using Spring with
+  different Java EE 5 components, in the specific context of JBoss, explaining
+  why a certain approach is preferable to another, when the Spring Framework
+  provides two or more options to achieving the same goal. For example, it
+  will explain why we gave preference to JCA-based JMS integration over the
+  DefaultMessageListenerContainer, or why we prefer to use an
+  application-server deployed persistence context versus having Spring create
+  one.</para>
+
+  <para>The example is not intended to be a guide on creating a domain model,
+  breaking down the various layers of the application or on UI design. While
+  the domain model has attempted to follow the general priciples of
+  object-oriented and domain-driven design, which are commonly associated with
+  Spring application, there are many other options and ways of doing it, which
+  are discussed in far more detail elsewhere. For example, the application
+  uses DAOs (or Repositories in DDD terms), but this shouldn't be viewed as
+  advocacy for using them in absolute terms. A significant number of Spring
+  applications use this particular design, and we have employed it to
+  illustrate the technical integration use cases.</para>
+
+  <para>Also, the application uses RichFaces as a component library for JSF.
+  We strongly encourage you to consult the Richfaces documentation and
+  examples for Richfaces-specific information.</para>
 
   <section>
-    <title>Making sure you have all you need</title>
+    <title>Prerequisites: making sure you have all you need</title>
 
     <para>Running the example requires the following setup:</para>
 
     <itemizedlist>
       <listitem>
-        <para>Java 6 JDK</para>
+        <para>Java 6 JDK;</para>
       </listitem>
 
       <listitem>
-        <para>JBoss AS 5.1.0 GA or JBoss EAP 5 or higher</para>
+        <para>JBoss AS 5.1.0 GA or later;</para>
       </listitem>
 
       <listitem>
-        <para>Maven 2.0.8 or higher</para>
+        <para>Maven 2.0.9 or later, with properly set up repositories;</para>
+      </listitem>
+
+      <listitem>
+        <para>The Spring Deployer.</para>
       </listitem>
     </itemizedlist>
+
+    <simplesect>
+      <title>Setting up Maven repositories</title>
+
+      <para>The Maven project setup does not make any assumptions where the
+      artifacts used in the project are coming from (which repository), as
+      users may have different settings for their Maven repositories (direct
+      access to community repositories, proxies, enterprise repository with
+      approved artifacts). Therefore, the setup of the repositories is left to
+      the user of the application.</para>
+
+      <para>In the most simple case, this example can be built out of the box
+      if the settings.xml file for the local Maven installation enables the
+      repositories from Maven Central and JBoss Releases. Instructions for
+      setting up the latter can be found at:
+      http://community.jboss.org/wiki/MavenGettingStarted-Users.</para>
+
+      <para>The pom.xml can be modified to include references to other
+      repositories, or equivalent artifact versions (if the build environment
+      uses an enterprise-wide repository in which the artifacts have different
+      version numbers).</para>
+    </simplesect>
+
+    <simplesect>
+      <title>Installing the Spring Deployer in JBoss AS</title>
+
+      <para>For running the application, the Spring Deployer must be installed
+      in JBoss AS. Please refer to the Snowdrop documentation for
+      details.</para>
+    </simplesect>
   </section>
 
   <section>
-    <title>How to run the examples</title>
+    <title>How to build and run the examples</title>
+
+    <para>The documentation will provide a more detailed account of the
+    application structure and use cases covered, but sometimes it is easier to
+    just run the application.</para>
 
     <para>Running the application consists of the following
     steps:<itemizedlist>
@@ -50,7 +118,17 @@
         <listitem>
           <para>Deploying the application</para>
         </listitem>
+
+        <listitem>
+          <para>Starting the database</para>
+        </listitem>
+
+        <listitem>
+          <para>Starting the application server</para>
+        </listitem>
       </itemizedlist></para>
+
+    <para>Below are some details on how to perform some of these steps.</para>
 
     <simplesect>
       <title>Building the application</title>
@@ -124,28 +202,117 @@ mvn -Pdb-setup</programlisting>
         </listitem>
       </itemizedlist>
 
-      <para>The Spring Deployer will be setup by extracting it into the
+      <para>As explained in the prerequisites, the Spring Deployer will be
+      setup by extracting it into the
       &lt;JBoss-Home&gt;/servers/&lt;server-instance&gt;/deployers folder.
       Please refer to the Spring Deployer documentation for details.</para>
 
       <para>For creating the DataSource and the Destination, you need to use
-      the facilities provided in the jbossconf folder. Just execute;</para>
+      the facilities provided in the jbossconf folder.</para>
 
       <para><informalexample>
           <programlisting>cd jbossconf
-mvn -Pinstall</programlisting>
+</programlisting>
+        </informalexample><informalexample>
+          <para>Modify the jbossconf/jbossas.properties file to indicate the
+          correct location of the JBoss AS installation. A commented example
+          is provided.</para>
+
+          <programlisting>mvn -Pinstall</programlisting>
         </informalexample>This will copy the datasource and JMS destination
       definitions into the JBoss server. Like the previous one, this step
       needs to be executed only once.</para>
     </simplesect>
 
     <simplesect>
-      <title>Deploying</title>
+      <title>Deploying the application</title>
 
-      <para>Deploying the application is as easy as copying one of the EARs
-      produced by the application into the $JBOSS_HOME/servers/default/deploy
-      folder. You can do that either before starting the application server,
-      or after it has started. Before you deploy the application</para>
+      <para>Copy one of the two ears produced by the build to the deploy
+      folder of JBoss AS.ou </para>
+
+      <para>The deployment folder is: JBOSS_HOME/server/default/deploy, and
+      the two (alternative) build files are:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>sportsclub-ear/target/sportsclub.ear (Hibernate-based
+          implementation);</para>
+        </listitem>
+
+        <listitem>
+          <para>sportsclub-jpa-ear/target/sportsclub.ear (JPA-based
+          implementation, using Hibernate as the underlying provider).</para>
+        </listitem>
+      </itemizedlist>
     </simplesect>
+
+    <simplesect>
+      <title>Starting the database</title>
+
+      <para>From the database folder:</para>
+
+      <para><informalexample>
+          <programlisting>cd database
+</programlisting>
+        </informalexample>Execute one of the two startup scripts:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>On Linux and other *nix-like systems:</para>
+
+          <informalexample>
+            <programlisting>./startdb.sh</programlisting>
+          </informalexample>
+        </listitem>
+
+        <listitem>
+          <para>On Windows:</para>
+
+          <informalexample>
+            <programlisting>startdb.bat</programlisting>
+          </informalexample>
+        </listitem>
+      </itemizedlist>
+
+      <para>The database must be always started before the application server
+      is started and the application is deployed. The application can also be
+      deployed in a running application server (for example after making
+      changes to it), but this should always happen while the database is
+      started).</para>
+    </simplesect>
+
+    <simplesect>
+      <title>Special configuration for distinct profiles</title>
+
+      <para>The Sportsclub application can be deployed in different JBoss
+      Application Server profiles. Some of these profiles, like for example
+      the Web profile, do not include a message broker, therefore JMS
+      integration features (see dedicated section) must be disabled. In order
+      to disable JMS integration in the Sportsclub application, the file
+      <code>sportsclub-invoicing-webmvc/src/main/webapp/WEB-INF/spring-business-context.xml</code>
+      must be modified by commenting out the following line:<programlisting>&lt;import resource="spring-messaging-context.xml"/&gt;</programlisting></para>
+
+      <para>Uncommenting the line will re-enable the JMS integration
+      features.</para>
+    </simplesect>
+  </section>
+
+  <section>
+    <title>Sportsclub and JBoss Developer Studio</title>
+
+    <para>The easiest way to understand how the application works is by
+    looking at its sources. This guide will show you how you can import the
+    application in JBoss Developer Studio.</para>
+
+    <para>Sportsclub is Maven-based, therefore you will need to create the
+    Eclipse project structure for it. You can do by using the Maven Eclipse
+    plugin:</para>
+
+    <informalexample>
+      <programlisting>mvn eclipse:eclipse -Dwtpversion=2.0</programlisting>
+
+      <para>Alternately, you can install the m2eclipse Maven Eclipse plugin,
+      and use it to import the application.</para>
+    </informalexample>
   </section>
 </chapter>

@@ -8,16 +8,17 @@
   <title>Using JBoss and Spring together</title>
 
   <para>This chapter will describe the various Spring and JBoss integration
-  use cases covered by the application and will describe how are they
-  implemented in the various application modules.</para>
+  use cases covered by the application and how are they implemented in the
+  various application modules.</para>
 
-  <para>As a Spring application that consists of multiple modules, our
-  strategy is to provide fragments of Spring configuration in each artifact
-  produced by a module, leaving to the upper layer components to aggregate
-  them. This strategy has multiple benefits: for one, it allows to separate
-  concerns between components - the Spring wiring of certain components is
-  left at the level where the components are defined, so that it can be
-  changed easily if the implementations change.</para>
+  <para>As a Spring application that consists of multiple modules, the main
+  strategy of constructing the global Spring configuration is to provide
+  Spring bean definition fragments in each artifact produced by a module,
+  leaving to the upper layer components to aggregate them by importing. This
+  strategy has multiple benefits: for one, it allows to separate concerns
+  between components - the Spring wiring of certain components is left at the
+  level where the components are defined, so that it can be changed easily if
+  the implementations change.</para>
 
   <section>
     <title>A look at the JBoss/Spring integration use cases</title>
@@ -178,7 +179,7 @@
 
         <listitem>
           <para>the repository interfaces that provide persistence services
-          for the application</para>
+          for the application;</para>
         </listitem>
       </itemizedlist>A relevant note regarding the domain module is the use of
     the term "repository" for the components that are used for retrieving
@@ -188,6 +189,32 @@
     the persistence and entity lookup functions are part of the domain, rather
     than simple persistence implementation strategies (as it is the case with
     the fairly similar Data Access Objects).</para>
+
+    <figure>
+      <title>Domain entities of the application and their connections</title>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/domain-entities.png" />
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <para>Figure 3.1 shows the domain entities of the application. A few
+    non-entity domain objects have been ommitted from the diagram. Figure 3.2
+    shows a more detailed overview of the entities involved in the
+    Account/Person relationshiop, including the non-entity domain
+    objects.</para>
+
+    <para><figure>
+        <title>The Account and Person entities</title>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/account-person.png" />
+          </imageobject>
+        </mediaobject>
+      </figure></para>
   </section>
 
   <section>
@@ -314,15 +341,18 @@
       <title>The JPA implementation</title>
 
       <para>The JPA implementation is, in many respects, very similar to the
-      Hibernate implementation, in that it provides a parametrized superclass
-      that is Spring-agnostic. Besides the fact that it is using the JPA API -
-      for example an EntityManager instead of the SessionFactory, the JPA
-      Persistence Unit (and subsequent EntityManager) are created by the
-      application server and not created by Spring (the EntityManager is
-      injected by Spring, but acquired from JNDI). The persistence unit is
-      deployed from within the JPA repository jar, in order to allow the
-      spring-domain jar to be deployed in non-JPA scenarios (e.g. Hibernate)
-      without triggering a persistence unit deployment.</para>
+      Hibernate implementation (therefore we won't provide a code example for
+      it). It provides a parametrized superclass that is Spring-agnostic as
+      well (except for the usage of the autowiring annotation - which can be
+      replaced by a simple setter if any reference to Spring needs to be
+      removed). Besides the fact that it is using the JPA API - for example an
+      EntityManager instead of the SessionFactory, the JPA Persistence Unit
+      (and subsequent EntityManager) are created by the application server and
+      not created by Spring (the EntityManager is injected by Spring, but
+      acquired from JNDI). The persistence unit is deployed from within the
+      JPA repository jar, in order to allow the spring-domain jar to be
+      deployed in non-JPA scenarios (e.g. Hibernate) without triggering a
+      persistence unit deployment.</para>
 
       <para>The Spring application context configuration fragments are very
       similar to the ones encountered in the Hibernate module:</para>
@@ -380,10 +410,10 @@ public class TestJpaAccountRepository
    /* */
 }
 </programlisting>This configuration reuses the 'application-specific' context
-        configuration fragment, as well as two specific context configuration
-        fragments to create an Spring context in isolation. Thus, the
-        functionality provided by the repositories can be tested outside the
-        running application.</para>
+        configuration fragment, as well as two test-specific (or otherwise
+        said local) context configuration fragments in order tos to create a
+        Spring context in isolation. Thus, the functionality provided by the
+        repositories can be tested outside the running application.</para>
       </informalexample>
     </section>
   </section>
@@ -394,7 +424,14 @@ public class TestJpaAccountRepository
     <para>On top of the domain and persistence layer sits the service layer of
     the application. Its role is to co-ordinate the domain objects and
     repositories in order to perform higher level operations. This is also the
-    layer which provides transaction demarcation.</para>
+    layer which provides transaction demarcation. One consideration for which
+    transaction demarcation should be done at service level is to ensure that
+    the changes made by service operations are atomic. Otherwise, concurrent
+    operations may leave the application data in an inconsistent state.
+    Demarcating transactions at the repository/DAO level should be done
+    carefully, taking into consideration that multiple repository/DAO
+    invocations that are not surrounded by a wrapping transactions will
+    execute in separate transactional contexts.</para>
 
     <para>In the Sportsclub application, there are two variants of
     implementing the service layer:</para>
@@ -420,8 +457,12 @@ public class TestJpaAccountRepository
       <title>The Spring-based service layer</title>
 
       <para>The Spring-based service layer exposes a number of service beans
-      that can be consumed by the UI. The service beans are injected with the
-      beans defined in the persistence layer.</para>
+      that can be consumed by the UI, which are injected with the beans
+      defined in the persistence layer. Given how this is a fairly
+      straightforward Spring configuration, we will non insist any more on
+      this topic, except for outlining that this is the level where
+      transaction demarcation is provided by the use of the appropriate Spring
+      annotations. </para>
     </section>
 
     <section>
@@ -518,16 +559,14 @@ public class BillingServiceImpl implements BillingService
 
       <para>The Subscriptions application uses Richfaces and JSF for the
       presentation layer and EJB for the business layer, so this part of the
-      application is not Spring-related. The only Spring-related feature at
-      this level is the fact that the repositories used by the EJBs are Spring
-      beans.</para>
+      application is not Spring-related. </para>
 
       <para>Although this is somewhat out of the Spring topic, it is worth
       mentioning for the benefit of the reader that we recommend using Seam
       for building applications that integrate JSF and EJB in Java EE 5. This
       type of integration is, however, beyond the scope of the current demo
-      application, so we are mentioning it here, although this example is not
-      demonstrating it.</para>
+      application, so this example is not demonstrating it. Please consult the
+      Seam documentation for detai.</para>
     </section>
 
     <section>
@@ -832,6 +871,12 @@ public class AccountController
     <section>
       <title>Payment processing: JMS integration through JCA</title>
 
+      <para>JMS integration can be enabled or disabled in the application, in
+      order to allow it to run in environments that dot have a message broker,
+      like for example the Web Profile of JBoss Application Server. For
+      details on how to do that, please consult section 1.1 of the current
+      guide. </para>
+
       <para>Besides displaying the current status of invoices and payments for
       a given account and generating invoices through the web interface, the
       Sportsclub application can also process payments for various accounts.
@@ -845,16 +890,18 @@ public class AccountController
       <para>The component that processes JMS messages is a POJO:</para>
 
       <para><informalexample>
-          <para><programlisting>@Component
-public class PaymentNotificationProcessor
+          <para><programlisting>public class PaymentNotificationProcessor
 {
+   private static final Log LOG = LogFactory.getLog(PaymentNotificationProcessor.class);
 
    @Autowired
    private PaymentProcessor paymentProcessor;
 
    public void processPaymentNotification(PaymentNotification paymentNotification)
    {
+      LOG.info(paymentNotification + " received");
       paymentProcessor.processPayment(paymentNotification.getAccountNumber(), paymentNotification.getAmount());
+      LOG.info(paymentNotification + " processed");
    }
 
 }</programlisting></para>
@@ -871,9 +918,45 @@ public class PaymentNotificationProcessor
       PaymentNotificationService web service implementation (whose contract
       does not depend on the PaymentNotification entity). </para>
 
+      <para>The arrival of messages and their processing can be traced by
+      examining the application log.</para>
+
       <para>Spring will instantiate a bean named
       "paymentNotificationProcessor" which will be registered as a processor
       for JMS message as follows:</para>
+
+      <para><informalexample>
+          <para><programlisting>&lt;jms:jca-listener-container resource-adapter="resourceAdapter" acknowledge="auto"
+                                activation-spec-factory="activationSpecFactory"&gt;
+  &lt;jms:listener destination="/queue/sportsclub" ref="paymentNotificationProcessor"
+                      method="processPaymentNotification"/&gt;
+&lt;/jms:jca-listener-container&gt;</programlisting></para>
+        </informalexample>This type of configuration uses the JCA
+      infrastructure to deliver messages to the listener, as opposed to the
+      DefaultMessageListenerContainer which is effectively polling the
+      destination for incoming messages. Using JCA will ensure better
+      performance, as well as the ability to integrate with the JTA
+      transaction manager out of the box.</para>
+
+      <para>In order to be able to test this feature, messages have to be sent
+      to the message queue. This can be done by using a special MBean defined
+      by the application, accessible from the JBoss AS JMX console. The name
+      of the bean is "sportsclub:name=paymentNotificationTrigger" and has an
+      operation called 'sendPaymentNotification' with two arguments:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>a long valuem which is the accountId for making the
+          payment;</para>
+        </listitem>
+
+        <listitem>
+          <para>a double value, which represents the amount to be paid;</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Once the JMX operation is invoked, a message is sent to the queue
+      and a confirmation message will be displayed in the JBoss log.</para>
     </section>
 
     <section>
@@ -939,19 +1022,23 @@ public class PaymentNotificationProcessor
       definition for the PaymentAuditor is:</para>
 
       <para><informalexample>
-          <para><programlisting>@ManagedResource(objectName = "sportsclub:name=paymentAuditor", description = "Payment Auditor", logFile = "log-sportsclub-auditor-jmx.log")
+          <para><programlisting>@ManagedResource(objectName = "sportsclub:name=paymentAuditor", description = "Payment Auditor")
 @Component
 public class PaymentAuditor
 {
+
+   private static final Log LOG = LogFactory.getLog(PaymentAuditor.class);
+
    private boolean enabled = true;
 
-   @ManagedAttribute
+   @ManagedAttribute(description = "Audit enabled")
    public void setEnabled(boolean enabled)
    {
+      LOG.info("Audit " +  (enabled ? "enabled":"disabled"));
       this.enabled = enabled;
    }
 
-   @ManagedAttribute
+   @ManagedAttribute(description = "Audit enabled")
    public boolean getEnabled()
    {
       return this.enabled;
@@ -961,11 +1048,7 @@ public class PaymentAuditor
    {
       if (this.enabled)
       {
-         System.out.println("AUDIT ENABLED! A payment has been made to account " + accountId + " for the amount of " + amount);
-      }
-      else
-      { 
-         System.out.println("AUDIT DISABLED!"); 
+         LOG.info("A payment has been made to account " + accountId + " for the amount of " + amount);
       }
    }
 }</programlisting>The annotations ManagedResource and ManagedAttribute are
@@ -992,7 +1075,12 @@ public class PaymentAuditor
         </informalexample></para>
 
       <para>As a result, you can turn this functionality on and off directly
-      from the JBoss AS JMX administration console.</para>
+      from the JBoss AS JMX administration console, using the
+      "sportsclub:name=paymentAuditor" bean to interact with the payment
+      auditor.</para>
+
+      <para>As explained in the JMS section, a separate MBean is set up for
+      setting messages to the payment notifications message queue. </para>
     </section>
 
     <section>
@@ -1040,7 +1128,9 @@ public class PaymentNotificationService extends SpringBeanAutowiringSupport
        &lt;servlet-name&gt;PaymentNotificationService&lt;/servlet-name&gt;
        &lt;url-pattern&gt;/ws/payment&lt;/url-pattern&gt;
    &lt;/servlet-mapping&gt;</programlisting>As a result, the a JAX-WS web
-        service can be accessed at http://localhost:8080/ws/payment.</para>
+        service can be accessed at http://localhost:8080/ws/payment. The
+        service can be tested using a free SOAP testing tool such as SOAP
+        UI.</para>
       </informalexample>
     </section>
   </section>
