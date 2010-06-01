@@ -28,6 +28,7 @@
 
     <properties>
         <commons-logging.version>1.1.1</commons-logging.version>
+        <richfaces.version>3.3.1.GA</richfaces.version>
     </properties>
 
     <dependencyManagement>
@@ -203,13 +204,13 @@
             <dependency>
                 <groupId>org.richfaces.framework</groupId>
                 <artifactId>richfaces-api</artifactId>
-                <version>3.3.1.GA</version>
+                <version>${richfaces.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>org.richfaces.ui</groupId>
                 <artifactId>richfaces-ui</artifactId>
-                <version>3.3.1.GA</version>
+                <version>${richfaces.version}</version>
             </dependency>
 
             <dependency>
@@ -265,9 +266,40 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
-
+                              
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>jboss-public-repository-group</id>
+            <name>JBoss Public Maven Repository Group</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jboss-deprecated-repository</id>
+            <name>JBoss Deprecated Maven Repository</name>
+            <url>http://repository.jboss.org/maven2/</url>
+            <layout>default</layout>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+                <updatePolicy>never</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <profiles>
         <profile>
