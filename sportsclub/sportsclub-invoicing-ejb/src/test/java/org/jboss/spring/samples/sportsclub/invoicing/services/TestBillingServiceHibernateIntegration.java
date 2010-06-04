@@ -6,7 +6,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Account;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
@@ -36,6 +35,7 @@ public class TestBillingServiceHibernateIntegration
    @Autowired
    private PlatformTransactionManager transactionManager;
 
+   @SuppressWarnings("unchecked")
    @Test
    public void testBillingService()
    {
