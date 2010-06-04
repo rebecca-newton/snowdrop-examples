@@ -11,14 +11,14 @@ settings for their Maven repositories (direct access to community repositories,
 proxies, enterprise repository with approved artifacts). Therefore, the setup
 of the repositories is left to the user of the application.
 
-In the most simple case, this example can be built out of the box if the
-settings.xml file for the local Maven installation enables the repositories from
-Maven Central and JBoss Releases. Instructions for setting up the latter can be
-found at: http://community.jboss.org/wiki/MavenGettingStarted-Users.
+The example is pre-configured with the JBoss community repositories.
 
 The pom.xml can be modified to include references to other repositories, or
 equivalent artifact versions (if the build environment uses an enterprise-wide
 repository in which the artifacts have different version numbers).
+
+Further instructions on how to set up the community repositories can be
+found at: http://community.jboss.org/wiki/MavenGettingStarted-Users.
 
 B. Spring Deployer installed in JBoss AS
 
