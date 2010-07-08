@@ -5,13 +5,7 @@ Prerequisites:
 
 A. Maven Repository setup
 
-The Maven project setup does not make any assumptions where the artifacts used
-in the project are coming from (which repository), as users may have different
-settings for their Maven repositories (direct access to community repositories,
-proxies, enterprise repository with approved artifacts). Therefore, the setup
-of the repositories is left to the user of the application.
-
-The example is pre-configured with the JBoss community repositories.
+The example is pre-configured with JBoss repositories.
 
 The pom.xml can be modified to include references to other repositories, or
 equivalent artifact versions (if the build environment uses an enterprise-wide
@@ -45,9 +39,19 @@ mvn clean package -Pspring-3
   b) modify the jbossconf/jbossas.properties file to indicate the correct location
   of the JBoss AS installation
 
-  c) execute the maven build:
+  c) execute the maven build with one of the two applicable profiles:
 
-    mvn -Pinstall
+    - for installing both the datasource and the JMS queue (e.g. for the default profile)
+
+       mvn -Pinstall
+
+    - for installing only the datasource (e.g. for the web profile)
+
+       mvn -Pinstall-only-ds
+
+    The installed files can be removed with the command:
+
+       mvn -Pcleanup
 
 3. Initialize the database
 
@@ -105,4 +109,4 @@ the JBoss AS Web Profile.
 
 
 
-      
+
