@@ -7,4 +7,4 @@
 *.iml
 target
 test-output
-jbossas.properties
+sportsclub/jbossconf/jbossas.properties

@@ -44,11 +44,24 @@
                                         <property name="jboss.home" value="${env.JBOSS_HOME}"/>
                                         <property name="jboss.deploy.destination"
                                                   value="${jboss.home}/server/${jboss.server.name}/deploy"/>
+
+                                        <delete
+                                                file="${jboss.home}/server/${jboss.server.name}/conf/sportsclub/users.properties"
+                                                failonerror="false"/>
+                                        <delete
+                                                file="${jboss.home}/server/${jboss.server.name}/conf/sportsclub/roles.properties"
+                                                failonerror="false"/>
+                                        <delete
+                                                file="${jboss.home}/server/${jboss.server.name}/conf/sportsclub"
+                                                failonerror="false"/>
                                         <delete
                                                 file="${jboss.deploy.destination}/messaging/sportsclub-destinations-service.xml"
                                                 failonerror="false"/>
                                         <delete
                                                 file="${jboss.deploy.destination}/sportsclub-ds.xml"
+                                                failonerror="false"/>
+                                        <delete
+                                                file="${jboss.deploy.destination}/security-jboss-beans.xml"
                                                 failonerror="false"/>
                                     </tasks>
                                 </configuration>
@@ -88,11 +101,24 @@
                                         <delete
                                                 file="${jboss.deploy.destination}/sportsclub-ds.xml"
                                                 failonerror="false"/>
-
+                                        <mkdir dir="${jboss.home}/server/${jboss.server.name}/conf/sportsclub"/>
+                                        <copy todir="${jboss.home}/server/${jboss.server.name}/conf/sportsclub"
+                                              overwrite="true">
+                                            <fileset dir=".">
+                                                <include name="users.properties"/>
+                                                <include name="roles.properties"/>
+                                            </fileset>
+                                        </copy>
                                         <copy todir="${jboss.deploy.destination}"
                                               overwrite="true">
                                             <fileset dir=".">
                                                 <include name="sportsclub-ds.xml"/>
+                                            </fileset>
+                                        </copy>
+                                        <copy todir="${jboss.deploy.destination}"
+                                              overwrite="true">
+                                            <fileset dir=".">
+                                                <include name="security-jboss-beans.xml"/>
                                             </fileset>
                                         </copy>
                                         <copy todir="${jboss.deploy.destination}/messaging"

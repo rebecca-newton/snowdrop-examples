@@ -14,6 +14,7 @@
       <param-value>org.jboss.spring.vfs.context.VFSXmlWebApplicationContext</param-value>
    </context-param>
 
+
    <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
    </listener>
@@ -45,6 +46,27 @@
        <servlet-name>PaymentNotificationService</servlet-name>
        <url-pattern>/ws/payment</url-pattern>
    </servlet-mapping>
+
+   <security-constraint>
+          <web-resource-collection>
+               <web-resource-name>All resources</web-resource-name>
+               <description>Protects all resources</description>
+               <url-pattern>/*</url-pattern>
+          </web-resource-collection>
+          <auth-constraint>
+               <role-name>*</role-name>
+          </auth-constraint>
+     </security-constraint>
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>sportsclub-invoicing</realm-name>
+    </login-config>
+    <security-role>
+        <role-name>ADMINISTRATOR</role-name>
+    </security-role>
+    <security-role>
+        <role-name>EMPLOYEE</role-name>
+    </security-role>
 
 
 </web-app>
