@@ -14,8 +14,17 @@
       <param-value>org.jboss.spring.vfs.context.VFSXmlWebApplicationContext</param-value>
    </context-param>
 
+    <filter>
+        <filter-name>filterChainProxy</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>filterChainProxy</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
-   <listener>
+
+    <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
    </listener>
 

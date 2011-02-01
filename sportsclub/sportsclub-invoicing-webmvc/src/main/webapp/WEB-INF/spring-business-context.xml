@@ -55,4 +55,6 @@
    <!-- Uncomment to enable JMS integration features  -->
    <import resource="spring-messaging-context.xml"/>
 
+   <import resource="spring-security-context.xml"/>
+
 </beans>

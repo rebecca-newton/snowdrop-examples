@@ -5,6 +5,7 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.Invoice;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Payment;
 import org.jboss.snowdrop.samples.sportsclub.ejb.SubscriptionService;
 import org.jboss.spring.samples.sportsclub.invoicing.services.BillingService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,6 +96,7 @@ public class AccountController
    }
 
    @RequestMapping(value = "/generateInvoice.do", method = RequestMethod.POST)
+   @Secured("ROLE_ADMIN")
    ModelMap generateInvoice(@RequestParam("id") String id)
    {
       Account account = subscriptionService.findAccountById(Long.parseLong(id));
