@@ -1,0 +1,313 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:a4j="http://richfaces.org/a4j"
+                template="layout/template.xhtml">
+
+    <ui:define name="content">
+
+        <rich:panel>
+            <f:facet name="header">Filter reservations</f:facet>
+            <h:form>
+                from:
+                <rich:calendar id="from"
+                               value="#{reservationSearch.reservationSearchOptions.fromDate}"
+                               datePattern="d/M/yyyy HH:mm"
+                               showApplyButton="true"
+                               locale="#{reservationSearch.reservationSearchOptions.locale}">
+                    <a4j:support event="onchanged" reRender="searchResults"/>
+                </rich:calendar>
+                to:
+                <rich:calendar id="to"
+                               value="#{reservationSearch.reservationSearchOptions.toDate}"
+                               datePattern="d/M/yyyy HH:mm"
+                               showApplyButton="true"
+                               locale="#{reservationSearch.reservationSearchOptions.locale}">
+                    <a4j:support event="onchanged" reRender="searchResults"/>
+                </rich:calendar>
+                <br/>
+                <table>
+                    <tr>
+                        <td>
+                            Equipment Type:
+                        </td>
+                        <td>
+                            <h:selectManyCheckbox id="equipmentTypes"
+                                                  value="#{reservationSearch.reservationSearchOptions.selectedEquipmentTypes}"
+                                                  layout="lineDirection" converter="#{equipmentTypeConverter}">
+                                <f:selectItems value="#{referenceData.equipmentTypes}"/>
+                                <a4j:support event="onchange" reRender="searchResults"/>
+                            </h:selectManyCheckbox>
+                        </td>
+                    </tr>
+                </table>
+
+            </h:form>
+        </rich:panel>
+
+        <a4j:outputPanel id="searchResults">
+            <h:form>
+                <rich:panel header="Search results">
+                    <rich:extendedDataTable id="searchResultsTable" value="#{reservationSearch}" var="reservation"
+                                            selectionMode="single"
+                                            selection="#{reservationSearch.selection}"
+                                            enableContextMenu="true"
+                                            height="250px"
+                                            rows="5"
+                                            tableState="#{reservationSearch.tableState.tableState}">
+                        <a4j:support event="onselectionchange" action="#{reservationSearch.reservationSelected}" reRender="reservationData,reservationFilters"/>
+                        <rich:column label="Reservation #">
+                            <f:facet name="header">
+                                <h:outputText value="Reservation #"/>
+                            </f:facet>
+                            <h:outputText value="#{reservation.id}"/>
+                        </rich:column>
+
+                        <rich:column label="Equipment Type">
+                            <f:facet name="header">
+                                <h:outputText value="Equipment Type"/>
+                            </f:facet>
+                            <h:outputText value="#{reservation.equipment.equipmentType}"/>
+                        </rich:column>
+
+                        <rich:column label="Equipment Description">
+                            <f:facet name="header">
+                                <h:outputText value="Equipment Description"/>
+                            </f:facet>
+                            <h:outputText value="#{reservation.equipment.name}: #{reservation.equipment.description}"/>
+                        </rich:column>
+
+                        <rich:column label="From">
+                            <f:facet name="header">
+                                <h:outputText value="From"/>
+                            </f:facet>
+                            <h:outputText value="#{reservation.from}">
+                                <f:convertDateTime dateStyle="long" type="both"/>
+                            </h:outputText>
+                        </rich:column>
+
+                        <rich:column label="To">
+                            <f:facet name="header">
+                                <h:outputText value="To"/>
+                            </f:facet>
+                            <h:outputText value="#{reservation.to}">
+                                <f:convertDateTime dateStyle="long" type="both"/>
+                            </h:outputText>
+                        </rich:column>
+
+                        <f:facet name="footer">
+                            <rich:datascroller id="scroller" for="searchResultsTable" maxPages="5"
+                                               page="#{reservationSearch.currentPage}"/>
+                        </f:facet>
+                    </rich:extendedDataTable>
+                    <rich:componentControl attachTo="deleteRsrvBtn" event="onclick" operation="selectionchange"
+                                           for="searchResults"/>
+                </rich:panel>
+            </h:form>
+        </a4j:outputPanel>
+
+        <!--*********************************** -->
+        
+        <a4j:outputPanel id="reservationFilters">
+            <rich:panel rendered="#{reservationSearch.editing and reservationSearch.reservation != null}">
+                <f:facet name="header">Edit Reservation</f:facet>
+                <table>
+                    <tr>
+                        <td style="width:500px">
+
+                            <rich:panel>
+                                <f:facet name="header">Filter accounts</f:facet>
+                                <h:form>
+                                    Type subscriber name:
+                                    <h:inputText id="searchField" value="#{accountFilterSearch.subscriberNameFragment}"
+                                                 label="Search name"/>
+                                    <rich:hotKey selector="##{rich:clientId('searchField')}" key="return"
+                                                 handler="#{rich:element('searchButton')}.onclick();return false;"/>
+                                    <a4j:commandButton id="searchButton" value="Search" action="#{accountFilterSearch.searchAccounts}"
+                                                       reRender="accountsTable"/>
+                                </h:form>
+                            </rich:panel>
+                            <rich:panel>
+                                <f:facet name="header">Select Account</f:facet>
+                                <h:form id="AccountSelectForm">
+                                    <rich:extendedDataTable id="accountsTable" value="#{accountFilterSearch}" var="account"
+                                                            selectionMode="single"
+                                                            selection="#{accountFilterSearch.selection}"
+                                                            enableContextMenu="true"
+                                                            height="250px"
+                                                            rows="5">
+                                        <a4j:support event="onselectionchange"
+                                                     action="#{reservationSearch.updateSelectedAccount}"
+                                                     reRender="reservationData"/>
+
+                                        <rich:column label="Id" width="7%">
+                                            <f:facet name="header">
+                                                <h:outputText value="Id"/>
+                                            </f:facet>
+                                            <h:outputText value="#{account.id}"/>
+                                        </rich:column>
+
+                                        <rich:column label="First Name">
+                                            <f:facet name="header">
+                                                <h:outputText value="First Name"/>
+                                            </f:facet>
+                                            <h:outputText value="#{account.subscriber.name.firstName}"/>
+                                        </rich:column>
+
+                                        <rich:column label="Last Name">
+                                            <f:facet name="header">
+                                                <h:outputText value="Last Name"/>
+                                            </f:facet>
+                                            <h:outputText value="#{account.subscriber.name.lastName}"/>
+                                        </rich:column>
+
+                                        <rich:column label="City">
+                                            <f:facet name="header">
+                                                <h:outputText value="City"/>
+                                            </f:facet>
+                                            <h:outputText value="#{account.subscriber.address.city}"/>
+                                        </rich:column>
+
+                                        <rich:column label="Country">
+                                            <f:facet name="header">
+                                                <h:outputText value="Country"/>
+                                            </f:facet>
+                                            <h:outputText value="#{account.subscriber.address.country}"/>
+                                        </rich:column>
+
+                                        <f:facet name="footer">
+                                            <rich:datascroller id="scrollerAccount" for="accountsTable" maxPages="5"
+                                                               page="#{accountFilterSearch.currentPage}"/>
+                                        </f:facet>
+                                    </rich:extendedDataTable>
+                                </h:form>
+                            </rich:panel>
+
+                        </td>
+                        <td style="width:500px;vertical-align:bottom;">
+                            <rich:panel>
+                                <f:facet name="header">Select Equipment</f:facet>
+                                    <h:form id="EquipmentSelectForm">
+                                        <rich:extendedDataTable id="equipmentsTable" value="#{equipmentFilterSearch}" var="equipment"
+                                                                selectionMode="single"
+                                                                selection="#{equipmentFilterSearch.selection}"
+                                                                enableContextMenu="true"
+                                                                height="250px"
+                                                                rows="5">
+                                            <a4j:support event="onselectionchange"
+                                                         action="#{reservationSearch.updateSelectedEquipment}"
+                                                         reRender="reservationData"/>
+
+                                            <rich:column label="Id" width="10%">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Id"/>
+                                                </f:facet>
+                                                <h:outputText value="#{equipment.id}"/>
+                                            </rich:column>
+
+                                            <rich:column label="Name" width="35%">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Name"/>
+                                                </f:facet>
+                                                <h:outputText value="#{equipment.name}"/>
+                                            </rich:column>
+
+                                            <rich:column label="Description" width="55%">
+                                                <f:facet name="header">
+                                                    <h:outputText value="Description"/>
+                                                </f:facet>
+                                                <h:outputText value="#{equipment.description}"/>
+                                            </rich:column>
+
+                                            <f:facet name="footer">
+                                                <rich:datascroller id="scrollerEquipment" for="equipmentsTable" maxPages="5"
+                                                                   page="#{equipmentFilterSearch.currentPage}"/>
+                                            </f:facet>
+
+                                        </rich:extendedDataTable>
+                                    </h:form>
+                            </rich:panel>
+                        </td>
+                    </tr>
+                </table>
+            </rich:panel>
+        </a4j:outputPanel>
+
+
+        <!-- ******************************************** -->
+
+        <a4j:outputPanel id="reservationData">
+            <rich:panel rendered="#{reservationSearch.reservation != null}" >
+                <h:form>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Equipment:"/>
+                        <h:panelGroup>
+                            <h:outputText rendered="#{reservationSearch.reservation.equipment != null}"
+                                          value="#{reservationSearch.reservation.equipment.name} (#{reservationSearch.reservation.equipment.description})"/>
+                            <h:outputText rendered="#{reservationSearch.reservation.equipment == null}"
+                                          value="Not selected"/>
+                        </h:panelGroup>
+
+                        <h:outputLabel value="Account:"/>
+                        <h:panelGroup>
+                            <h:outputText rendered="#{reservationSearch.reservation.account != null}"
+                                          value="#{reservationSearch.reservation.account.subscriber.name.firstName} #{reservationSearch.reservation.account.subscriber.name.lastName} (#{reservationSearch.reservation.account.subscriber.address.city}, #{reservationSearch.reservation.account.subscriber.address.country})"/>
+                            <h:outputText rendered="#{reservationSearch.reservation.account == null}" value="Not selected"/>
+                        </h:panelGroup>
+
+                        <h:outputLabel value="From:"/>
+                        <h:panelGroup>
+                            <h:outputText value="#{reservationSearch.reservation.from}" rendered="#{!reservationSearch.editing}"/>
+                            <rich:calendar id="from"
+                                       value="#{reservationSearch.reservation.from}"
+                                       datePattern="d/M/yy HH:mm"
+                                       showApplyButton="true"
+                                       locale="#{reservationSearch.locale}"
+                                       rendered="#{reservationSearch.editing}"/>
+                        </h:panelGroup>
+
+                        <h:outputLabel value="To:"/>
+                        <h:panelGroup>
+                            <h:outputText value="#{reservationSearch.reservation.to}" rendered="#{!reservationSearch.editing}"/>
+                            <rich:calendar id="to"
+                                       value="#{reservationSearch.reservation.to}"
+                                       datePattern="d/M/yy HH:mm"
+                                       showApplyButton="true"
+                                       locale="#{reservationSearch.locale}"
+                                       rendered="#{reservationSearch.editing}"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    
+                    <a4j:commandButton id="deleteRsrvBtn" value="Delete Reservation" action="#{reservationSearch.deleteReservation}" reRender="searchResults,reservationFilters,reservationData" rendered="#{!reservationSearch.editing}" status="actionStatus" />
+                    <a4j:commandButton id="editRsrvBtn" value="Edit Reservation" reRender="reservationData,reservationFilters" rendered="#{!reservationSearch.editing}" status="actionStatus">
+                        <f:setPropertyActionListener value="#{true}" target="#{reservationSearch.editing}"/>
+                    </a4j:commandButton>
+                    <br/>
+                    <a4j:commandButton id="cancelRsrvBtn" value="Cancel Editing" rendered="#{reservationSearch.editing}" reRender="reservationData,reservationFilters">
+                        <f:setPropertyActionListener value="#{false}" target="#{reservationSearch.editing}"/>
+                    </a4j:commandButton>
+                    <a4j:commandButton id="saveRsrvBtn" value="Save Reservation" action="#{reservationSearch.saveCurrent}" reRender="reservationData,reservationFilters,searchResults" rendered="#{reservationSearch.editing}" status="actionStatus" />
+
+                </h:form>
+            </rich:panel>
+        </a4j:outputPanel>
+
+        <rich:modalPanel id="ajaxLoadingModalBox" minHeight="200" minWidth="450"
+                height="100" width="250" zindex="2000">
+             <f:facet name="header">
+                  <h:outputText value="Request being processed"></h:outputText>
+             </f:facet>
+             <h:outputText value="Your request is being processed, please wait."></h:outputText>
+        </rich:modalPanel>
+
+        <a4j:region>
+            <a4j:status id="actionStatus"
+                        onstart="Richfaces.showModalPanel('ajaxLoadingModalBox',{width:450, top:200})"
+                        onstop="Richfaces.hideModalPanel('ajaxLoadingModalBox')"></a4j:status>
+        </a4j:region>
+    
+    </ui:define>
+
+</ui:composition>

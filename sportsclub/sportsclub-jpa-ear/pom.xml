@@ -132,18 +132,6 @@
                             <artifactId>sportsclub-subscriptions-web</artifactId>
                             <contextRoot>/sportsclub/subscriptions</contextRoot>
                         </webModule>
-                        <jarModule>
-                            <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-                            <artifactId>sportsclub-domain</artifactId>
-                        </jarModule>
-                        <jarModule>
-                            <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-                            <artifactId>sportsclub-jpa-dao</artifactId>
-                        </jarModule>
-                        <jarModule>
-                            <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-                            <artifactId>sportsclub-reservations-spring</artifactId>
-                        </jarModule>
                         <webModule>
                             <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
                             <artifactId>sportsclub-reservations-web</artifactId>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="classpath*:reservations-service.xml"/>
+
+    <import resource="classpath*:infrastructure.xml"/>
+    
+    <!-- Session scoped beans -->
+    <bean id="reservationCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationCreate" scope="session" init-method="init">
+        <property name="reservationService" ref="reservationService"/>
+        <property name="accountService" ref="accountService"/>
+        <property name="accountFilter" ref="accountFilterCreate"/>
+        <property name="equipmentFilter" ref="equipmentFilterCreate"/>
+    </bean>
+
+    <bean id="reservationSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearch" scope="session">
+        <property name="reservationService" ref="reservationService"/>
+        <property name="tableState" ref="reservationSearchTableState"/>
+        <property name="reservationSearchOptions" ref="reservationSearchOptions"/>
+        <property name="accountFilter" ref="accountFilterSearch"/>
+        <property name="equipmentFilter" ref="equipmentFilterSearch"/>
+    </bean>
+    
+    <bean id="reservationSearchTableState" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationTableState" scope="session"/>
+
+    <bean id="reservationSearchOptions" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReservationSearchOptions" scope="session" init-method="init">
+        <property name="equipmentService" ref="equipmentService"/>
+    </bean>
+
+    <!-- *FilterSearch beans are used by reservationSearch -->
+    <bean id="accountFilterSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.AccountFilter" scope="session">
+        <property name="accountService" ref="accountService"/>
+    </bean>
+
+    <bean id="equipmentFilterSearch" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentFilter" scope="session">
+        <property name="equipmentService" ref="equipmentService"/>
+    </bean>
+
+    <!-- *FilterCreate beans are used by reservationCreate -->
+    <bean id="accountFilterCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.AccountFilter" scope="session">
+        <property name="accountService" ref="accountService"/>
+    </bean>
+
+    <bean id="equipmentFilterCreate" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.EquipmentFilter" scope="session">
+        <property name="equipmentService" ref="equipmentService"/>
+    </bean>
+    
+    <bean id="equipmentTypeConverter" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.converter.EquipmentTypeConverter"/>
+    
+    <!-- Application scoped service -->
+    <bean id="referenceData" class="org.jboss.snowdrop.samples.sportsclub.jsf.beans.ReferenceData" init-method="init">
+        <property name="equipmentService" ref="equipmentService"/>
+    </bean>
+    
+    <context:annotation-config/>
+    
+</beans>

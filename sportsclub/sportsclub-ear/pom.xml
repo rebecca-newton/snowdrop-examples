@@ -55,6 +55,12 @@
             <type>war</type>
             <version>${project.version}</version>
         </dependency>
+         <dependency>
+            <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
+            <artifactId>sportsclub-reservations-webflow</artifactId>
+            <type>war</type>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
             <artifactId>sportsclub-invoicing-webmvc</artifactId>
@@ -116,8 +122,9 @@
                 <version>2.4</version>
                 <configuration>
                     <displayName>Sports Club Sample Application</displayName>
-                    <defaultLibBundleDir>/lib/</defaultLibBundleDir>
                     <generateApplicationXml>true</generateApplicationXml>
+                            <earSourceExcludes>**/application.xml</earSourceExcludes>
+                    <defaultLibBundleDir>/lib/</defaultLibBundleDir>
                     <workDirectory>${project.build.directory}/${project.build.finalName}-exploded.ear</workDirectory>
                     <modules>
                         <ejbModule>
@@ -133,22 +140,15 @@
                             <artifactId>sportsclub-subscriptions-web</artifactId>
                             <contextRoot>/sportsclub/subscriptions</contextRoot>
                         </webModule>
-                        <jarModule>
-                            <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-                            <artifactId>sportsclub-domain</artifactId>
-                        </jarModule>
-                        <jarModule>
-                            <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-                            <artifactId>sportsclub-hibernate-dao</artifactId>
-                        </jarModule>
-                        <jarModule>
-                            <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
-                            <artifactId>sportsclub-reservations-spring</artifactId>
-                        </jarModule>
                         <webModule>
                             <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
                             <artifactId>sportsclub-reservations-web</artifactId>
                             <contextRoot>/sportsclub/reservations</contextRoot>
+                        </webModule>
+                         <webModule>
+                            <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>
+                            <artifactId>sportsclub-reservations-webflow</artifactId>
+                            <contextRoot>/sportsclub/reservations-webflow</contextRoot>
                         </webModule>
                        <webModule>
                             <groupId>org.jboss.snowdrop.samples.sportsclub</groupId>

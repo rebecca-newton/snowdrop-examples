@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE application PUBLIC
+	"-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN"
+	"http://java.sun.com/dtd/application_1_3.dtd">
+<application>
+  <display-name>Sports Club Sample Application</display-name>
+  <module>
+    <ejb>sportsclub-subscriptions-ejb-1.0-SNAPSHOT.jar</ejb>
+  </module>
+  <module>
+    <ejb>sportsclub-invoicing-ejb-1.0-SNAPSHOT.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>sportsclub-subscriptions-web-1.0-SNAPSHOT.war</web-uri>
+      <context-root>/sportsclub/subscriptions</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>sportsclub-reservations-web-1.0-SNAPSHOT.war</web-uri>
+      <context-root>/sportsclub/reservations</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>sportsclub-invoicing-webmvc.war</web-uri>
+      <context-root>/sportsclub/invoicing</context-root>
+    </web>
+  </module>
+</application>

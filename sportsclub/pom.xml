@@ -15,6 +15,7 @@
         <module>sportsclub-hibernate-dao</module>
         <module>sportsclub-jpa-dao</module>
         <module>sportsclub-reservations-web</module>
+        <module>sportsclub-reservations-webflow</module>
         <module>sportsclub-reservations-spring</module>
         <module>sportsclub-test-infrastructure</module>
         <module>sportsclub-invoicing-ejb</module>
@@ -152,6 +153,24 @@
                <groupId>org.springframework</groupId>
                <artifactId>spring-webmvc</artifactId>
                <version>${spring.version}</version>
+           </dependency>
+
+            <dependency>
+               <groupId>org.springframework.webflow</groupId>
+               <artifactId>spring-webflow</artifactId>
+               <version>${spring-webflow.version}</version>
+           </dependency>
+
+            <dependency>
+               <groupId>org.springframework.webflow</groupId>
+               <artifactId>spring-faces</artifactId>
+               <version>${spring-webflow.version}</version>
+           </dependency>
+
+            <dependency>
+               <groupId>org.springframework.webflow</groupId>
+               <artifactId>spring-binding</artifactId>
+               <version>${spring-webflow.version}</version>
            </dependency>
 
             <dependency>
@@ -311,6 +330,7 @@
                 <spring.version>2.5.6.SEC01</spring.version>
                 <junit.version>4.4</junit.version>
                 <snowdrop.version>1.0.1.GA</snowdrop.version>
+                <spring-webflow.version>2.0.6.RELEASE</spring-webflow.version>
             </properties>
         </profile>
         <profile>
@@ -318,7 +338,8 @@
             <properties>
                 <spring.version>3.0.2.RELEASE</spring.version>
                 <junit.version>4.6</junit.version>
-                <snowdrop.version>1.1.0.GA</snowdrop.version>                
+                <snowdrop.version>1.1.0.GA</snowdrop.version>
+                <spring-webflow.version>2.2.1.RELEASE</spring-webflow.version>
             </properties>
         </profile>
     </profiles>

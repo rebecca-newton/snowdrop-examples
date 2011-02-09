@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:faces="http://www.springframework.org/schema/faces"
+       xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/webflow-config
+                           http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.0.xsd
+                           http://www.springframework.org/schema/faces
+                           http://www.springframework.org/schema/faces/spring-faces-2.0.xsd">
+
+    <webflow:flow-registry id="flowRegistry" flow-builder-services="flowBuilderServices">
+        <webflow:flow-location path="/WEB-INF/flows/reservation/reservation-flow.xml" id="reservation"/>
+    </webflow:flow-registry>
+
+    <webflow:flow-executor flow-registry="flowRegistry" id="flowExecutor">
+        <webflow:flow-execution-listeners>
+            <webflow:listener ref="facesWebFlowListener"/>
+        </webflow:flow-execution-listeners>
+    </webflow:flow-executor>
+
+    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+        <property name="flowExecutor" ref="flowExecutor"/>
+    </bean>
+    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+        <property name="flowRegistry" ref="flowRegistry"/>
+        <property name="order" value="0"/>
+    </bean>
+
+    <faces:flow-builder-services id="flowBuilderServices"/>
+
+    <bean id="facesWebFlowListener" class="org.springframework.faces.webflow.FlowFacesContextLifecycleListener"/>
+
+</beans>
