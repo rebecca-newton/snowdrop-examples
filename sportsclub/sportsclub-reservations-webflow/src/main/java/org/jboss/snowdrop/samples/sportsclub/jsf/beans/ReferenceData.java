@@ -1,11 +1,9 @@
 package org.jboss.snowdrop.samples.sportsclub.jsf.beans;
 
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.EquipmentType;
-import org.jboss.snowdrop.samples.sportsclub.domain.entity.Equipment;
 import org.jboss.snowdrop.samples.sportsclub.service.EquipmentService;
 
 import javax.faces.model.SelectItem;
-import java.util.Collection;
 
 /**
  * @author <a href="mailto:lvlcek@redhat.com">Lukas Vlcek</a>

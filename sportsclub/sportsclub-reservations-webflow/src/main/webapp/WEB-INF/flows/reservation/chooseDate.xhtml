@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:a4j="http://richfaces.org/a4j"
+                template="/layout/template.xhtml">
+    <ui:define name="content">
+
+        <rich:panel>
+            <h:outputLabel value="From"/>
+            <h:panelGroup>
+                <rich:calendar id="from"
+                               value="#{reservationCreate.reservation.from}"
+                               datePattern="d/M/yy HH:mm"
+                               showApplyButton="true"
+                               locale="#{reservationCreate.locale}"/>
+                <h:message for="from" style="color:RED" showDetail="true" showSummary="true"/>
+            </h:panelGroup>
+
+            <h:outputLabel value="To"/>
+            <h:panelGroup>
+                <rich:calendar id="to"
+                               value="#{reservationCreate.reservation.to}"
+                               datePattern="d/M/yy HH:mm"
+                               showApplyButton="true"
+                               locale="#{reservationCreate.locale}"/>
+                <h:message for="to" style="color:RED" showDetail="true" showSummary="true"/>
+            </h:panelGroup>
+
+        </rich:panel>
+        <rich:panel>
+            <h:form>
+                <a4j:commandButton id="searchButton" value="Next" action="next"
+                                   reRender="accountsTable"/>
+                <a4j:commandButton id="searchButton" value="Previous" action="previous"
+                                   reRender="accountsTable"/>
+            </h:form>
+        </rich:panel>
+    </ui:define>
+</ui:composition>

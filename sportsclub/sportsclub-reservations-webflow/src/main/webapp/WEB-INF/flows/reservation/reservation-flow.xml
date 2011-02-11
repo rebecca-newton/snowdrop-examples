@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flow xmlns="http://www.springframework.org/schema/webflow"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-   <view-state id="beginReservation" >
-       <transition on="byEquipmentType" to="searchEquipment"/>
-       <transition on="byDate" to="selectCalendar"/>
-   </view-state>
+	<view-state id="beginReservation">
+		<transition on="byEquipmentType" to="selectEquipment" />
+		<transition on="byAccount" to="selectAccount" />
+	</view-state>
+	<view-state id="chooseDate" redirect="false" popup="false">
+		<transition on="*" to="finishReservation" />
+	</view-state>
 
 
-   <view-state id="searchEquipment"/>
+	<view-state id="selectEquipment">
+		<transition on="next" to="chooseDate" bind="false" />
+		<transition on="previous" to="beginReservation" bind="false" />
+	</view-state>
 
-   <view-state id="selectCalendar"/>
+	<view-state id="selectAccount">
+		<transition on="next" to="chooseDate" bind="false" />
+		<transition on="previous" to="beginReservation" bind="false" />
+	</view-state>
+	<end-state id="finishReservation" commit="false" />
 
 </flow>

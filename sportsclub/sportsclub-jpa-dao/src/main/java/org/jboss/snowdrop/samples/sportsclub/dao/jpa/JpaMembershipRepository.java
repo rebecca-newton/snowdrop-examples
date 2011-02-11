@@ -5,9 +5,6 @@ import org.jboss.snowdrop.samples.sportsclub.domain.repository.MembershipReposit
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
-import java.lang.reflect.Member;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,6 +19,7 @@ public class JpaMembershipRepository extends JpaRepository<Membership, String> i
       super(Membership.class);
    }
 
+   @SuppressWarnings("unchecked")
    public List<Membership> findAllActiveMembershipTypes()
    {
       Query query = entityManager.createQuery("FROM " + Membership.class.getSimpleName() + " m WHERE m.active = :active");

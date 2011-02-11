@@ -36,12 +36,13 @@ public abstract class HibernateRepository<T, I extends Serializable> implements 
       return this.sessionFactory.getCurrentSession();
    }
 
-   
+   @SuppressWarnings("unchecked")
    public T findById(I id)
    {
       return (T)getCurrentSession().get(clazz, id);
    }
 
+   @SuppressWarnings("unchecked")
    public T save(T object)
    {
       return (T) getCurrentSession().merge(object);
@@ -52,6 +53,7 @@ public abstract class HibernateRepository<T, I extends Serializable> implements 
       getCurrentSession().delete(object);
    }
 
+   @SuppressWarnings("unchecked")
    public List<T> findAll()
    {
       return getCurrentSession().createCriteria(clazz).list();

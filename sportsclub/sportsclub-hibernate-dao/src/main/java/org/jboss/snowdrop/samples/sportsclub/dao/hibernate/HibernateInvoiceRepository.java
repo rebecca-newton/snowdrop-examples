@@ -15,6 +15,7 @@ public class HibernateInvoiceRepository extends HibernateRepository<Invoice, Lon
       super(Invoice.class);
    }
 
+   @SuppressWarnings("unchecked")
    public List<Invoice> findForAccount(Account account)
    {
       Criteria criteria = getCurrentSession().createCriteria(Invoice.class);

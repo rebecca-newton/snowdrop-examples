@@ -25,6 +25,7 @@ import org.springframework.transaction.support.TransactionTemplate;
  * 
  * @author Marius Bogoevici
  */
+@SuppressWarnings("rawtypes")
 public class TestDatasourceFactoryBean implements FactoryBean, ResourceLoaderAware
 {
 
@@ -80,7 +81,7 @@ public class TestDatasourceFactoryBean implements FactoryBean, ResourceLoaderAwa
       return dataSource;
    }
 
-   public Class getObjectType()
+   public Class<DataSource> getObjectType()
    {
       return DataSource.class;
    }
@@ -90,6 +91,7 @@ public class TestDatasourceFactoryBean implements FactoryBean, ResourceLoaderAwa
       return true;
    }
 
+   @SuppressWarnings("unchecked")
    @PostConstruct
    public void doAfterConstruction()
    {

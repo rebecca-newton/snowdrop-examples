@@ -13,7 +13,6 @@ import org.jboss.snowdrop.samples.sportsclub.domain.entity.BillingType;
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Person;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.AccountRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.MembershipRepository;
-import org.jboss.snowdrop.samples.sportsclub.domain.repository.PersonRepository;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.AccountSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.InvoiceSearchCriteria;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.criteria.PersonSearchCriteria;
@@ -31,9 +30,6 @@ public class SubscriptionServiceImpl implements SubscriptionService
 
    @Spring(bean = "accountRepository", jndiName = "SpringDao")
    private AccountRepository accountRepository;
-
-   @Spring(bean = "personRepository", jndiName = "SpringDao")
-   private PersonRepository personRepository;
 
    @Spring(bean = "membershipRepository", jndiName = "SpringDao")
    private MembershipRepository membershipRepository;

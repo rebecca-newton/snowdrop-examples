@@ -20,6 +20,7 @@ public class JpaInvoiceRepository extends JpaRepository<Invoice, Long> implement
       super(Invoice.class);
    }
 
+   @SuppressWarnings("unchecked")
    public List<Invoice> findForAccount(Account account)
    {
       Query query = entityManager.createQuery("FROM " + Invoice.class.getSimpleName() + " i WHERE i.account.id = :id");

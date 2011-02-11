@@ -26,6 +26,7 @@ public class JpaReservationRepository extends JpaRepository<Reservation, Long> i
       return (Long)query.getSingleResult();
    }
 
+   @SuppressWarnings("unchecked")
    public List<Reservation> getByCriteria(ReservationSearchCriteria criteria)
    {
       Query query = getQuery(criteria, null);

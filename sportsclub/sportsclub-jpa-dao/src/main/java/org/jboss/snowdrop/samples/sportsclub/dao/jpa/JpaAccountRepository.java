@@ -27,12 +27,13 @@ public class JpaAccountRepository extends JpaRepository<Account, Long> implement
       return (Long)query.getSingleResult();
    }
 
+   @SuppressWarnings("unchecked")
    public List<Account> findByCriteria(AccountSearchCriteria criteria)
    {
       Query query = getQuery(criteria, null);
       if (criteria.getRange() != null)
          query = applyRange(query, criteria.getRange());
-      return query.getResultList();
+      return (List<Account>)query.getResultList();
    }
 
    private Query getQuery(AccountSearchCriteria criteria, String select)

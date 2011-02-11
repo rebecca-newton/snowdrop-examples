@@ -23,6 +23,7 @@ public class JpaEquipmentRepository extends JpaRepository<Equipment,Long> implem
         return EquipmentType.values();
     }
 
+   @SuppressWarnings("unchecked")
    public Collection<Equipment> findByCriteria(RangeCriteria criteria)
    {
       Query query = entityManager.createQuery("FROM " + Equipment.class.getSimpleName());

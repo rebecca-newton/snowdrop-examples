@@ -19,6 +19,7 @@ public class JpaPaymentRepository extends JpaRepository<Payment, Long> implement
       super(Payment.class);
    }
 
+   @SuppressWarnings("unchecked")
    public List<Payment> findForAccount(Account account)
    {
       Query query = entityManager.createQuery("FROM " + Payment.class.getSimpleName() + " p WHERE p.account.id = :id");

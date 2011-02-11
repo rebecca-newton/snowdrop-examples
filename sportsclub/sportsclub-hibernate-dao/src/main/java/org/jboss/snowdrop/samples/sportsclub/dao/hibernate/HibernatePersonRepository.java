@@ -1,7 +1,5 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.hibernate;
 
-import static org.hibernate.criterion.Restrictions.ilike;
-
 import org.jboss.snowdrop.samples.sportsclub.domain.entity.Person;
 import org.jboss.snowdrop.samples.sportsclub.domain.repository.PersonRepository;
 

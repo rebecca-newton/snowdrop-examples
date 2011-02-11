@@ -42,6 +42,7 @@ public abstract class JpaRepository<T, I extends Serializable> implements Reposi
       this.entityManager.remove(object);
    }
 
+   @SuppressWarnings("unchecked")
    public List<T> findAll()
    {
       return entityManager.createQuery("SELECT c FROM " + clazz.getSimpleName() + " c").getResultList();

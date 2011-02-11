@@ -1,7 +1,5 @@
 package org.jboss.snowdrop.samples.sportsclub.dao.jpa;
 
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

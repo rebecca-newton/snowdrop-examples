@@ -35,12 +35,12 @@ public class TestBillingServiceHibernateIntegration
    @Autowired
    private PlatformTransactionManager transactionManager;
 
-   @SuppressWarnings("unchecked")
+   @SuppressWarnings({ "unchecked", "rawtypes" })
    @Test
    public void testBillingService()
    {
 
-      final Invoice invoice = (Invoice)new TransactionTemplate(transactionManager).execute(new TransactionCallback()
+	final Invoice invoice = (Invoice)new TransactionTemplate(transactionManager).execute(new TransactionCallback()
       {
          public Object doInTransaction(TransactionStatus status)
          {
